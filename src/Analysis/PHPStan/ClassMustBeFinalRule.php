@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace EightFold\Architecture\PHPStan\Rules;
+namespace EightFold\Analysis\PHPStan;
 
-use EightFold\Architecture\Attributes\AllowInheritance;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
+
+use EightFold\Attributes\AllowInheritance;
 
 /**
  * Enforces that all concrete classes must be declared final unless explicitly

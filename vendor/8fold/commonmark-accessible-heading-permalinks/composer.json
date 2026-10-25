@@ -1,0 +1,47 @@
+{
+  "name": "8fold/commonmark-accessible-heading-permalinks",
+  "description": "An extension of PHP League's CommonMark library to enable accessible Heading Permalinks usage.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Josh Bruce",
+      "email": "josh@8fold.pro"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "league/commonmark": "^2.3"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.6",
+    "phpstan/phpstan": "^1.7",
+    "phpunit/phpunit": "^9.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Eightfold\\CommonMarkAccessibleHeadingPermalink\\": "./src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Eightfold\\CommonMarkAccessibleHeadingPermalink\\Tests\\": "./tests"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "prefer-stable": true,
+  "scripts": {
+    "prod": "@production",
+    "production": ["@style", "@stan", "@test"],
+    "style": "./vendor/bin/phpcs --standard=phpcs.xml -p ./src",
+    "stan": "./vendor/bin/phpstan analyze",
+    "test": "./vendor/bin/phpunit"
+  }
+}

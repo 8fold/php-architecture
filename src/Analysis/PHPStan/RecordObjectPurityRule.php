@@ -14,11 +14,13 @@ use PHPStan\Node\InClassNode;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 
-use MTM\Shared\Attributes\Record;
+use Eightfold\Analysis\PHPStan\Checks\DataObjectChecks;
+
+use Eightfold\Attributes\RecordObject;
 
 /**
  * Enforces the record-object purity contract (docs/data-objects.md) on
- * every class carrying the #[Record] attribute:
+ * every class carrying the #[RecordObject] attribute:
  * promoted readonly properties and get-only property hooks only,
  * a single public constructor, and no static methods — PHP 8.5 chains
  * from new, so static initializers are ceremony pretending to be safety.
@@ -36,7 +38,7 @@ use MTM\Shared\Attributes\Record;
  *
  * @implements Rule<InClassNode>
  */
-final class RecordPurityRule implements Rule
+final class RecordObjectPurityRule implements Rule
 {
     public function getNodeType(): string
     {
@@ -57,7 +59,8 @@ final class RecordPurityRule implements Rule
             return [];
         }
 
-        $name = (string) ($class->namespacedName ?? $class->name);
+        // Hydrated FQCN from InClassNode
+        $name = $node->getClassReflection()->getName();
 
         return [
             ...self::checkMethods($class, $name),
@@ -69,7 +72,7 @@ final class RecordPurityRule implements Rule
     {
         foreach ($class->attrGroups as $group) {
             foreach ($group->attrs as $attribute) {
-                if ($scope->resolveName($attribute->name) === Record::class) {
+                if ($scope->resolveName($attribute->name) === RecordObject::class) {
                     return true;
                 }
             }
@@ -88,12 +91,12 @@ final class RecordPurityRule implements Rule
 
             if ($method->isStatic()) {
                 $errors[] = RuleErrorBuilder::message(
-                    "#[Record] {$name} declares static {$methodName}();"
+                    "#[RecordObject] {$name} declares static {$methodName}();"
                     . ' record objects keep strict purity — no static'
                     . ' initializers, call the public constructor directly'
                     . ' (docs/data-objects.md).'
                 )
-                    ->identifier('ef-arch.recordStaticMethod')
+                    ->identifier('efarch.recordStaticMethod')
                     ->line($method->getStartLine())
                     ->build();
 
@@ -102,12 +105,12 @@ final class RecordPurityRule implements Rule
 
             if (strtolower($methodName) !== '__construct') {
                 $errors[] = RuleErrorBuilder::message(
-                    "#[Record] {$name} declares {$methodName}(); record"
-                    . ' objects are promoted properties and property'
+                    "#[RecordObject] {$name} declares {$methodName}(); record"
+                    . ' objects are promoted properties and property hooks only'
                     . ' hooks only — behavior belongs elsewhere'
                     . ' (docs/data-objects.md).'
                 )
-                    ->identifier('ef-arch.recordMethod')
+                    ->identifier('efarch.recordMethod')
                     ->line($method->getStartLine())
                     ->build();
 
@@ -116,9 +119,9 @@ final class RecordPurityRule implements Rule
 
             if ($method->isPublic() === false) {
                 $errors[] = RuleErrorBuilder::message(
-                    "#[Record] {$name} must have a public constructor."
+                    "#[RecordObject] {$name} must have a public constructor."
                 )
-                    ->identifier('ef-arch.recordConstructorVisibility')
+                    ->identifier('efarch.recordConstructorVisibility')
                     ->line($method->getStartLine())
                     ->build();
             }
@@ -141,10 +144,10 @@ final class RecordPurityRule implements Rule
             if ($promoted && $readonly === false) {
                 $paramName = '$' . (string) ($param->var->name ?? '?');
                 $errors[] = RuleErrorBuilder::message(
-                    "#[Record] {$name} promotes {$paramName} without"
+                    "#[RecordObject] {$name} promotes {$paramName} without"
                     . ' readonly; record properties are readonly values.'
                 )
-                    ->identifier('ef-arch.recordPromotedProperty')
+                    ->identifier('efarch.recordPromotedProperty')
                     ->line($param->getStartLine())
                     ->build();
             }
@@ -163,10 +166,10 @@ final class RecordPurityRule implements Rule
 
             if ($property->isStatic()) {
                 $errors[] = RuleErrorBuilder::message(
-                    "#[Record] {$name} declares static {$propertyName};"
+                    "#[RecordObject] {$name} declares static {$propertyName};"
                     . ' record objects hold row values, not shared state.'
                 )
-                    ->identifier('ef-arch.recordStaticProperty')
+                    ->identifier('efarch.recordStaticProperty')
                     ->line($property->getStartLine())
                     ->build();
 
@@ -177,12 +180,12 @@ final class RecordPurityRule implements Rule
                 foreach ($property->hooks as $hook) {
                     if ($hook->name->toString() === 'set') {
                         $errors[] = RuleErrorBuilder::message(
-                            "#[Record] {$name} defines a set hook on"
+                            "#[RecordObject] {$name} defines a set hook on"
                             . " {$propertyName}; record property hooks"
                             . ' are get-only views — mutate by'
                             . ' constructing a new instance.'
                         )
-                            ->identifier('ef-arch.recordSetHook')
+                            ->identifier('efarch.recordSetHook')
                             ->line($hook->getStartLine())
                             ->build();
                     }
@@ -193,11 +196,11 @@ final class RecordPurityRule implements Rule
 
             if ($property->isReadonly() === false) {
                 $errors[] = RuleErrorBuilder::message(
-                    "#[Record] {$name} declares mutable {$propertyName};"
+                    "#[RecordObject] {$name} declares mutable {$propertyName};"
                     . ' record properties are promoted readonly or'
                     . ' get-only property hooks.'
                 )
-                    ->identifier('ef-arch.recordMutableProperty')
+                    ->identifier('efarch.recordMutableProperty')
                     ->line($property->getStartLine())
                     ->build();
             }

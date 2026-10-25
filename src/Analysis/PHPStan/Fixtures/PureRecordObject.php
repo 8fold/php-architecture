@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace MTM\Analysis\PHPStan\Fixtures;
+namespace Eightfold\Analysis\PHPStan\Fixtures;
 
-use MTM\Shared\Attributes\Record;
+use Eightfold\Attributes\RecordObject;
 
 /**
  * The sanctioned record shape: promoted readonly properties (required
  * first, nullable last) and a computed get-only hook.
  */
-#[Record]
-final class PureRecord
+#[RecordObject]
+final class PureRecordObject
 {
     public ?string $token {
         get => $this->session?->id;
@@ -19,7 +19,7 @@ final class PureRecord
 
     public function __construct(
         public readonly string $id,
-        public readonly ?PureRecord $session = null,
+        public readonly ?PureRecordObject $session = null,
     ) {
     }
 }

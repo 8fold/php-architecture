@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace MTM\Analysis\PHPStan\Fixtures;
+namespace Eightfold\Analysis\PHPStan\Fixtures;
 
-use MTM\Shared\Attributes\Record;
+use Eightfold\Attributes\RecordObject;
 
 /**
  * Deliberately impure: exercises every check in RecordPurityRule.
  */
-#[Record]
-final class ImpureRecord
+#[RecordObject]
+final class ImpureRecordObject
 {
     public string $mutable;
 

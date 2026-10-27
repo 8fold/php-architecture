@@ -6,3 +6,7 @@ parameters:
 	paths:
 		- src
 		- tests
+
+excludePaths:
+	analyseAndScan:
+		- tests/PHPStan/Fixtures

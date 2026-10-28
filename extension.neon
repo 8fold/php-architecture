@@ -1,0 +1,6 @@
+includes:
+	- vendor/spaze/phpstan-disallowed-calls/extension.neon
+
+rules:
+	- Eightfold\PHPStan\Rules\ClassShouldBeFinal
+	- Eightfold\PHPStan\Rules\ClassShouldNotBeSubclass

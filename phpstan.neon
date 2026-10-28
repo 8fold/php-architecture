@@ -1,12 +1,11 @@
 includes:
-	- vendor/spaze/phpstan-disallowed-calls/extension.neon
+	- extension.neon
 
 parameters:
 	level: 10
 	paths:
 		- src
 		- tests
-
-excludePaths:
-	analyseAndScan:
-		- tests/PHPStan/Fixtures
+	excludePaths:
+		analyseAndScan:
+			- tests/PHPStan/Fixtures

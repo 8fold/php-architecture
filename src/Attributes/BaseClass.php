@@ -1,5 +1,7 @@
 <?php
 
+namespace Eightfold\Attributes;
+
 use Attribute;
 
 use InvalidArgumentException;
@@ -10,11 +12,9 @@ use InvalidArgumentException;
  * By default, 8fold PHP projects avoid designing classes to be extended.
  */
 #[Attribute(Attribute::TARGET_CLASS)]
-final readonly class BaseClass
+final class BaseClass
 {
-    public string $rationale;
-
-    public function __construt(string $rationale)
+    public function __construct(public string $rationale)
     {
         if (trim($rationale) === '') {
             throw new InvalidArgumentException(

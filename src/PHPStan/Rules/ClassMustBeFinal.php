@@ -5,35 +5,45 @@ namespace Eightfold\PHPStan\Rules;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
+use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
-use PHPStan\Rules\RuleError;
+
+use Eightfold\Attributes\BaseClass;
 
 /**
  * @implements Rule<InClassNode>
  */
-final class ClassMustBeFinal implements Rule
+#[BaseClass('Testing the BaseClass attribute-based opt-out capability')]
+class ClassMustBeFinal implements Rule
 {
-    public static function message(): string
+    public static function message(string $className): string
     {
         return <<<message
-        class must be declared as final.
+        Class {$className} must be declared as final.
         message;
     }
 
-    public static function tip(): string
+    public static function tip(string $className, bool $isInclude = false): string
     {
-        return <<<tip
-        Mark class as `final` (recommended).
-        tip;
+        $className = $className
+            |> (fn($c) => explode('\\', $c))
+            |> 'array_last';
+
+        $base = <<<base
+        Change declaration to `final class {$className}`
+        base;
+
+        if ($isInclude) {
+            return <<<tip
+            {$base} (recommended);
+            tip;
+        }
+        return $base;
     }
 
-    public static function errorFoundFor(Node $node): bool
+    public static function errorFoundFor(InClassNode $node): bool
     {
-        if (($node instanceof InClassNode) === false) {
-            return false;
-        }
-
         // Skip interfaces, traits, enums, anonymous classes, abstract classes,
         // and classes marked final
         $classReflection = $node->getClassReflection();
@@ -51,7 +61,7 @@ final class ClassMustBeFinal implements Rule
         return $classReflection->isFinal() === false;
     }
 
-    public static function ruleError(int $startLine): RuleError
+    public static function ruleError(InClassNode $node): IdentifierRuleError
     {
         $id = static::class
             |> (fn($c) => explode('\\', $c))
@@ -59,11 +69,14 @@ final class ClassMustBeFinal implements Rule
             |> 'lcfirst'
             |> (fn($s) => 'eightfold.' . $s);
 
+        $className = $node->getClassReflection()->getName();
         return RuleErrorBuilder::message(
-            self::message()
+            self::message($className)
         )->tip(
-            self::tip()
-        )->identifier($id)->line($startLine)->nonIgnorable()->build();
+            self::tip($className, false)
+        )->line(
+            $node->getOriginalNode()->getStartLine()
+        )->identifier($id)->nonIgnorable()->build();
     }
 
     public function getNodeType(): string
@@ -71,11 +84,14 @@ final class ClassMustBeFinal implements Rule
         return InClassNode::class;
     }
 
+    /**
+     * @param InClassNode $node
+     */
     public function processNode(Node $node, Scope $scope): array
     {
         if (self::errorFoundFor($node)) {
             return [
-                self::ruleError($node->getOriginalNode()->getStartLine()),
+                self::ruleError($node),
             ];
         }
         return [];

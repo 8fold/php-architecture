@@ -5,9 +5,9 @@ namespace Eightfold\PHPStan\Rules;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
+use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
-use PHPStan\Rules\RuleError;
 
 use Eightfold\PHPStan\Rules\ClassMustBeFinal;
 
@@ -20,26 +20,26 @@ final class ClassShouldBeFinal implements Rule
 {
     private const string OPT_OUT_ATTRIBUTE = BaseClass::class;
 
-    public static function message(): string
+    public static function message(string $className): string
     {
         return <<<message
-        class should be declared as final.
+        Class {$className} should be declared as final.
         message;
     }
 
-    public static function tip(): string
+    public static function tip(string $className, bool $isInclude = false): string
     {
         $attributeName = self::OPT_OUT_ATTRIBUTE;
 
-        $inherited = substr_replace(ClassMustNotBeSubclass::tip(), ';', 1);
+        $inherited = ClassMustNotBeSubclass::tip($className, true);
 
         return <<<tip
         {$inherited}
-                or, decorate the class with the {$attributeName} attribute.
+            \tor, decorate the class with the {$attributeName} attribute.
         tip;
     }
 
-    public static function errorFoundFor(Node $node): bool
+    public static function errorFoundFor(InClassNode $node): bool
     {
         if (ClassMustBeFinal::errorFoundFor($node) === false) {
             return false;
@@ -54,7 +54,7 @@ final class ClassShouldBeFinal implements Rule
         return count($attributes) === 0;
     }
 
-    public static function ruleError(int $startLine): RuleError
+    public static function ruleError(InClassNode $node): IdentifierRuleError
     {
         $id = static::class
             |> (fn($c) => explode('\\', $c))
@@ -62,13 +62,14 @@ final class ClassShouldBeFinal implements Rule
             |> 'lcfirst'
             |> (fn($s) => 'eightfold.' . $s);
 
+        $className = $node->getClassReflection()->getName();
         return RuleErrorBuilder::message(
-            self::message()
+            self::message($className)
         )->tip(
-            self::tip()
-        )->identifier(
-            $id
-        )->line($startLine)->nonIgnorable()->build();
+            self::tip($className, false)
+        )->line(
+            $node->getOriginalNode()->getStartLine()
+        )->identifier($id)->nonIgnorable()->build();
     }
 
     public function getNodeType(): string
@@ -76,11 +77,14 @@ final class ClassShouldBeFinal implements Rule
         return InClassNode::class;
     }
 
+    /**
+     * @param InClassNode $node
+     */
     public function processNode(Node $node, Scope $scope): array
     {
         if (self::errorFoundFor($node)) {
             return [
-                self::ruleError($node->getOriginalNode()->getStartLine())
+                self::ruleError($node)
             ];
         }
         return [];

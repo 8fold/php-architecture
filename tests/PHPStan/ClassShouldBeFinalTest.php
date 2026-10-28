@@ -12,8 +12,14 @@ use PHPStan\Testing\RuleTestCase;
 
 use Eightfold\PHPStan\Rules\ClassShouldBeFinal;
 
-use Eightfold\Tests\PHPStan\Fixtures\ClassShouldBeFinalNonCompliant;
+use Eightfold\Tests\PHPStan\Fixtures\ClassShouldBeFinalNoncompliant;
 
+use Eightfold\Attributes\Subclass;
+
+/**
+ * @extends RuleTestCase<ClassShouldBeFinal>
+ */
+#[Subclass('PHPUnit and PHPStan\Testing require exntension.')]
 final class ClassShouldBeFinalTest extends RuletestCase
 {
     protected function getRule(): Rule
@@ -25,10 +31,16 @@ final class ClassShouldBeFinalTest extends RuletestCase
     #[Group('analysis')]
     public function noncompliant_fails(): void
     {
+        $noncompliant = ClassShouldBeFinalNoncompliant::class;
+
         parent::analyse(
             [__DIR__ . '/Fixtures/ClassShouldBeFinalNoncompliant.php'],
             [
-                [ClassShouldBeFinal::message(), 5, ClassShouldBeFinal::tip()]
+                [
+                    ClassShouldBeFinal::message($noncompliant),
+                    5,
+                    ClassShouldBeFinal::tip($noncompliant, false)
+                ]
             ]
         );
     }

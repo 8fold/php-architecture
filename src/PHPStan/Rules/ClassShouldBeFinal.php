@@ -41,17 +41,16 @@ final class ClassShouldBeFinal implements Rule
 
     public static function errorFoundFor(InClassNode $node): bool
     {
-        if (ClassMustBeFinal::errorFoundFor($node) === false) {
-            return false;
-        }
-
+        // Check if opt-out attribute was found
         $nativeReflection = $node->getClassReflection()->getNativeReflection();
         $attributes = $nativeReflection->getAttributes(
             self::OPT_OUT_ATTRIBUTE
         );
+        if ($attributes !== []) {
+            return false;
+        }
 
-        // Check if opt-out attribute was found
-        return count($attributes) === 0;
+        return ClassMustBeFinal::errorFoundFor($node);
     }
 
     public static function ruleError(InClassNode $node): IdentifierRuleError

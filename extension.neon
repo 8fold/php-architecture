@@ -4,3 +4,4 @@ includes:
 rules:
 	- Eightfold\PHPStan\Rules\ClassShouldBeFinal
 	- Eightfold\PHPStan\Rules\ClassShouldNotBeSubclass
+	- Eightfold\PHPStan\Rules\MethodShouldNotBePublic

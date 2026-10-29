@@ -28,7 +28,7 @@ final class Factory
     public static function recommendedAlternatives(): string
     {
         return <<<alternatives
-        Add use static initializer pattern on the class to be instantiated and make the class constructor private: `private function __constructor()`
+        Use static initializer pattern on the class to be instantiated and make the class constructor private: `private function __constructor()`
         alternatives;
     }
     

@@ -25,6 +25,11 @@ final class CommandWithStatus
         qualities>>>;
     }
     
+    public static function recommendedAlternatives(): string
+    {
+        return '';
+    }
+    
     public static function example(): string
     {
         return <<<example

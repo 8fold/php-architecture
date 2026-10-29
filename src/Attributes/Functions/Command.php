@@ -22,6 +22,6 @@ final class Command
         1. Impure & State-Altering: Causes a state transition in the object, database, or external system.
         2. Non-Value Returning: Returns `void`, signaling side-effect execution rather than data evaluation; throws error on failure.
         3. Non-Idempotent: Executing the method multiple times alters state sequentially (e.g., repeatedly deducting funds).
-        qualities>>>
+        qualities>>>;
     }
 }

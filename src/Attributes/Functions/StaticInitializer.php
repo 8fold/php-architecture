@@ -7,7 +7,7 @@ namespace Eightfold\Attributes;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_METHOD)]
-final class Factory
+final class StaticInitializer
 {
     public static function behavior(): string
     {

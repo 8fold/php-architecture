@@ -90,24 +90,6 @@ class AccountService
 final readonly class CurrencyAmount
 {
     /**
-     * TYPE: Constructor / Initializer Method
-     *
-     * BEHAVIOR: Object lifecycle entry point that initializes properties and enforces domain invariants.
-     *
-     * IMMUTABLE QUALITIES (DEFINING INVARIANTS):
-     * 1. Invariant Enforcement: Guarantees object state is valid before the reference is accessible.
-     * 2. Non-Re-invocable: Cannot be explicitly called on an already initialized object instance.
-     */
-    public function __construct(
-        public float $amount,
-        public string $currency = 'USD'
-    ) {
-        if ($this->amount < 0) {
-            throw new InvalidArgumentException("Amount cannot be negative");
-        }
-    }
-
-    /**
      * TYPE: Factory Method (Static Factory)
      *
      * BEHAVIOR: Encapsulates instantiation logic, parameter normalization, or driver selection.

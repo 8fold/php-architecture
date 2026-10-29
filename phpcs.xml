@@ -10,7 +10,9 @@
 	<arg name="colors" />
 
  	<rule ref="PSR12">
- 		<!-- We separate `use` clauses, all other PSR12 whitespace rules should apply -->
+ 		<!-- Allow allow empty line before closeing of control structures: } -->
+ 		<exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose"/>
+ 		<!-- `use` clauses on new lines -->
  		<exclude name="PSR12.Files.FileHeader"/>
  	</rule>
 	<rule ref="Generic.Files.LineLength">

@@ -24,4 +24,21 @@ final class Command
         3. Non-Idempotent: Executing the method multiple times alters state sequentially (e.g., repeatedly deducting funds).
         qualities>>>;
     }
+    
+    public static function example(): string
+    {
+        return <<<example
+        public/private/protected delete(): void
+        {
+            // remove instance from database
+            // throw on failure
+        }
+        
+        delete(Record $record): void
+        {
+            // remove instance from database
+            // throw on failure
+        }
+        example>>>;
+    }
 }

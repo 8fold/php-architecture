@@ -30,7 +30,7 @@ and local adaptations of the shared rules.
   `tests/PHPStan/`.
 - `bin/`: Composer-exposed command-line tools for consuming projects.
 - `docs/`: project documentation, including the agent context copied by
-  consuming projects.
+  consuming projects and the [glossary](glossary.md).
 - `.github/instructions/`: Copilot instructions for PHP class and test
   conventions.
 - Tool configuration: `phpcs.xml`, `phpstan.neon`, `phpunit.xml`.

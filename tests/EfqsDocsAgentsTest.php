@@ -27,8 +27,11 @@ final class EfqsDocsAgentsTest extends TestCase
         $files = [
             '/AGENTS.md',
             '/composer.json',
+            '/docs/agent-context.md',
+            '/docs',
             '/nested/AGENTS.md',
             '/package with spaces/AGENTS.md',
+            '/package with spaces/docs/agent-context.md',
             '/package with spaces/bin/efqs',
             '/project with spaces/AGENTS.md',
             '/project with spaces/composer.json',
@@ -42,8 +45,10 @@ final class EfqsDocsAgentsTest extends TestCase
         }
         $directories = [
             '/AGENTS.md',
+            '/docs',
             '/nested',
             '/package with spaces/bin',
+            '/package with spaces/docs',
             '/package with spaces',
             '/project with spaces',
         ];
@@ -101,6 +106,176 @@ final class EfqsDocsAgentsTest extends TestCase
 
         parent::assertSame(0, $exitCode, $error);
         parent::assertFileEquals(dirname(__DIR__) . '/AGENTS.md', $project . '/AGENTS.md');
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function copies_the_canonical_context_and_creates_the_docs_directory(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+
+        [$exitCode, $output, $error] = self::runInstaller(
+            $this->projectDirectory,
+            ['docs:context']
+        );
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertStringContainsString('Copied agent-context.md', $output);
+        parent::assertFileEquals(
+            dirname(__DIR__) . '/docs/agent-context.md',
+            $this->projectDirectory . '/docs/agent-context.md'
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function refuses_to_overwrite_a_different_context_file(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/docs');
+        file_put_contents($this->projectDirectory . '/docs/agent-context.md', "Local context\n");
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            ['docs:context']
+        );
+
+        parent::assertNotSame(0, $exitCode);
+        parent::assertStringContainsString('refusing to overwrite', $error);
+        parent::assertSame(
+            "Local context\n",
+            file_get_contents($this->projectDirectory . '/docs/agent-context.md')
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function reports_an_identical_context_file_as_current(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/docs');
+        copy(
+            dirname(__DIR__) . '/docs/agent-context.md',
+            $this->projectDirectory . '/docs/agent-context.md'
+        );
+
+        [$exitCode, $output, $error] = self::runInstaller(
+            $this->projectDirectory,
+            ['docs:context']
+        );
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertStringContainsString('already current', $output);
+        parent::assertFileEquals(
+            dirname(__DIR__) . '/docs/agent-context.md',
+            $this->projectDirectory . '/docs/agent-context.md'
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function reports_when_an_existing_context_file_cannot_be_read(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/docs');
+        $destination = $this->projectDirectory . '/docs/agent-context.md';
+        file_put_contents($destination, "Local context\n");
+        if (!chmod($destination, 0000)) {
+            parent::markTestSkipped('File permissions cannot be changed in this environment.');
+        }
+
+        try {
+            clearstatcache(true, $destination);
+            if (is_readable($destination)) {
+                parent::markTestSkipped(
+                    'File permissions cannot prevent reading in this environment.'
+                );
+            }
+
+            [$exitCode, , $error] = self::runInstaller(
+                $this->projectDirectory,
+                ['docs:context']
+            );
+
+            parent::assertNotSame(0, $exitCode);
+            parent::assertStringContainsString(
+                'Unable to read the existing agent-context.md',
+                $error
+            );
+        } finally {
+            chmod($destination, 0600);
+        }
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function reports_when_the_context_directory_cannot_be_created(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        file_put_contents($this->projectDirectory . '/docs', "Not a directory\n");
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            ['docs:context']
+        );
+
+        parent::assertNotSame(0, $exitCode);
+        parent::assertStringContainsString('Unable to create the destination directory', $error);
+        parent::assertSame(
+            "Not a directory\n",
+            file_get_contents($this->projectDirectory . '/docs')
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function reads_the_context_relative_to_the_installed_package(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/package with spaces/bin', 0700, true);
+        mkdir($this->projectDirectory . '/package with spaces/docs', 0700);
+        copy(
+            dirname(__DIR__) . '/bin/efqs',
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+        file_put_contents(
+            $this->projectDirectory . '/package with spaces/docs/agent-context.md',
+            "Installed package context\n"
+        );
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            ['docs:context'],
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertSame(
+            "Installed package context\n",
+            file_get_contents($this->projectDirectory . '/docs/agent-context.md')
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function reports_a_missing_canonical_context_file(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/package with spaces/bin', 0700, true);
+        copy(
+            dirname(__DIR__) . '/bin/efqs',
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            ['docs:context'],
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+
+        parent::assertNotSame(0, $exitCode);
+        parent::assertStringContainsString("Unable to read the package's agent-context.md", $error);
+        parent::assertDirectoryDoesNotExist($this->projectDirectory . '/docs');
     }
 
     #[Test]

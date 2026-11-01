@@ -1,33 +1,35 @@
 # 8fold Architecture for PHP
 
-## Install the shared agent rules
+## Install the shared agent rules and context
 
 Add `8fold/php-architecture` to the consuming project's Composer dependencies
-and install them. From the consuming project's root, run:
+and install them. From the consuming project's root, copy the shared rules and
+the project context:
 
 ```sh
 ./vendor/bin/efqs docs:agents
+./vendor/bin/efqs docs:context
 ```
 
+The first command copies `AGENTS.md` to the project root. The second copies
+`docs/agent-context.md`, creating `docs/` if needed. Either command leaves an
+identical destination unchanged and refuses to overwrite a different file.
+
 Composer makes `efqs` available in its configured `bin-dir`, which defaults to
-`vendor/bin`. To also expose the command as `composer efqs:docs:agents`, add
-this entry to the consuming project's existing `composer.json` scripts:
+`vendor/bin`. To expose the commands as Composer scripts, add these entries to
+the consuming project's existing `composer.json` scripts:
 
 ```json
 {
   "scripts": {
-    "efqs:docs:agents": "efqs docs:agents"
+    "efqs:docs:agents": "efqs docs:agents",
+    "efqs:docs:context": "efqs docs:context"
   }
 }
 ```
 
-The command copies this package's `AGENTS.md` to the project root. If the
-destination is already identical, it reports that it is current; if it differs,
-the command fails without overwriting it.
-
-This is only the first setup step. The copied rules also require a
-project-specific `docs/agent-context.md`, which this command does not create.
-Adapt that document to the consuming project before relying on the rules.
+The copied context is a starting point, not consuming-project facts. Adapt it
+to the consuming project before relying on the rules.
 
 ## PHP conventions (strict)
 
@@ -40,4 +42,3 @@ Adapt that document to the consuming project before relying on the rules.
 
 - **`ClassMustBeFinalRule`:** Enforces classes are declared `final` by default. Use the `AllowInheritance` to explicitly allow class extension.
 - Data Objects are PHP classes
-

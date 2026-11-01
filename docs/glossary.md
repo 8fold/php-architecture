@@ -9,8 +9,8 @@ Use these terms consistently in code, documentation, and agent instructions.
 - **Method**: a `function` declared in a class-like structure (`class`,
   `trait`, `enum`, or `interface`). Interface and abstract methods are declared
   without a body.
-- **Instance Method**: a method not declared `static`; called on an instance
-  (`$this->method()`, `$object->method()`).
+- **Instance Method**: a method not declared `static`; requires an instance
+  (`$object->method()`, or `self::method()` from within the class).
 - **Static Method**: a method declared `static`; called without an instance
   (`self::method()`, `ClassName::method()`). PHP also allows calls through an
   instance.

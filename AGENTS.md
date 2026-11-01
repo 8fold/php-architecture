@@ -117,8 +117,9 @@ These rules apply whenever a request asks for changes to files.
    document and the repository's `docs/agent-context.md`. The agent context
    records the repository's actual commands, paths, environment, and
    exceptions. Every consuming repository must have one, starting from the
-   package's minimal template. Both documents are binding. Report conflicts
-   between them ([Communication](#communication) rule 3).
+   package's minimal [template](templates/agent-context.md). Both documents
+   are binding. Report conflicts between them
+   ([Communication](#communication) rule 3).
 2. **Inspect before changing.** Check the branch and `git status` at the start.
    Preserve unrelated work in progress.
 3. **Complete the startup gates in order.** The agent context lists the

@@ -25,6 +25,8 @@ and local adaptations of the shared rules.
   `extension.neon`.
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with PHPStan rule fixtures under
   `tests/PHPStan/`.
+- `templates/`: starting files for consuming projects, such as
+  `agent-context.md`.
 - `.github/instructions/`: Copilot instructions for PHP class and test
   conventions.
 - Tool configuration: `phpcs.xml`, `phpstan.neon`, `phpunit.xml`.
@@ -91,5 +93,3 @@ Each entry links to the shared rule it adapts.
 - [Information placement](../AGENTS.md#information-placement) rule 1: the
   information hierarchy links to `8fold/site-masteringthemundane.com` at
   bc4f99d until this package ships its own copy.
-- [Session and workspace](../AGENTS.md#session-and-workspace) rule 1: the
-  minimal agent-context template for consuming projects does not exist yet.

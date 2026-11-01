@@ -42,9 +42,10 @@ Name sniffs and PHPStan rules as the rule they enforce, using an
 `Must`, `MustNot`, `Should`, `ShouldNot`, or `May`. Examples:
 `InstanceMethodsMustNotBeAccessedViaThis`, `ClassMustBeFinal`.
 
-PHPCS requires two additions: the `Sniff` suffix and a category folder, as in
-`src/PHPCS/Sniffs/Methods/InstanceMethodsMustNotBeAccessedViaThisSniff.php`.
-Name fixtures and tests after the rule, adding `Compliant`, `Noncompliant`, or
+Put the rule body under `src/PHPCS/Sniffs/<Category>/<Rule>.php`. Register it
+through a shell in the `Eightfold` standard that delegates to the body:
+`src/PHPCS/Standard/Eightfold/Sniffs/<Category>/<Rule>Sniff.php`. PHPCS
+requires the shell's `Sniff` suffix and category folder. Name fixtures and tests after the rule, adding `Compliant`, `Noncompliant`, or
 `Test`.
 
 `tests/PHPCS/Fixtures/` is excluded from the repository style sweep, not from

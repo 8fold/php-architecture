@@ -25,6 +25,7 @@ and local adaptations of the shared rules.
   `extension.neon`.
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with PHPStan rule fixtures under
   `tests/PHPStan/`.
+- `bin/`: Composer-exposed command-line tools for consuming projects.
 - `templates/`: starting files for consuming projects, such as
   `agent-context.md`.
 - `.github/instructions/`: Copilot instructions for PHP class and test

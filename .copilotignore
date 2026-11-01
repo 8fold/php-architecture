@@ -1,0 +1,18 @@
+# Baseline agent ignore file for 8fold PHP projects.
+#
+# Every project has a .copilotignore that starts from this file; see the
+# Security section of AGENTS.md. Uses .gitignore syntax: patterns without a
+# slash match at any depth.
+
+# Credentials and key/certificate material. These patterns apply at any depth.
+auth.json
+*.pem
+*.key
+
+# Secret environment files: `.env` and `.env-*`.
+.env
+.env-*
+
+# Committed, secret-free templates. Projects name their templates in
+# docs/agent-context.md and add any others here.
+!.env-example

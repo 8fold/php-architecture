@@ -4,6 +4,16 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+# Local credentials and key/certificate material
+auth.json
+*.pem
+*.key
+
+# Secret environment files; keep the committed example template visible.
+.env
+.env-*
+!.env-example
+
 .env-local
 .env-test
 .env-prod

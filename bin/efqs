@@ -1,0 +1,83 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+if (!isset($argc, $argv) || $argc !== 2 || ($argv[1] ?? null) !== 'docs:agents') {
+    fwrite(STDERR, "Usage: efqs docs:agents\n");
+    exit(1);
+}
+
+$projectRoot = getcwd();
+if ($projectRoot === false) {
+    fwrite(STDERR, "Unable to determine the current directory.\n");
+    exit(1);
+}
+
+if (!is_file($projectRoot . DIRECTORY_SEPARATOR . 'composer.json')) {
+    fwrite(STDERR, "Run this command from the consuming project root containing composer.json.\n");
+    exit(1);
+}
+
+$source = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'AGENTS.md';
+$content = @file_get_contents($source);
+if ($content === false) {
+    fwrite(STDERR, "Unable to read the package's AGENTS.md: {$source}\n");
+    exit(1);
+}
+
+$destination = $projectRoot . DIRECTORY_SEPARATOR . 'AGENTS.md';
+if (file_exists($destination) || is_link($destination)) {
+    if (!is_file($destination)) {
+        fwrite(STDERR, "The destination exists and is not a regular file: {$destination}\n");
+        exit(1);
+    }
+
+    $existing = @file_get_contents($destination);
+    if ($existing === false) {
+        fwrite(STDERR, "Unable to read the existing AGENTS.md: {$destination}\n");
+        exit(1);
+    }
+
+    if ($existing === $content) {
+        fwrite(STDOUT, "AGENTS.md is already current: {$destination}\n");
+        exit(0);
+    }
+
+    fwrite(STDERR, "AGENTS.md already exists and differs; refusing to overwrite: {$destination}\n");
+    exit(1);
+}
+
+$file = @fopen($destination, 'x');
+if ($file === false) {
+    fwrite(
+        STDERR,
+        "Unable to create AGENTS.md without overwriting an existing file: {$destination}\n"
+    );
+    exit(1);
+}
+
+$length = strlen($content);
+$offset = 0;
+while ($offset < $length) {
+    $written = @fwrite($file, substr($content, $offset));
+    if ($written === false || $written === 0) {
+        fclose($file);
+        fwrite(
+            STDERR,
+            "Unable to write AGENTS.md; the new file may be incomplete: {$destination}\n"
+        );
+        exit(1);
+    }
+    $offset += $written;
+}
+
+if (!fclose($file)) {
+    fwrite(
+        STDERR,
+        "Unable to finish writing AGENTS.md; the new file may be incomplete: {$destination}\n"
+    );
+    exit(1);
+}
+
+fwrite(STDOUT, "Copied AGENTS.md to {$destination}\n");

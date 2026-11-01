@@ -79,7 +79,7 @@ final class ThisMemberAccessTest extends TestCase
         require_once dirname(__DIR__, 2) . '/vendor/squizlabs/php_codesniffer/autoload.php';
 
         if (!class_exists(ThisMemberAccessSniff::class)) {
-            throw new RuntimeException('Sniff unavailable; use the no-op bootstrap.');
+            throw new RuntimeException('The proposed PHPCS sniff is unavailable.');
         }
 
         if (!defined('PHP_CODESNIFFER_CBF')) {

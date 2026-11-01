@@ -26,8 +26,10 @@ and local adaptations of the shared rules.
 - `src/Attributes/`: PHP attributes (`Eightfold\Attributes\`).
 - `src/PHPStan/`: PHPStan rules (`Eightfold\PHPStan\`), registered in
   `extension.neon`.
-- `tests/`: PHPUnit tests (`Eightfold\Tests\`), with PHPStan rule fixtures under
-  `tests/PHPStan/`.
+- `src/PHPCodeSniffer/`: PHPCS sniffs (`Eightfold\PHPCodeSniffer\`), not yet
+  registered in `phpcs.xml`.
+- `tests/`: PHPUnit tests (`Eightfold\Tests\`), with fixtures under
+  `tests/PHPStan/Fixtures/` and `tests/PHPCS/Fixtures/`.
 - `bin/`: Composer-exposed command-line tools for consuming projects.
 - `docs/`: project documentation, including the agent context copied by
   consuming projects.
@@ -79,9 +81,7 @@ Not functional yet; do not rely on these:
 
 The repository is mid-consolidation. `composer check` is not expected to pass:
 several PHP files under `src/Attributes/` do not parse, and `extension.neon`
-registers a rule that does not exist. `composer.json` autoloads
-`Eightfold\PHPCodeSniffer\` from `src/PHPCodeSniffer/`, which does not exist.
-Report failures under
+registers a rule that does not exist. Report failures under
 [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
 rule 5. Do not fix unrelated code as part of other work.
 

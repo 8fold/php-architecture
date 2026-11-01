@@ -4,6 +4,7 @@ Read this with [AGENTS.md](../AGENTS.md). This document records this
 repository's actual commands, paths, environment, startup gates, exceptions,
 and local adaptations of the shared rules.
 
+<!-- Project identity and boundaries. -->
 ## Source and scope
 
 - `8fold/php-architecture` is the canonical home of the shared agent–user rules
@@ -18,20 +19,23 @@ and local adaptations of the shared rules.
 - This is a library: there is no web server, preview, database, or secret
   environment setup.
 
-## Layout
+<!-- Directory and runtime map. -->
+## Layout and runtime
 
+- PHP `^8.5`, as declared in `composer.json`.
 - `src/Attributes/`: PHP attributes (`Eightfold\Attributes\`).
 - `src/PHPStan/`: PHPStan rules (`Eightfold\PHPStan\`), registered in
   `extension.neon`.
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with PHPStan rule fixtures under
   `tests/PHPStan/`.
 - `bin/`: Composer-exposed command-line tools for consuming projects.
-- `templates/`: starting files for consuming projects, such as
-  `agent-context.md`.
+- `docs/`: project documentation, including the agent context copied by
+  consuming projects.
 - `.github/instructions/`: Copilot instructions for PHP class and test
   conventions.
 - Tool configuration: `phpcs.xml`, `phpstan.neon`, `phpunit.xml`.
 
+<!-- Commands and their known limitations. -->
 ## Build, test, and lint commands
 
 The entry points are defined in `composer.json`:
@@ -55,6 +59,22 @@ Not functional yet; do not rely on these:
 - `composer graph:refresh` calls `cli/graphify-token-usage.php`, which does not
   exist.
 
+<!-- Tool enforcement versus written guidance. -->
+## Enforcement boundaries
+
+- Enforced: PHPCS style checks, PHPStan analysis, and PHPUnit tests through the
+  corresponding `composer check:*` scripts.
+- Not enforced: guidance in `AGENTS.md` unless a tool or check explicitly
+  implements it.
+
+<!-- Secret templates, copies, and previews. -->
+## Environment and secrets
+
+- Secret-free templates: None.
+- Directed secret copies: None.
+- Local preview: None; this is a library with no web server.
+
+<!-- Known repository limitations. -->
 ## Current state
 
 The repository is mid-consolidation. `composer check` is not expected to pass:
@@ -65,6 +85,7 @@ Report failures under
 [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
 rule 5. Do not fix unrelated code as part of other work.
 
+<!-- Ordered repository-specific startup gates. -->
 ## Session startup
 
 1. Read `AGENTS.md` and this document. Check the branch and `git status`.
@@ -73,10 +94,12 @@ rule 5. Do not fix unrelated code as part of other work.
 3. If `vendor/` is missing and the task needs validation, run
    `composer install`.
 
+<!-- Exceptions permitted by the shared rules. -->
 ## Exceptions
 
 None.
 
+<!-- Local deviations from the shared rules. -->
 ## Local adaptations and pending deliverables
 
 Each entry links to the shared rule it adapts.

@@ -29,7 +29,7 @@
     "psr-4": {
       "Eightfold\\Attributes\\": "./src/Attributes/",
       "Eightfold\\PHPStan\\": "./src/PHPStan/",
-      "Eightfold\\PHPCodeSniffer\\": "./src/PHPCodeSniffer/"
+      "Eightfold\\PHPCS\\": "./src/PHPCS/"
     }
   },
   "autoload-dev": {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Eightfold\Tests\PHPCS\Fixtures;
 
-final class ThisMemberAccessNoncompliant
+final class InstanceMethodsMustNotBeAccessedViaThisNoncompliant
 {
     /** Each statement should produce a MethodAccessViaThis error. */
     public function exercise(string $method): void

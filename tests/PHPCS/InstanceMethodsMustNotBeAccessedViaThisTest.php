@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Eightfold\Tests\PHPCS;
 
-use Eightfold\PHPCodeSniffer\Sniffs\Classes\ThisMemberAccessSniff;
+use Eightfold\PHPCS\Sniffs\Methods\InstanceMethodsMustNotBeAccessedViaThisSniff;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Ruleset;
@@ -14,15 +14,18 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-final class ThisMemberAccessTest extends TestCase
+final class InstanceMethodsMustNotBeAccessedViaThisTest extends TestCase
 {
-    private const ERROR_CODE = 'PHPCodeSniffer.Classes.ThisMemberAccess.MethodAccessViaThis';
+    private const SNIFF = InstanceMethodsMustNotBeAccessedViaThisSniff::class;
+
+    private const ERROR_CODE =
+        'PHPCS.Methods.InstanceMethodsMustNotBeAccessedViaThis.MethodAccessViaThis';
 
     #[Test]
     #[Group('phpcs')]
     public function compliant_member_access_has_no_diagnostics(): void
     {
-        $file = self::analyseFixture('ThisMemberAccessCompliant.php');
+        $file = self::analyseFixture('InstanceMethodsMustNotBeAccessedViaThisCompliant.php');
 
         parent::assertSame([], $file->getErrors());
         parent::assertSame([], $file->getWarnings());
@@ -32,7 +35,7 @@ final class ThisMemberAccessTest extends TestCase
     #[Group('phpcs')]
     public function this_method_access_reports_each_violation_without_a_fix(): void
     {
-        $file = self::analyseFixture('ThisMemberAccessNoncompliant.php');
+        $file = self::analyseFixture('InstanceMethodsMustNotBeAccessedViaThisNoncompliant.php');
         $actual = [];
 
         foreach ($file->getErrors() as $line => $columns) {
@@ -78,7 +81,7 @@ final class ThisMemberAccessTest extends TestCase
     {
         require_once dirname(__DIR__, 2) . '/vendor/squizlabs/php_codesniffer/autoload.php';
 
-        if (!class_exists(ThisMemberAccessSniff::class)) {
+        if (!class_exists(self::SNIFF)) {
             throw new RuntimeException('The proposed PHPCS sniff is unavailable.');
         }
 
@@ -99,7 +102,7 @@ final class ThisMemberAccessTest extends TestCase
 
         // Initialize PHPCS with a built-in standard, then isolate the proposed sniff.
         $ruleset = new Ruleset($config);
-        $ruleset->sniffs = [ThisMemberAccessSniff::class => ThisMemberAccessSniff::class];
+        $ruleset->sniffs = [self::SNIFF => self::SNIFF];
         $ruleset->sniffCodes = [];
         $ruleset->ruleset = [];
         $ruleset->ignorePatterns = [];
@@ -107,7 +110,7 @@ final class ThisMemberAccessTest extends TestCase
         $ruleset->populateTokenListeners();
 
         if (
-            !isset($ruleset->sniffs[ThisMemberAccessSniff::class])
+            !isset($ruleset->sniffs[self::SNIFF])
             || $ruleset->tokenListeners === []
         ) {
             throw new RuntimeException('The proposed sniff did not register any token listeners.');
@@ -121,7 +124,7 @@ final class ThisMemberAccessTest extends TestCase
         $file = new LocalFile($path, $ruleset, $config);
         $file->process();
 
-        if (!array_key_exists(ThisMemberAccessSniff::class, $file->getListenerTimes())) {
+        if (!array_key_exists(self::SNIFF, $file->getListenerTimes())) {
             throw new RuntimeException('The proposed sniff did not process the fixture.');
         }
 

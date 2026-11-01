@@ -6,7 +6,7 @@ namespace Eightfold\Tests\PHPCS\Fixtures;
 
 use Closure;
 
-final class ThisMemberAccessCompliant
+final class InstanceMethodsMustNotBeAccessedViaThisCompliant
 {
     private string $name = 'Ada';
 

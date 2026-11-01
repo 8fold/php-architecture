@@ -26,8 +26,10 @@ and local adaptations of the shared rules.
 - `src/Attributes/`: PHP attributes (`Eightfold\Attributes\`).
 - `src/PHPStan/`: PHPStan rules (`Eightfold\PHPStan\`), registered in
   `extension.neon`.
-- `src/PHPCodeSniffer/`: PHPCS sniffs (`Eightfold\PHPCodeSniffer\`), not yet
-  registered in `phpcs.xml`.
+- `src/PHPCS/`: PHPCS sniffs (`Eightfold\PHPCS\`), not yet registered in
+  `phpcs.xml`.
+- Sniff and PHPStan rule names follow the
+  [RFC 2119 naming convention](../.github/instructions/phpcs-sniff-development.instructions.md#naming).
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with fixtures under
   `tests/PHPStan/Fixtures/` and `tests/PHPCS/Fixtures/`.
 - `bin/`: Composer-exposed command-line tools for consuming projects.

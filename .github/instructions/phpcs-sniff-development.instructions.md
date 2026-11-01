@@ -1,5 +1,5 @@
 ---
-applyTo: "src/PHPCodeSniffer/**/*.php,tests/PHPCS/**/*.php,phpcs.xml"
+applyTo: "src/PHPCS/**/*.php,tests/PHPCS/**/*.php,phpcs.xml"
 ---
 
 # PHPCS sniff development
@@ -34,6 +34,18 @@ approval does not satisfy a later gate.
    violations before changing code, and fix approved, in-scope errors until
    passing. Report unrelated baseline failures rather than expanding scope
    silently. Do not make automatic behavior-changing rewrites.
+
+## Naming
+
+Name sniffs and PHPStan rules as the rule they enforce, using an
+[RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) keyword in PascalCase:
+`Must`, `MustNot`, `Should`, `ShouldNot`, or `May`. Examples:
+`InstanceMethodsMustNotBeAccessedViaThis`, `ClassMustBeFinal`.
+
+PHPCS requires two additions: the `Sniff` suffix and a category folder, as in
+`src/PHPCS/Sniffs/Methods/InstanceMethodsMustNotBeAccessedViaThisSniff.php`.
+Name fixtures and tests after the rule, adding `Compliant`, `Noncompliant`, or
+`Test`.
 
 `tests/PHPCS/Fixtures/` is excluded from the repository style sweep, not from
 explicit sniff tests. Never repair intentional violations to make the style

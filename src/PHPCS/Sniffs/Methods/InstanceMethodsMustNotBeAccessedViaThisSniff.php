@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\PHPCodeSniffer\Sniffs\Classes;
+namespace Eightfold\PHPCS\Sniffs\Methods;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
 use UnexpectedValueException;
 
-final class ThisMemberAccessSniff implements Sniff
+final class InstanceMethodsMustNotBeAccessedViaThisSniff implements Sniff
 {
     public function register(): array
     {

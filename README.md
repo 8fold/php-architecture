@@ -1,19 +1,23 @@
 # 8fold Architecture for PHP
 
-## Install the shared agent rules and context
+## Install the shared agent rules, context, and Graphify guides
 
 Add `8fold/php-architecture` to the consuming project's Composer dependencies
 and install them. From the consuming project's root, copy the shared rules and
-the project context:
+the project context and Graphify guides:
 
 ```sh
 ./vendor/bin/efqs docs:agents
 ./vendor/bin/efqs docs:context
+./vendor/bin/efqs docs:graphify-setup
+./vendor/bin/efqs docs:graphify-workflow
 ```
 
-The first command copies `AGENTS.md` to the project root. The second copies
-`docs/agent-context.md`, creating `docs/` if needed. Either command leaves an
-identical destination unchanged and refuses to overwrite a different file.
+The commands copy `AGENTS.md`, `docs/agent-context.md`,
+`docs/graphify-setup.md`, and `docs/graphify-workflow.md`, respectively,
+creating destination directories if needed. Each command leaves an identical
+destination unchanged and refuses to overwrite a different file. Copying the
+guides does not install Graphify, configure hooks, or create a graph.
 
 Composer makes `efqs` available in its configured `bin-dir`, which defaults to
 `vendor/bin`. To expose the commands as Composer scripts, add these entries to
@@ -23,13 +27,15 @@ the consuming project's existing `composer.json` scripts:
 {
   "scripts": {
     "efqs:docs:agents": "efqs docs:agents",
-    "efqs:docs:context": "efqs docs:context"
+    "efqs:docs:context": "efqs docs:context",
+    "efqs:docs:graphify-setup": "efqs docs:graphify-setup",
+    "efqs:docs:graphify-workflow": "efqs docs:graphify-workflow"
   }
 }
 ```
 
-The copied context is a starting point, not consuming-project facts. Adapt it
-to the consuming project before relying on the rules.
+The copied context and guides are starting points, not consuming-project facts.
+Adapt project-specific setup and commands before relying on them.
 
 ## PHP conventions (strict)
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Eightfold\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -28,10 +29,14 @@ final class EfqsDocsAgentsTest extends TestCase
             '/AGENTS.md',
             '/composer.json',
             '/docs/agent-context.md',
+            '/docs/graphify-setup.md',
+            '/docs/graphify-workflow.md',
             '/docs',
             '/nested/AGENTS.md',
             '/package with spaces/AGENTS.md',
             '/package with spaces/docs/agent-context.md',
+            '/package with spaces/docs/graphify-setup.md',
+            '/package with spaces/docs/graphify-workflow.md',
             '/package with spaces/bin/efqs',
             '/project with spaces/AGENTS.md',
             '/project with spaces/composer.json',
@@ -275,6 +280,143 @@ final class EfqsDocsAgentsTest extends TestCase
 
         parent::assertNotSame(0, $exitCode);
         parent::assertStringContainsString("Unable to read the package's agent-context.md", $error);
+        parent::assertDirectoryDoesNotExist($this->projectDirectory . '/docs');
+    }
+
+    /**
+     * @return array<string, array{string, string}>
+     */
+    public static function graphifyGuides(): array
+    {
+        return [
+            'setup' => ['docs:graphify-setup', 'graphify-setup.md'],
+            'workflow' => ['docs:graphify-workflow', 'graphify-workflow.md'],
+        ];
+    }
+
+    #[Test]
+    #[Group('cli')]
+    #[DataProvider('graphifyGuides')]
+    public function copies_each_graphify_guide_and_creates_the_docs_directory(string $command, string $fileName): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            [$command]
+        );
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertFileEquals(
+            dirname(__DIR__) . '/docs/' . $fileName,
+            $this->projectDirectory . '/docs/' . $fileName
+        );
+        parent::assertDirectoryDoesNotExist($this->projectDirectory . '/graphify-out');
+    }
+
+    #[Test]
+    #[Group('cli')]
+    #[DataProvider('graphifyGuides')]
+    public function reports_an_identical_graphify_guide_as_current(string $command, string $fileName): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/docs');
+        copy(
+            dirname(__DIR__) . '/docs/' . $fileName,
+            $this->projectDirectory . '/docs/' . $fileName
+        );
+
+        [$exitCode, $output, $error] = self::runInstaller(
+            $this->projectDirectory,
+            [$command]
+        );
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertStringContainsString('already current', $output);
+        parent::assertFileEquals(
+            dirname(__DIR__) . '/docs/' . $fileName,
+            $this->projectDirectory . '/docs/' . $fileName
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    #[DataProvider('graphifyGuides')]
+    public function refuses_to_overwrite_a_different_graphify_guide(string $command, string $fileName): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/docs');
+        file_put_contents(
+            $this->projectDirectory . '/docs/' . $fileName,
+            "Local guide\n"
+        );
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            [$command]
+        );
+
+        parent::assertNotSame(0, $exitCode);
+        parent::assertStringContainsString('refusing to overwrite', $error);
+        parent::assertSame(
+            "Local guide\n",
+            file_get_contents($this->projectDirectory . '/docs/' . $fileName)
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    #[DataProvider('graphifyGuides')]
+    public function reads_each_graphify_guide_relative_to_the_installed_package(string $command, string $fileName): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/package with spaces/bin', 0700, true);
+        mkdir($this->projectDirectory . '/package with spaces/docs', 0700);
+        copy(
+            dirname(__DIR__) . '/bin/efqs',
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+        file_put_contents(
+            $this->projectDirectory . '/package with spaces/docs/' . $fileName,
+            "Installed package graph guide\n"
+        );
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            [$command],
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertSame(
+            "Installed package graph guide\n",
+            file_get_contents($this->projectDirectory . '/docs/' . $fileName)
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    #[DataProvider('graphifyGuides')]
+    public function reports_a_missing_canonical_graphify_guide(string $command, string $fileName): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/package with spaces/bin', 0700, true);
+        copy(
+            dirname(__DIR__) . '/bin/efqs',
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            [$command],
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+
+        parent::assertNotSame(0, $exitCode);
+        parent::assertStringContainsString(
+            "Unable to read the package's {$fileName}",
+            $error
+        );
         parent::assertDirectoryDoesNotExist($this->projectDirectory . '/docs');
     }
 

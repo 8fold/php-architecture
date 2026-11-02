@@ -37,19 +37,18 @@ the consuming project's existing `composer.json` scripts:
 The copied context and guides are starting points, not consuming-project facts.
 Adapt project-specific setup and commands before relying on them.
 
-## Refresh this repository's knowledge graph
+## Refresh code in this repository's knowledge graph
 
 From the repository root:
 
 ```sh
-composer graph       # code, then documentation
-composer graph:code  # code only: fast, no Copilot credits
-composer graph:docs  # documentation: launches a Copilot agent, uses credits
+composer graph:code
 ```
 
-Each command prints `FAILED` and stops if the refresh did not complete. The
+This refreshes code only; documentation still needs the
+[Graphify skill's semantic refresh](docs/graphify-workflow.md#refresh). The
 [agent context](docs/agent-context.md#build-test-and-lint-commands) describes
-what each command checks and requires.
+the command's requirements and its code-only alias.
 
 ## PHP conventions (strict)
 

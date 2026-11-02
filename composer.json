@@ -45,15 +45,8 @@
       "@optimize-autoloader"
     ],
     "local": "@check",
-    "graph": [
-      "@graph:code",
-      "@graph:docs"
-    ],
     "graph:code": "@php cli/graph.php code",
-    "graph:docs": [
-      "Composer\\Config::disableProcessTimeout",
-      "@php cli/graph.php docs"
-    ],
+    "graph:refresh": "@graph:code",
     "check": [
       "@check:style",
       "@check:analyze",
@@ -76,9 +69,8 @@
     "check:test": "Runs all PHPUnit test suites.",
     "check:instructions": "Lists tracked files matched by each Copilot instruction applyTo pattern; fails on malformed frontmatter or empty matches.",
 
-    "graph": "Refreshes the knowledge graph: code, then documentation. Stops at the first failure.",
     "graph:code": "Refreshes code in the knowledge graph with the Graphify CLI (fast; no agent).",
-    "graph:docs": "Refreshes documentation in the knowledge graph by launching a Copilot agent with the Graphify skill.",
+    "graph:refresh": "Alias for the code-only knowledge graph refresh.",
     "optimize-autoloader": "Dumps authoritative classmap autoloader excluding dev dependencies."
   },
   "script-aliases": {

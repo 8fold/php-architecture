@@ -5,6 +5,10 @@ Run these gates in order at the start of each session, before other work.
 1. **Check and refresh the knowledge graph.** This gate runs first, before
    reading other documents, so the graph can help navigate them. Check for
    `graphify-out/graph.json`.
+   - Use the Graphify skill for this gate. Do not run `graphify` from a
+     shell: the CLI accepts similar arguments but cannot extract prose
+     without an API key. If the skill is unavailable, ask whether to install
+     it ([local tooling](../docs/graphify-setup.md#local-tooling)).
    - If absent, follow the [setup guide](../docs/graphify-setup.md): report
      it and obtain explicit approval before creating a graph.
    - If present, follow the [workflow guide](../docs/graphify-workflow.md):

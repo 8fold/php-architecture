@@ -58,6 +58,11 @@ The entry points are defined in `composer.json`:
   coverage ([details](#verify-path-specific-instruction-coverage)).
 - `composer production` (alias `composer prod`): `check`, then
   `optimize-autoloader`.
+- `composer graph:code` (alias `composer graph:refresh`): refresh code in the
+  existing knowledge graph with `graphify update .`, without an agent or API
+  key. It looks for the Graphify CLI on `PATH` or in `~/.local/bin` and fails
+  if the graph or CLI is missing or the update fails. Documentation still
+  requires the [semantic refresh](graphify-workflow.md#refresh).
 
 The current local environment uses MAMP PHP 8.5.2
 (`/Applications/MAMP/bin/php/php8.5.2/bin/php`). Do not assume that path
@@ -67,8 +72,6 @@ Not functional yet; do not rely on these:
 
 - `composer local` only runs `check`. Its description (git hooks, build) is
   aspirational.
-- `composer graph:refresh` calls `cli/graphify-token-usage.php`, which does not
-  exist.
 
 <!-- Tool enforcement versus written guidance. -->
 ## Enforcement boundaries

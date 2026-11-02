@@ -28,6 +28,11 @@ Run these gates in order at the start of each session, before other work.
    from the lock file and does nothing when `vendor/` is already current. Run
    `composer update` only when the user explicitly requests it.
 
+## Convention requests
+
+When the user asks for a new agent instruction, for example, "we need an agent
+instruction to X," follow the [convention workflow](../docs/convention-workflow.md).
+
 ## Voice
 
 Copied from [AGENTS.md](../AGENTS.md#voice), the canonical source, so the rule

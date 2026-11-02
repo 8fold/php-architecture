@@ -1,0 +1,41 @@
+---
+name: Convention request
+about: Track a coding convention as an agent instruction, PHPCS sniff, and PHPStan rule
+labels: enhancement
+---
+
+<!-- Process: docs/convention-workflow.md -->
+
+## Summary
+
+<!-- State the convention with one compliant and one noncompliant example. -->
+
+```php
+// Noncompliant
+
+// Compliant
+```
+
+## Proposed name
+
+<!-- Sniff and rule name per .github/instructions/analysis-naming.instructions.md. -->
+
+## Tasks
+
+<!-- Keep each recommended layer. For a layer that does not apply or is not recommended, replace its task with the reason. -->
+
+- [ ] **Agent instruction:** a `.github/instructions/*.instructions.md` file, new or existing. Must pass `composer check:instructions`.
+- [ ] **PHPCS sniff:** follow `.github/instructions/phpcs-sniff-development.instructions.md`.
+- [ ] **PHPStan rule:** follow the sniff stages and approval gates.
+
+## Open questions
+
+<!-- Accuracy, overlap, existing code, and behavior (docs/convention-workflow.md#layers). -->
+
+## Out of scope
+
+- Rewriting existing code.
+
+## Related
+
+<!-- Blockers and related issues. -->

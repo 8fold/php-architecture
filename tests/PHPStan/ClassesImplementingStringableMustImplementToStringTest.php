@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Eightfold\Tests\PHPStan;
 
-use Eightfold\Analysis\StringableClassesMustUseToStringInterface\PHPStanRule;
+use Eightfold\Analysis\ClassesImplementingStringableMustImplementToString\PHPStanRule;
 use Eightfold\Attributes\Classes\Subclass;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt\Class_;
@@ -18,10 +18,10 @@ use PHPUnit\Framework\Attributes\Test;
  * @extends RuleTestCase<PHPStanRule>
  */
 #[Subclass(rationale: 'PHPStan rule tests require RuleTestCase.')]
-final class StringableClassesMustUseToStringInterfaceTest extends RuleTestCase
+final class ClassesImplementingStringableMustImplementToStringTest extends RuleTestCase
 {
     private const MESSAGE =
-        'Stringable classes must implement Eightfold\\Interfaces\\ToString.';
+        'Classes implementing Stringable must implement Eightfold\\Interfaces\\ToString.';
 
     private const TIP =
         'Implement Eightfold\\Interfaces\\ToString and its toString(): string method.';
@@ -35,7 +35,7 @@ final class StringableClassesMustUseToStringInterfaceTest extends RuleTestCase
     #[Group('analysis')]
     public function reports_each_directly_stringable_class_once(): void
     {
-        self::loadFixtureSymbols('StringableClassesMustUseToStringInterfaceNoncompliant.php');
+        self::loadFixtureSymbols('ClassesImplementingStringableMustImplementToStringNoncompliant.php');
 
         $errors = [];
         foreach ([17, 25, 33, 41, 49, 57, 61, 71, 83, 94] as $line) {
@@ -45,9 +45,9 @@ final class StringableClassesMustUseToStringInterfaceTest extends RuleTestCase
         parent::analyse(
             [
                 dirname(__DIR__)
-                . '/PHPCS/Fixtures/StringableClassesMustUseToStringInterfaceContract.php',
+                . '/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringContract.php',
                 dirname(__DIR__)
-                . '/PHPCS/Fixtures/StringableClassesMustUseToStringInterfaceNoncompliant.php',
+                . '/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringNoncompliant.php',
             ],
             $errors
         );
@@ -57,14 +57,14 @@ final class StringableClassesMustUseToStringInterfaceTest extends RuleTestCase
     #[Group('analysis')]
     public function accepts_suite_contract_implementations_and_non_targets(): void
     {
-        self::loadFixtureSymbols('StringableClassesMustUseToStringInterfaceCompliant.php');
+        self::loadFixtureSymbols('ClassesImplementingStringableMustImplementToStringCompliant.php');
 
         parent::analyse(
             [
                 dirname(__DIR__)
-                . '/PHPCS/Fixtures/StringableClassesMustUseToStringInterfaceContract.php',
+                . '/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringContract.php',
                 dirname(__DIR__)
-                . '/PHPCS/Fixtures/StringableClassesMustUseToStringInterfaceCompliant.php',
+                . '/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringCompliant.php',
             ],
             []
         );
@@ -80,7 +80,7 @@ final class StringableClassesMustUseToStringInterfaceTest extends RuleTestCase
 
         parent::assertCount(1, $errors);
         parent::assertSame(
-            'eightfold.stringableClassesMustUseToStringInterface',
+            'eightfold.classesImplementingStringableMustImplementToString',
             $errors[0]->getIdentifier()
         );
         parent::assertInstanceOf(NonIgnorableRuleError::class, $errors[0]);
@@ -90,7 +90,7 @@ final class StringableClassesMustUseToStringInterfaceTest extends RuleTestCase
     {
         $fixtures = dirname(__DIR__) . '/PHPCS/Fixtures/';
         require_once $fixtures
-            . 'StringableClassesMustUseToStringInterfaceContract.php';
+            . 'ClassesImplementingStringableMustImplementToStringContract.php';
         require_once $fixtures . $name;
     }
 }

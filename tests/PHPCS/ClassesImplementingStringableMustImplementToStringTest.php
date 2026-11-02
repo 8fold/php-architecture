@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Eightfold\Tests\PHPCS;
 
-use Eightfold\Efqs\Sniffs\Classes\StringableClassesMustUseToStringInterfaceSniff;
+use Eightfold\Efqs\Sniffs\Classes\ClassesImplementingStringableMustImplementToStringSniff;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Ruleset;
@@ -14,18 +14,18 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-final class StringableClassesMustUseToStringInterfaceTest extends TestCase
+final class ClassesImplementingStringableMustImplementToStringTest extends TestCase
 {
-    private const SNIFF = StringableClassesMustUseToStringInterfaceSniff::class;
+    private const SNIFF = ClassesImplementingStringableMustImplementToStringSniff::class;
 
     private const ERROR_CODE =
-        'Efqs.Classes.StringableClassesMustUseToStringInterface.MissingToStringInterface';
+        'Efqs.Classes.ClassesImplementingStringableMustImplementToString.MissingToStringInterface';
 
     #[Test]
     #[Group('phpcs')]
     public function compliant_classes_have_no_diagnostics(): void
     {
-        $file = self::analyseFixture('StringableClassesMustUseToStringInterfaceCompliant.php');
+        $file = self::analyseFixture('ClassesImplementingStringableMustImplementToStringCompliant.php');
 
         parent::assertSame([], $file->getErrors());
         parent::assertSame([], $file->getWarnings());
@@ -35,7 +35,7 @@ final class StringableClassesMustUseToStringInterfaceTest extends TestCase
     #[Group('phpcs')]
     public function reports_each_directly_stringable_class_once(): void
     {
-        $file = self::analyseFixture('StringableClassesMustUseToStringInterfaceNoncompliant.php');
+        $file = self::analyseFixture('ClassesImplementingStringableMustImplementToStringNoncompliant.php');
         $actual = [];
 
         foreach ($file->getErrors() as $line => $columns) {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPCS\Fixtures\StringableClassesMustUseToStringInterface;
+namespace Eightfold\Tests\PHPCS\Fixtures\ClassesImplementingStringableMustImplementToString;
 
 use Stringable;
 use Stringable as NativeStringable;

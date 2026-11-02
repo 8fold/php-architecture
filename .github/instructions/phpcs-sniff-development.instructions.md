@@ -39,7 +39,7 @@ approval does not satisfy a later gate.
 
 Put the rule body under `src/PHPCS/Sniffs/<Category>/<Rule>.php`. Register it
 through a shell in the `Efqs` (Eightfold Quality Suite) standard that delegates
-to the body: `src/PHPCS/Standard/Efqs/Sniffs/<Category>/<Rule>Sniff.php`, in
+to the body: `src/PHPCS/Efqs/Sniffs/<Category>/<Rule>Sniff.php`, in
 namespace `Eightfold\Efqs\Sniffs\<Category>`. PHPCS derives the diagnostic
 code, `Efqs.<Category>.<Rule>`, from that namespace and the `Sniff` suffix.
 

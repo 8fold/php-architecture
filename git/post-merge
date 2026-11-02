@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#
+# Refreshes code in the local Graphify knowledge graph after every merge
+# (git pull, git merge origin/main), so the graph agents consult first
+# never describes pre-merge code. Documentation still needs the semantic
+# refresh in docs/graphify-workflow.md.
+#
+# One-time opt-in per clone (hooks are not cloned with the repository):
+#
+#   git config core.hooksPath git
+#
+# Never blocks a merge: an absent graphify-out/graph.json (graph never
+# built in this checkout) is a silent no-op, and a failed refresh only
+# warns.
+
+ROOT="$(git rev-parse --show-toplevel)"
+
+if [ ! -f "$ROOT/graphify-out/graph.json" ]; then
+    exit 0
+fi
+
+if ! php "$ROOT/cli/graph.php" code; then
+    echo 'Graphify code refresh failed; merge is not blocked' >&2
+fi
+exit 0

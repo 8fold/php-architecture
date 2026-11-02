@@ -15,7 +15,8 @@ applyTo: "src/Analysis/**/*.php,src/PHPCS/**/*.php,experimental/Analysis/**/*.ph
 - PHPStan identifiers use `eightfold.` followed by the convention folder name
   with its first character lowercased; do not derive them from the shared
   `PHPStanRule` class name.
-- Name tests and fixtures after the rule, adding `Compliant`, `Noncompliant`,
-  or `Test`. 
+- Name tests after the rule, adding `Test`. Fixtures live in a folder named
+  after the rule, following the
+  [fixture layout](analysis-fixtures.instructions.md).
 - Experimental analysis files mirror this structure under
   `experimental/Analysis/` and are not Composer-autoloaded.

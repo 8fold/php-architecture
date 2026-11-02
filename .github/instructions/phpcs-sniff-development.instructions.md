@@ -10,8 +10,9 @@ implementation; activation approval authorizes ruleset integration. An
 approval does not satisfy a later gate.
 
 1. **Fixtures.** Create syntactically valid compliant and intentionally
-   noncompliant fixtures under `tests/PHPCS/Fixtures/`. Describe the expected
-   diagnostics and include cases that must not be reported.
+   noncompliant fixtures under `tests/PHPCS/Fixtures/<Convention>/`, following
+   the [fixture layout](analysis-fixtures.instructions.md). Describe the
+   expected diagnostics and include cases that must not be reported.
 2. **Fixture approval.** Review the fixtures with the user. Iterate until the
    user agrees that they accurately represent the rule. Do not write the tests
    before approval.

@@ -41,8 +41,9 @@ and local adaptations of the shared rules.
 - Convention folder names, sniffs, and PHPStan rule names follow the
   [RFC 2119 naming convention](../.github/instructions/analysis-naming.instructions.md).
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with analysis tests under
-  `tests/Analysis/`, PHPStan fixtures under `tests/PHPStan/Fixtures/`, and
-  PHPCS fixtures under `tests/PHPCS/Fixtures/`.
+  `tests/Analysis/`, and PHPStan and PHPCS fixtures in convention folders
+  under `tests/PHPStan/Fixtures/` and `tests/PHPCS/Fixtures/`, following the
+  [fixture layout](../.github/instructions/analysis-fixtures.instructions.md).
 - `bin/`: Composer-exposed command-line tools for consuming projects.
 - `cli/`: repository-only command-line tools.
 - `docs/`: project documentation, including the agent context and

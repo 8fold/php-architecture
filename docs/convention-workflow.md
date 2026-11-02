@@ -28,8 +28,10 @@ example.
 | Agent instruction | Always. | A `.github/instructions/*.instructions.md` file, new or existing; must pass `composer check:instructions`. |
 | PHPCS sniff | The convention is detectable from tokens alone, without types. | [PHPCS sniff development](../.github/instructions/phpcs-sniff-development.instructions.md). |
 | PHPStan rule | Detection needs types, symbols, or semantic analysis. | No documented process yet; follow the sniff stages (fixtures, tests, implementation, activation) with the same approval gates. |
+| Trait | A shared implementation would support the convention. | Add or update a PHP trait. |
+| Interface | A shared contract would support the convention. | Add or update a PHP interface. |
 
-Recommend a sniff or rule only when its benefit outweighs its cost. Consider:
+Recommend optional work only when its benefit outweighs its cost. Consider:
 
 - **Accuracy.** Whether the check can be precise enough to avoid false
   positives. PHPCS cannot see types; PHPStan can.

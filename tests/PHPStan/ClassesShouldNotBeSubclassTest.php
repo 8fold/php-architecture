@@ -13,6 +13,7 @@ use PHPStan\Testing\RuleTestCase;
 use Eightfold\Analysis\ClassesShouldNotBeSubclass\PHPStanRule as ClassesShouldNotBeSubclass;
 
 use Eightfold\Tests\PHPStan\Fixtures\ClassesMustNotBeSubclassNoncompliant;
+use Eightfold\Tests\PHPStan\Fixtures\ClassesShouldBeFinalCompliantUsingAttribute;
 
 use Eightfold\Attributes\Classes\Subclass;
 
@@ -52,6 +53,24 @@ final class ClassesShouldNotBeSubclassTest extends RuletestCase
         parent::analyse(
             [__DIR__ . '/Fixtures/ClassesShouldNotBeSubclassCompliantUsingAttribute.php'],
             []
+        );
+    }
+
+    #[Test]
+    #[Group('analysis')]
+    public function base_class_attribute_does_not_suppress_subclass_diagnostics(): void
+    {
+        $noncompliant = ClassesShouldBeFinalCompliantUsingAttribute::class;
+
+        parent::analyse(
+            [__DIR__ . '/Fixtures/ClassesShouldBeFinalCompliantUsingAttribute.php'],
+            [
+                [
+                    ClassesShouldNotBeSubclass::message($noncompliant),
+                    7,
+                    ClassesShouldNotBeSubclass::tip($noncompliant, false)
+                ]
+            ]
         );
     }
 

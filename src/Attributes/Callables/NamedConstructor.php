@@ -9,24 +9,11 @@ use Attribute;
 #[Attribute(Attribute::TARGET_METHOD)]
 final class NamedConstructor
 {
-    public static function definingInvariants(): string
-    {
-        return 'returns self/static, results in new instance on success';
-    }
-
-
-
-
-
-
-
-
-
     public static function behavior(): string
     {
         // phpcs:disable
         return <<<behavior
-        Encapsulates instantiation logic, parameter normalization, or driver selection. (See also StaticInitializer)
+        Encapsulates instantiation logic, parameter normalization, or driver selection.
         behavior;
         // phpcs:enable
     }
@@ -37,7 +24,7 @@ final class NamedConstructor
         return <<<qualities
         1. Construction Abstraction: Decouples instantiation details from direct constructor invocation.
         2. Expressive Entry Point: Conveys domain intent via descriptive names (e.g., `fromCents()`, `fromArray()`).
-        3. Instance Return Guarantee: Always yields a fully initialized object or driver subclass.
+        3. Instance Return Guarantee: Yields a new, fully initialized `self` or `static` instance.
         qualities;
         // phpcs:enable
     }
@@ -52,11 +39,11 @@ final class NamedConstructor
     public static function example(): string
     {
         // phpcs:disable
-        return <<<example
-        #[StaticInitializer]
-        public static function fromCents(int \$cents, string \$currency = 'USD'): self
+        return <<<'example'
+        #[\Eightfold\Attributes\Callables\NamedConstructor]
+        public static function fromCents(int $cents, string $currency = 'USD'): self
         {
-            return new self(\$cents / 100.0, \$currency);
+            return new self($cents / 100.0, $currency);
         }
         example;
         // phpcs:enable

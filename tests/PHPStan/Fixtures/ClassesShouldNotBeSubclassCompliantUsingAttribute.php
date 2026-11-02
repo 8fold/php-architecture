@@ -4,7 +4,7 @@ namespace Eightfold\Tests\PHPStan\Fixtures;
 
 use Eightfold\Attributes\Classes\Subclass;
 
-#[Subclass('Required by PHPUnit\Framework\TestCase contract')]
-class ClassesShouldNotBeSubclassCompliantUsingAttribute
+#[Subclass('This fixture requires a subclass.')]
+class ClassesShouldNotBeSubclassCompliantUsingAttribute extends \DateTime
 {
 }

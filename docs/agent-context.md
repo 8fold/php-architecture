@@ -34,7 +34,8 @@ and local adaptations of the shared rules.
   `extension.neon` remain commented out; the vendor extension remains enabled.
   PHPStan ignores lines prefixed with `#`.
 - `experimental/Analysis/`: analysis experiments outside Composer autoloading,
-  including the callable type-analysis and attribute-inference prototype.
+  including the unsupported [callable type-analysis and attribute-inference
+  prototype](../experimental/Analysis/CallablesMustBeTyped/README.md).
 - The `InstanceMethodsMustNotBeAccessedViaThis` Sniff registration is declared
   in `phpcs.xml`.
 - Convention folder names, sniffs, and PHPStan rule names follow the
@@ -46,7 +47,8 @@ and local adaptations of the shared rules.
 - `cli/`: repository-only command-line tools.
 - `docs/`: project documentation, including the agent context and
   Graphify [setup](graphify-setup.md) and [workflow](graphify-workflow.md)
-  guides copied by consuming projects.
+  guides copied by consuming projects, as well as
+  [draft callable examples](callable-pattern-drafts.md).
 - `.github/contributing.md`: canonical contribution, change-classification,
   and [issue-triage policy](../.github/contributing.md#issue-triage).
   The cumulative rubric is qualitative, not a numeric score.
@@ -122,9 +124,12 @@ the canonical home. The script is repository-only and is not a Composer binary.
 <!-- Known repository limitations. -->
 ## Current state
 
-The repository is mid-consolidation. `composer check` is not expected to pass:
-several PHP files under `src/Attributes/` do not parse. The existing custom
-PHPStan registrations, including a missing rule, are commented out.
+The repository is mid-consolidation. `composer check:style` still reports
+pre-existing line-length warnings in `tests/EfqsDocsAgentsTest.php`, and
+`composer check:analyze` still reports pre-existing errors: PHPStan does not
+load PHPCS's autoloader by default, and additional test and fixture type errors
+remain when it is loaded. The existing custom PHPStan registrations, including
+a missing rule, are commented out.
 Report failures under
 [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
 rule 5. Do not fix unrelated code as part of other work.

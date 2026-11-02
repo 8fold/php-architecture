@@ -120,12 +120,26 @@ the command's requirements and its code-only alias.
   rule is implemented but disabled alongside the other custom rules.
   See the [enforcement boundaries](docs/agent-context.md#enforcement-boundaries)
   for its scope and current activation state.
-- **`MethodScopeConventionRule`**: Enforces strict `self::`, `parent::`, and `$this->` scoping conventions on method calls.
-- **`DataObjectPurityRule`**: Enforces strict immutable, property-only rules for class instances.
-- **`RecordPurityRule`**: Enforces strict immutable, property-only Data Object rules applied to database row representation.
+- **Method scope:** [Guidance](.github/instructions/php-class-use.instructions.md)
+  distinguishes `self::`, `parent::`, and `$this->`. The registered PHPCS sniff
+  checks instance method calls via `$this->`; it does not enforce every scope
+  convention.
+- **Data object and record purity:** No PHPStan purity rules are currently
+  shipped.
 
 
 ## PHP conventions (default with options)
 
-- **`ClassesMustBeFinalRule`:** Enforces classes are declared `final` by default. Use the `AllowInheritance` to explicitly allow class extension.
+- **Class finality and inheritance:** `ClassesShouldBeFinal` and
+  `ClassesShouldNotBeSubclass` recognize `Eightfold\Attributes\Classes\BaseClass`
+  and `Eightfold\Attributes\Classes\Subclass` as their respective advisory
+  opt-outs. The corresponding `Must` rules do not accept those opt-outs.
+  Custom PHPStan rules are currently disabled in `extension.neon`.
 - Data Objects are PHP classes
+
+## Attribute inference
+
+`CallableSubtype` supports name lookups, but the unfinished `fromFlags()`
+sketch is not part of the production API. The
+[inference prototype](experimental/Analysis/CallablesMustBeTyped/README.md) is
+non-autoloaded and unsupported.

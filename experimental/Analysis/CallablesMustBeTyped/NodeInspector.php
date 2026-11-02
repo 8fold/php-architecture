@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Eightfold\Experimental\Analysis\CallablesMustBeTyped;
 
 /**
+ * Experimental draft; not autoloaded or supported.
+ *
  * AST Node Inspector for Method & Function Properties
  */
 final readonly class NodeInspector

@@ -30,10 +30,7 @@ applyTo: "src/**/*.php,experimental/Analysis/**/*.php,tests/**/*.php"
 
 - Run `composer check:analyze` for PHPStan analysis.
 - These attributes express architectural intent; documentation is not proof
-  of enforcement. The `Should` PHPStan rules recognize the corresponding
-  attributes under `Eightfold\Attributes\Classes\`, but all custom
-  registrations in `extension.neon` remain commented out (one references a
-  rule that is not implemented). The registration gap is tracked in
-  [#24](https://github.com/8fold/php-architecture/issues/24). Report that
-  enforcement is disabled rather than treating the attributes as active
-  analyzer opt-outs.
+  of enforcement. The advisory PHPStan rules recognize the corresponding
+  attributes in isolated tests, but all custom rule registrations in
+  `extension.neon` remain commented out. Do not treat these conventions as
+  enforced by the repository's normal analyzer configuration.

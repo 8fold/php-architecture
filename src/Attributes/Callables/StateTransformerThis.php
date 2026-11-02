@@ -9,24 +9,11 @@ use Attribute;
 #[Attribute(Attribute::TARGET_METHOD)]
 final class StateTransformerThis
 {
-    public static function definingInvariants(): string
-    {
-        return 'returns `\$this` (not `clone`), mutates internal state only, is instance method (not static)';
-    }
-
-
-
-
-
-
-
-
-
     public static function behavior(): string
     {
         // phpcs:disable
-        return <<<behavior
-        Creates and returns a modified copy or cloned instance (`self`/`static`) with updated state while leaving the original `\$this` instance completely untouched (immutable copy-on-write transformation). (See also StateTransformerThis)
+        return <<<'behavior'
+        Mutates internal state on `$this` in place and returns `$this` for fluent method chaining.
         behavior;
         // phpcs:enable
     }
@@ -34,10 +21,10 @@ final class StateTransformerThis
     public static function definingInvariants(): string
     {
         // phpcs:disable
-        return <<<qualities
-        1. Immutability Preservation (\$this Isolation): Never mutates the state of the caller object instance (\$this).
-        2. Fresh Instance Yield (self/static Return): Always produces and returns a new instance (`self`/`static`) containing the updated state (\$result !== \$this).
-        3. Native Copy-on-Write Execution: Leverages PHP 8.5's `clone(\$this, ['prop' => \$value])` syntax to construct fresh state representations.
+        return <<<'qualities'
+        1. In-Place Mutation: Mutates only the internal state of the current instance.
+        2. Self-Referential Yield: Returns the same `$this` instance, not a clone.
+        3. Non-Static Instance Method: Enables fluent chaining on a single mutable instance.
         qualities;
         // phpcs:enable
     }
@@ -52,20 +39,12 @@ final class StateTransformerThis
     public static function example(): string
     {
         // phpcs:disable
-        return <<<example
-        #[StateTransformer]
-        public function withAmount(float \$newAmount): self
+        return <<<'example'
+        #[\Eightfold\Attributes\Callables\StateTransformerThis]
+        public function setAmount(float $newAmount): self
         {
-        PHP 8.5 native clone with inline property modification
-            return clone(\$this, [
-                'amount' => \$newAmount,
-            ]);
-        }
-        
-        #[StateTransformer]
-        public function withCurrency(string \$currency): self
-        {
-            return new self(\$this->amount, \$currency);
+            $this->amount = $newAmount;
+            return $this;
         }
         example;
         // phpcs:enable

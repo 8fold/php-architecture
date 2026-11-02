@@ -13,6 +13,7 @@ use PHPStan\Testing\RuleTestCase;
 use Eightfold\Analysis\ClassesMustBeFinal\PHPStanRule as ClassesMustBeFinal;
 
 use Eightfold\Tests\PHPStan\Fixtures\ClassesMustBeFinalNoncompliant;
+use Eightfold\Tests\PHPStan\Fixtures\ClassesShouldBeFinalCompliantUsingAttribute;
 
 use Eightfold\Attributes\Classes\Subclass;
 
@@ -39,6 +40,24 @@ final class ClassesMustBeFinalTest extends RuletestCase
                 [
                     ClassesMustBeFinal::message($noncompliant),
                     5,
+                    ClassesMustBeFinal::tip($noncompliant, false)
+                ]
+            ]
+        );
+    }
+
+    #[Test]
+    #[Group('analysis')]
+    public function base_class_attribute_does_not_suppress_a_mandatory_rule(): void
+    {
+        $noncompliant = ClassesShouldBeFinalCompliantUsingAttribute::class;
+
+        parent::analyse(
+            [__DIR__ . '/Fixtures/ClassesShouldBeFinalCompliantUsingAttribute.php'],
+            [
+                [
+                    ClassesMustBeFinal::message($noncompliant),
+                    7,
                     ClassesMustBeFinal::tip($noncompliant, false)
                 ]
             ]

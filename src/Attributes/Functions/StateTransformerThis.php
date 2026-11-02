@@ -151,7 +151,7 @@ class UserProfile
     // Backed property with set hook validation
     public string $email = '' {
         set(string $value) {
-            if (!str_contains($value, '@')) {
+            if (str_contains($value, '@') === false) {
                 throw new InvalidArgumentException("Invalid email address format: {$value}");
             }
             $this->email = strtolower(trim($value));

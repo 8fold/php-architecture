@@ -44,7 +44,7 @@ final readonly class NodeInspector
 
     public function accessesThis(Node $node): bool
     {
-        if ($this->isStatic($node) || $this->isStandalone($node)) {
+        if (self::isStatic($node) || self::isStandalone($node)) {
             return false;
         }
 
@@ -57,7 +57,7 @@ final readonly class NodeInspector
 
     public function mutatesInstanceState(Node $node): bool
     {
-        if ($this->isStatic($node) || $this->isStandalone($node)) {
+        if (self::isStatic($node) || self::isStandalone($node)) {
             return false;
         }
 
@@ -79,7 +79,7 @@ final readonly class NodeInspector
 
     public function getDeclaredSubtypeAttribute(Node $node): ?string
     {
-        if (!$node instanceof ClassMethod && !$node instanceof Function_) {
+        if (($node instanceof ClassMethod) === false && ($node instanceof Function_) === false) {
             return null;
         }
 

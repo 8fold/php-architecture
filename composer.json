@@ -22,11 +22,15 @@
     "squizlabs/php_codesniffer": "^4.0",
     "spaze/phpstan-disallowed-calls": "^4.14"
   },
+  "bin": [
+    "bin/efqs"
+  ],
   "autoload": {
     "psr-4": {
       "Eightfold\\Attributes\\": "./src/Attributes/",
       "Eightfold\\PHPStan\\": "./src/PHPStan/",
-      "Eightfold\\PHPCodeSniffer\\": "./src/PHPCodeSniffer/"
+      "Eightfold\\PHPCS\\": "./src/PHPCS/",
+      "Eightfold\\Efqs\\": "./src/PHPCS/Efqs/"
     }
   },
   "autoload-dev": {
@@ -41,7 +45,8 @@
       "@optimize-autoloader"
     ],
     "local": "@check",
-    "graph:refresh": "if [ -x \"$HOME/.local/bin/graphify\" ] && [ -f graphify-out/graph.json ]; then GRAPHIFY_NO_BACKUP=1 \"$HOME/.local/bin/graphify\" update . && php cli/graphify-token-usage.php --measured 0 0; else echo 'graphify or graphify-out/graph.json not found; skipping graph refresh'; fi",
+    "graph:code": "@php cli/graph.php code",
+    "graph:refresh": "@graph:code",
     "check": [
       "@check:style",
       "@check:analyze",
@@ -50,6 +55,7 @@
     "check:style": "./vendor/bin/phpcs --standard=phpcs.xml",
     "check:analyze": "./vendor/bin/phpstan analyze",
     "check:test": "./vendor/bin/phpunit --display-all-issues",
+    "check:instructions": "@php cli/check-instructions-coverage.php",
     "optimize-autoloader": "composer dumpautoload --no-dev --classmap-authoritative"
   },
   "scripts-descriptions": {
@@ -61,8 +67,10 @@
     "check:style": "Runs PHP CodeSniffer style compliance checks.",
     "check:analyze": "Runs PHPStan static analysis.",
     "check:test": "Runs all PHPUnit test suites.",
+    "check:instructions": "Lists tracked files matched by each Copilot instruction applyTo pattern; fails on malformed frontmatter or empty matches.",
 
-    "graph:refresh": "Updates the Graphify codebase knowledge graph and logs token usage.",
+    "graph:code": "Refreshes code in the knowledge graph with the Graphify CLI (fast; no agent).",
+    "graph:refresh": "Alias for the code-only knowledge graph refresh.",
     "optimize-autoloader": "Dumps authoritative classmap autoloader excluding dev dependencies."
   },
   "script-aliases": {

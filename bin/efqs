@@ -1,0 +1,114 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+$files = [
+    'docs:agents' => 'AGENTS.md',
+    'docs:context' => 'docs/agent-context.md',
+    'docs:graphify-setup' => 'docs/graphify-setup.md',
+    'docs:graphify-workflow' => 'docs/graphify-workflow.md',
+    'docs:contributing' => '.github/contributing.md',
+    'docs:convention-workflow' => 'docs/convention-workflow.md',
+    'templates:bug' => '.github/ISSUE_TEMPLATE/Bug_report.md',
+    'templates:feature' => '.github/ISSUE_TEMPLATE/Feature_request.md',
+    'templates:deprecation' => '.github/ISSUE_TEMPLATE/Deprecation_notice_or_request.md',
+    'templates:convention' => '.github/ISSUE_TEMPLATE/Convention_request.md',
+    'templates:pull-request' => '.github/pull_request_template.md',
+];
+$usage = 'Usage: efqs ' . implode('|', array_keys($files)) . "\n";
+if (isset($argc, $argv) === false || $argc !== 2) {
+    fwrite(STDERR, $usage);
+    exit(1);
+}
+
+$command = $argv[1] ?? null;
+if (is_string($command) === false || isset($files[$command]) === false) {
+    fwrite(STDERR, $usage);
+    exit(1);
+}
+
+$projectRoot = getcwd();
+if ($projectRoot === false) {
+    fwrite(STDERR, "Unable to determine the current directory.\n");
+    exit(1);
+}
+
+if (is_file($projectRoot . DIRECTORY_SEPARATOR . 'composer.json') === false) {
+    fwrite(STDERR, "Run this command from the consuming project root containing composer.json.\n");
+    exit(1);
+}
+
+$relativePath = str_replace('/', DIRECTORY_SEPARATOR, $files[$command]);
+$fileName = basename($relativePath);
+$source = dirname(__DIR__) . DIRECTORY_SEPARATOR . $relativePath;
+$content = @file_get_contents($source);
+if ($content === false) {
+    fwrite(STDERR, "Unable to read the package's {$fileName}: {$source}\n");
+    exit(1);
+}
+
+$destination = $projectRoot . DIRECTORY_SEPARATOR . $relativePath;
+$destinationDirectory = dirname($destination);
+if (is_dir($destinationDirectory) === false && @mkdir($destinationDirectory, 0755, true) === false) {
+    fwrite(STDERR, "Unable to create the destination directory: {$destinationDirectory}\n");
+    exit(1);
+}
+
+if (file_exists($destination) || is_link($destination)) {
+    if (is_file($destination) === false) {
+        fwrite(STDERR, "The destination exists and is not a regular file: {$destination}\n");
+        exit(1);
+    }
+
+    $existing = @file_get_contents($destination);
+    if ($existing === false) {
+        fwrite(STDERR, "Unable to read the existing {$fileName}: {$destination}\n");
+        exit(1);
+    }
+
+    if ($existing === $content) {
+        fwrite(STDOUT, "{$fileName} is already current: {$destination}\n");
+        exit(0);
+    }
+
+    fwrite(
+        STDERR,
+        "{$fileName} already exists and differs; refusing to overwrite: {$destination}\n"
+    );
+    exit(1);
+}
+
+$file = @fopen($destination, 'x');
+if ($file === false) {
+    fwrite(
+        STDERR,
+        "Unable to create {$fileName} without overwriting an existing file: {$destination}\n"
+    );
+    exit(1);
+}
+
+$length = strlen($content);
+$offset = 0;
+while ($offset < $length) {
+    $written = @fwrite($file, substr($content, $offset));
+    if ($written === false || $written === 0) {
+        fclose($file);
+        fwrite(
+            STDERR,
+            "Unable to write {$fileName}; the new file may be incomplete: {$destination}\n"
+        );
+        exit(1);
+    }
+    $offset += $written;
+}
+
+if (fclose($file) === false) {
+    fwrite(
+        STDERR,
+        "Unable to finish writing {$fileName}; the new file may be incomplete: {$destination}\n"
+    );
+    exit(1);
+}
+
+fwrite(STDOUT, "Copied {$fileName} to {$destination}\n");

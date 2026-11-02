@@ -1,0 +1,153 @@
+# php-architecture agent context
+
+Read this with [AGENTS.md](../AGENTS.md). This document records this
+repository's actual commands, paths, environment, startup gates, exceptions,
+and local adaptations of the shared rules.
+
+<!-- Project identity and boundaries. -->
+## Source and scope
+
+- `8fold/php-architecture` is the canonical home of the shared agent–user rules
+  in `AGENTS.md`. It is also a complete PHP project, with code, tests, and tool
+  configuration. Its own repository files (for example `.copilotignore` and
+  this document) are the baselines that consuming 8fold projects start from.
+- The shared rules were consolidated from
+  `8fold/site-mastering-the-mundane.apps` (`AGENTS.md` at 15782c3, a private
+  repository) and
+  [`8fold/site-masteringthemundane.com`](https://github.com/8fold/site-masteringthemundane.com/blob/bc4f99d3aadab909385d30e1ad7022444bc403a4/AGENTS.md)
+  (`AGENTS.md` at bc4f99d).
+- This is a library: there is no web server, preview, database, or secret
+  environment setup.
+
+<!-- Directory and runtime map. -->
+## Layout and runtime
+
+- PHP `^8.5`, as declared in `composer.json`.
+- `src/Attributes/`: PHP attributes (`Eightfold\Attributes\`).
+- `src/PHPStan/`: PHPStan rules (`Eightfold\PHPStan\`). All custom
+  registrations in `extension.neon` are commented out; the vendor extension
+  remains enabled. PHPStan ignores lines prefixed with `#`.
+- `src/PHPCS/`: PHPCS sniffs (`Eightfold\PHPCS\`). Rule bodies are in
+  `Sniffs/`; the `Efqs` standard in `Efqs/` (`Eightfold\Efqs\`)
+  registers them.
+  The `InstanceMethodsMustNotBeAccessedViaThis` Sniff is registered in
+  `phpcs.xml`.
+- Sniff and PHPStan rule names follow the
+  [RFC 2119 naming convention](../.github/instructions/analysis-naming.instructions.md).
+- `tests/`: PHPUnit tests (`Eightfold\Tests\`), with fixtures under
+  `tests/PHPStan/Fixtures/` and `tests/PHPCS/Fixtures/`.
+- `bin/`: Composer-exposed command-line tools for consuming projects.
+- `cli/`: repository-only command-line tools.
+- `docs/`: project documentation, including the agent context and
+  Graphify [setup](graphify-setup.md) and [workflow](graphify-workflow.md)
+  guides copied by consuming projects.
+- `.github/contributing.md`: canonical contribution, change-classification,
+  and [issue-triage policy](../.github/contributing.md#issue-triage).
+  The cumulative rubric is qualitative, not a numeric score.
+- `.github/ISSUE_TEMPLATE/`: bug, feature, deprecation, and convention templates.
+  `.github/pull_request_template.md` is the sole default PR template.
+- `.github/instructions/`: Copilot instructions for PHP class and test
+  conventions, including
+  [explicit boolean expressions](../.github/instructions/php-boolean-expressions.instructions.md).
+  Template edits follow the
+  [GitHub template instruction](../.github/instructions/github-templates.instructions.md).
+- Tool configuration: `phpcs.xml`, `phpstan.neon`, `phpunit.xml`.
+
+<!-- Commands and their known limitations. -->
+## Build, test, and lint commands
+
+The entry points are defined in `composer.json`:
+
+- `composer install`: install dependencies from the lock file.
+- `composer check`: run `check:style`, `check:analyze`, and `check:test`.
+- `composer check:style`: PHPCS with `phpcs.xml`.
+- `composer check:analyze`: PHPStan with `phpstan.neon`.
+- `composer check:test` (alias `composer test`): PHPUnit.
+- `composer check:instructions`: list and check path-specific instruction
+  coverage ([details](#verify-path-specific-instruction-coverage)).
+- `composer production` (alias `composer prod`): `check`, then
+  `optimize-autoloader`.
+- `composer graph:code` (alias `composer graph:refresh`): refresh code in the
+  existing knowledge graph with `graphify update .`, without an agent or API
+  key. It looks for the Graphify CLI on `PATH` or in `~/.local/bin` and fails
+  if the graph or CLI is missing or the update fails. Documentation still
+  requires the [semantic refresh](graphify-workflow.md#refresh).
+
+The current local environment uses MAMP PHP 8.5.2
+(`/Applications/MAMP/bin/php/php8.5.2/bin/php`). Do not assume that path
+exists elsewhere.
+
+Not functional yet; do not rely on these:
+
+- `composer local` only runs `check`. Its description (git hooks, build) is
+  aspirational.
+
+<!-- Tool enforcement versus written guidance. -->
+## Enforcement boundaries
+
+- Enforced: PHPCS style checks, built-in and vendor PHPStan analysis, and
+  PHPUnit tests through the corresponding `composer check:*` scripts.
+- Disabled: all custom PHPStan rule registrations in `extension.neon`,
+  including `BooleanNegationMustBeExplicit`. That rule reports unary `!` on
+  operands PHPStan knows are boolean, with non-ignorable identifier
+  `eightfold.booleanNegationMustBeExplicit`. Nullable, non-boolean, and unknown
+  operands require manual intent review. Its isolated fixture tests run
+  regardless of whether the rule is enabled for repository analysis.
+- Not enforced: guidance in `AGENTS.md` unless a tool or check explicitly
+  implements it.
+
+### Verify path-specific instruction coverage
+
+`composer check:instructions` lists the tracked files that each
+`.github/instructions/*.instructions.md` `applyTo` pattern matches. It fails
+on missing or malformed frontmatter and on patterns that match no tracked
+files. Review the output for missing or unexpected files. The glob semantics,
+intended scopes, limits, and exit codes live in
+[`cli/check-instructions-coverage.php`](../cli/check-instructions-coverage.php),
+the canonical home. The script is repository-only and is not a Composer binary.
+
+<!-- Secret templates, copies, and previews. -->
+## Environment and secrets
+
+- Secret-free templates: None.
+- Directed secret copies: None.
+- Local preview: None; this is a library with no web server.
+
+<!-- Known repository limitations. -->
+## Current state
+
+The repository is mid-consolidation. `composer check` is not expected to pass:
+several PHP files under `src/Attributes/` do not parse. The existing custom
+PHPStan registrations, including a missing rule, are commented out.
+Report failures under
+[Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
+rule 5. Do not fix unrelated code as part of other work.
+
+<!-- Ordered repository-specific startup gates. -->
+## Session startup
+
+1. Check and refresh the knowledge graph under the
+   [local graph policy](#local-adaptations-and-pending-deliverables), before
+   reading other documents.
+2. Read `AGENTS.md` and this document. Check the branch and `git status`.
+
+<!-- Exceptions permitted by the shared rules. -->
+## Exceptions
+
+None.
+
+<!-- Local deviations from the shared rules. -->
+## Local adaptations and pending deliverables
+
+Each entry links to the shared rule it adapts.
+
+- [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
+  rule 1: the knowledge graph exists; the
+  [workflow guide](graphify-workflow.md) applies, and updates require no
+  separate approval. The repository follows the setup guide's
+  [artifact-tracking baseline](graphify-setup.md#artifact-tracking):
+  `.gitignore` lists the local-only Graphify files, and the core artifacts are
+  committed.
+- [Information placement](../AGENTS.md#information-placement) rule 1: the
+  information hierarchy links to `8fold/site-masteringthemundane.com` at
+  bc4f99d until this package ships its own copy.

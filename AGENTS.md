@@ -128,15 +128,12 @@ These rules apply whenever a request asks for changes to files.
    repository's ordered startup gates, if it has any. Complete them before
    other work and report what each one found. Do not borrow gates, commands, or
    environment steps from another repository; they are not portable facts.
-4. **Install, don't upgrade.** When dependencies are missing or the agent
-   context requires it, install from the lock file (`composer install`).
-   Never run `composer update` as routine startup.
-5. **Respect the session mode.** If the current mode forbids writes that a
+4. **Respect the session mode.** If the current mode forbids writes that a
    startup gate needs, run the read-only gates and state which gates were
    deferred. Then ask whether to continue read-only or switch to a mode that
    permits writes. Read-only audits, reviews, and research can proceed. Work
    that ends in commits requires the gates.
-6. **Treat worktrees as temporary.** Session worktrees, and any uncommitted
+5. **Treat worktrees as temporary.** Session worktrees, and any uncommitted
    work in them, are deleted when the session is archived. Commit and push
    approved work ([Human gates and Git workflow](#human-gates-and-git-workflow)
    rules 1 and 6). Do not assume a preview or local server serves the current

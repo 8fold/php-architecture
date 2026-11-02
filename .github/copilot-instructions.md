@@ -17,8 +17,12 @@ Run these gates in order at the start of each session, before other work.
      ([usage evidence](../docs/graphify-workflow.md#php-coverage-and-usage-evidence)).
 
 2. **Read the shared rules.** Read [AGENTS.md](../AGENTS.md) and the
-     [agent context](../docs/agent-context.md), including the repository's
-     startup order and local adaptations.
+   [agent context](../docs/agent-context.md), including the repository's
+   startup order and local adaptations.
+
+3. **Install dependencies.** Run `composer install` every session. It installs
+   from the lock file and does nothing when `vendor/` is already current. Run
+   `composer update` only when the user explicitly requests it.
 
 ## Voice
 

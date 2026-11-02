@@ -37,6 +37,19 @@ the consuming project's existing `composer.json` scripts:
 The copied context and guides are starting points, not consuming-project facts.
 Adapt project-specific setup and commands before relying on them.
 
+## Refresh code in this repository's knowledge graph
+
+From the repository root:
+
+```sh
+composer graph:code
+```
+
+This refreshes code only; documentation still needs the
+[Graphify skill's semantic refresh](docs/graphify-workflow.md#refresh). The
+[agent context](docs/agent-context.md#build-test-and-lint-commands) describes
+the command's requirements and its code-only alias.
+
 ## PHP conventions (strict)
 
 - **`MethodScopeConventionRule`**: Enforces strict `self::`, `parent::`, and `$this->` scoping conventions on method calls.

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPCS\Fixtures;
+namespace Eightfold\Tests\PHPCS\Fixtures\FilesMustImportClassNames;
 
 use ArrayObject;
 use Countable;
@@ -22,7 +22,7 @@ use PHPStan\Rules\Rule;
 use Eightfold\Attributes\CallableSubtype;
 use Eightfold\Attributes\Classes\BaseClass;
 
-trait FilesMustImportDependenciesCompliantTrait
+trait CompliantTrait
 {
 }
 
@@ -31,7 +31,7 @@ trait FilesMustImportDependenciesCompliantTrait
  *
  * Every class-like name in code is imported directly, including built-in PHP
  * classes. Aliased imports (ClassNode) and unqualified names from the current
- * namespace (FilesMustImportDependenciesCompliantTrait) are compliant. Global
+ * namespace (CompliantTrait) are compliant. Global
  * functions (\strlen, \count), constants (\PHP_EOL), and names in strings,
  * comments, and docblocks such as \PhpParser\Node are outside this
  * convention. PHPCS cannot classify symbols, so the PHPStan fixtures verify
@@ -40,11 +40,11 @@ trait FilesMustImportDependenciesCompliantTrait
  * @implements Rule<ClassNode>
  */
 #[BaseClass('Fixture for issue #46.')]
-abstract class FilesMustImportDependenciesCompliant extends DateTime implements
+abstract class Compliant extends DateTime implements
     Stringable,
     Rule
 {
-    use FilesMustImportDependenciesCompliantTrait;
+    use CompliantTrait;
 
     /** @param ArrayObject<int, mixed>|SplObjectStorage<object, mixed> $items */
     public function __construct(

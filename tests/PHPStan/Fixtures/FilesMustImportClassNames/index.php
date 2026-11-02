@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPStan\Fixtures\FilesMustImportDependenciesIndex;
+namespace Eightfold\Tests\PHPStan\Fixtures\FilesMustImportClassNames;
 
 use PhpParser\ParserFactory;
 use DateTimeImmutable;
 
 /*
  * No class declaration: the rule analyzes PHPStan\Node\FileNode.
- * Expected: two eightfold.filesMustImportDependencies errors:
+ * Expected: two eightfold.filesMustImportClassNames errors:
  * - line 7, ParserFactory: the PSL import DateTimeImmutable belongs first;
  * - line 21, \DateTime: fully qualified instead of imported.
  * Global functions (count) and constants (\PHP_EOL) are not reported.

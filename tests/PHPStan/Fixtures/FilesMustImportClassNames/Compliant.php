@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPStan\Fixtures;
+namespace Eightfold\Tests\PHPStan\Fixtures\FilesMustImportClassNames;
 
 use DateTime;
 
@@ -50,7 +50,7 @@ use Eightfold\Attributes\Functions\Pure;
  *
  * @implements Rule<Class_>
  */
-final class FilesMustImportDependenciesCompliant extends DateTime implements
+final class Compliant extends DateTime implements
     Stringable,
     Rule
 {

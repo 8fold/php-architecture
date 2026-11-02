@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPStan\Fixtures;
+namespace Eightfold\Tests\PHPStan\Fixtures\FilesMustImportClassNames;
 
 use Countable;
 use DateTime;
@@ -19,19 +19,19 @@ use Stringable;
 /**
  * Draft fixture for issue #46; the expected diagnostic is provisional.
  *
- * The same imports as FilesMustImportDependenciesCompliant, in one
+ * The same imports as Compliant, in one
  * alphabetical block, as many editors produce. Every name is imported, so
- * only grouping is reported; FilesMustImportDependenciesNoncompliant/index.php
+ * only grouping is reported; index.php
  * covers a fully qualified name in a file without a class.
  *
- * Expected: one eightfold.filesMustImportDependencies error at the first
+ * Expected: one eightfold.filesMustImportClassNames error at the first
  * import that departs from the expected order (line 7, Countable; DateTime
  * is expected first), naming the expected order. An alternative is one
  * diagnostic per misplaced import.
  *
  * @implements Rule<Class_>
  */
-final class FilesMustImportDependenciesNoncompliant extends DateTime implements
+final class Noncompliant extends DateTime implements
     Stringable,
     Rule
 {

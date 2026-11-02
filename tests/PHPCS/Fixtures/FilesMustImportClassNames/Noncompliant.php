@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPCS\Fixtures;
+namespace Eightfold\Tests\PHPCS\Fixtures\FilesMustImportClassNames;
 
 use PHPStan\Rules;
 
-trait FilesMustImportDependenciesNoncompliantTrait
+trait NoncompliantTrait
 {
 }
 
 /**
  * Draft fixture for issue #46; expected diagnostics are provisional.
  * The convention applies to the whole file, not just class declarations;
- * FilesMustImportDependenciesNoncompliant/index.php has neither a namespace
+ * index.php has neither a namespace
  * nor a class.
  *
- * Expected: one Efqs.Files.FilesMustImportDependencies.FullyQualified error
+ * Expected: one Efqs.Files.FilesMustImportClassNames.FullyQualified error
  * for each fully qualified class-like name in code, including built-in PHP
  * classes, at the name's first token: the attribute, extends, implements,
  * trait use, property and parameter types, union and nullable types, `new`,
@@ -24,7 +24,7 @@ trait FilesMustImportDependenciesNoncompliantTrait
  *
  * Partially qualified names that resolve through an imported namespace
  * (Rules\Rule) produce a separate
- * Efqs.Files.FilesMustImportDependencies.Qualified error; whether that case
+ * Efqs.Files.FilesMustImportClassNames.Qualified error; whether that case
  * belongs in this convention is an open question.
  *
  * Not reported: the namespace declaration, `use` import statements, global
@@ -34,11 +34,11 @@ trait FilesMustImportDependenciesNoncompliantTrait
  * @implements Rules\Rule<\PhpParser\Node\Stmt\Class_>
  */
 #[\Eightfold\Attributes\Classes\BaseClass('Fixture for issue #46.')]
-abstract class FilesMustImportDependenciesNoncompliant extends \DateTime implements
+abstract class Noncompliant extends \DateTime implements
     \Stringable,
     Rules\Rule
 {
-    use \Eightfold\Tests\PHPCS\Fixtures\FilesMustImportDependenciesNoncompliantTrait;
+    use \Eightfold\Tests\PHPCS\Fixtures\FilesMustImportClassNames\NoncompliantTrait;
 
     /** @param \ArrayObject<int, mixed>|\SplObjectStorage<object, mixed> $items */
     public function __construct(

@@ -78,9 +78,9 @@ These rules apply whenever a request asks for changes to files.
      developer-facing contract, such as a public API, URL, or configuration.
 
    Never mix the two in one commit. A commit may touch several files to complete
-   its change. Full definitions, including how tests may change in a
-   refactoring, will live in the shared contribution guide (see the agent
-   context for its status). Commit messages follow
+   its    change. These summarize the canonical
+   [change-classification definitions](.github/contributing.md#change-classification),
+   including how tests may change in a refactoring. Commit messages follow
    [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 2. **One open pull request per session, of one or more commits.** Each agent
    session has at most one open pull request at a time. It is built from as
@@ -110,6 +110,10 @@ These rules apply whenever a request asks for changes to files.
      required.
    - Never edit root-owned or tool-generated configuration directly. Report the
      mismatch and request a user-managed correction.
+8. **Follow the triage policy.** Backlog audits and next-work recommendations
+   follow the [contribution guide](.github/contributing.md#issue-triage).
+   Labels, evidence, and dependencies inform recommendations; recommendations
+   do not themselves authorize repository or issue changes.
 
 ---
 

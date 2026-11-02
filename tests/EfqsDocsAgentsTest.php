@@ -42,6 +42,10 @@ final class EfqsDocsAgentsTest extends TestCase
             '/project with spaces/composer.json',
             '/existing.txt',
         ];
+        foreach (self::contributionFiles() as [, $relativePath]) {
+            $files[] = '/' . $relativePath;
+            $files[] = '/package with spaces/' . $relativePath;
+        }
         foreach ($files as $path) {
             $path = $this->projectDirectory . $path;
             if (is_file($path) || is_link($path)) {
@@ -50,10 +54,14 @@ final class EfqsDocsAgentsTest extends TestCase
         }
         $directories = [
             '/AGENTS.md',
+            '/.github/ISSUE_TEMPLATE',
+            '/.github',
             '/docs',
             '/nested',
             '/package with spaces/bin',
             '/package with spaces/docs',
+            '/package with spaces/.github/ISSUE_TEMPLATE',
+            '/package with spaces/.github',
             '/package with spaces',
             '/project with spaces',
         ];
@@ -422,6 +430,130 @@ final class EfqsDocsAgentsTest extends TestCase
             $error
         );
         parent::assertDirectoryDoesNotExist($this->projectDirectory . '/docs');
+    }
+
+    /**
+     * @return array<string, array{string, string}>
+     */
+    public static function contributionFiles(): array
+    {
+        return [
+            'guide' => ['docs:contributing', '.github/contributing.md'],
+            'convention workflow' => ['docs:convention-workflow', 'docs/convention-workflow.md'],
+            'bug' => ['templates:bug', '.github/ISSUE_TEMPLATE/Bug_report.md'],
+            'feature' => ['templates:feature', '.github/ISSUE_TEMPLATE/Feature_request.md'],
+            'deprecation' => [
+                'templates:deprecation',
+                '.github/ISSUE_TEMPLATE/Deprecation_notice_or_request.md',
+            ],
+            'convention' => [
+                'templates:convention',
+                '.github/ISSUE_TEMPLATE/Convention_request.md',
+            ],
+            'pull request' => ['templates:pull-request', '.github/pull_request_template.md'],
+        ];
+    }
+
+    #[Test]
+    #[Group('cli')]
+    #[DataProvider('contributionFiles')]
+    public function copies_contribution_files_without_overwriting_local_adaptations(
+        string $command,
+        string $relativePath
+    ): void {
+        self::createProjectManifest($this->projectDirectory);
+        $destination = $this->projectDirectory . '/' . $relativePath;
+
+        [$exitCode, , $error] = self::runInstaller($this->projectDirectory, [$command]);
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertFileEquals(dirname(__DIR__) . '/' . $relativePath, $destination);
+
+        [$exitCode, $output, $error] = self::runInstaller($this->projectDirectory, [$command]);
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertStringContainsString('already current', $output);
+
+        file_put_contents($destination, "Local adaptation\n");
+        [$exitCode, , $error] = self::runInstaller($this->projectDirectory, [$command]);
+
+        parent::assertNotSame(0, $exitCode);
+        parent::assertStringContainsString('refusing to overwrite', $error);
+        parent::assertSame("Local adaptation\n", file_get_contents($destination));
+    }
+
+    #[Test]
+    #[Group('cli')]
+    #[DataProvider('contributionFiles')]
+    public function uses_installed_contribution_files_and_reports_missing_sources(
+        string $command,
+        string $relativePath
+    ): void {
+        self::createProjectManifest($this->projectDirectory);
+        $package = $this->projectDirectory . '/package with spaces';
+        mkdir($package . '/bin', 0700, true);
+        $script = $package . '/bin/efqs';
+        copy(dirname(__DIR__) . '/bin/efqs', $script);
+        $destination = $this->projectDirectory . '/' . $relativePath;
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            [$command],
+            $script
+        );
+
+        parent::assertNotSame(0, $exitCode);
+        parent::assertStringContainsString("Unable to read the package's", $error);
+        parent::assertDirectoryDoesNotExist(dirname($destination));
+
+        $source = $package . '/' . $relativePath;
+        mkdir(dirname($source), 0700, true);
+        file_put_contents($source, "Installed package contribution file\n");
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            [$command],
+            $script
+        );
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertSame(
+            "Installed package contribution file\n",
+            file_get_contents($destination)
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    #[DataProvider('contributionFiles')]
+    public function documents_reusable_paths_and_keeps_repository_links_resolvable(
+        string $command,
+        string $relativePath
+    ): void {
+        $root = dirname(__DIR__);
+        $inventory = file_get_contents($root . '/README.md');
+        $content = file_get_contents($root . '/' . $relativePath);
+        if ($inventory === false || $content === false) {
+            parent::fail('Unable to read the reusable-file inventory or source.');
+        }
+        parent::assertStringContainsString(
+            "| `{$command}` | `{$relativePath}` |",
+            $inventory
+        );
+
+        preg_match_all('/\[[^\]]+\]\(([^)]+)\)/', $content, $links);
+        foreach ($links[1] as $target) {
+            if (preg_match('/^[a-z][a-z0-9+.-]*:/i', $target) === 1) {
+                continue;
+            }
+            $path = explode('#', $target, 2)[0];
+            if ($path === '') {
+                continue;
+            }
+            parent::assertFileExists(
+                dirname($root . '/' . $relativePath) . '/' . $path,
+                "{$relativePath} has an unresolved relative link: {$target}"
+            );
+        }
     }
 
     #[Test]

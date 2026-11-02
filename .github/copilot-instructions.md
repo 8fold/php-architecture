@@ -33,6 +33,13 @@ Run these gates in order at the start of each session, before other work.
 When the user asks for a new agent instruction, for example, "we need an agent
 instruction to X," follow the [convention workflow](../docs/convention-workflow.md).
 
+## Issue triage
+
+When asked to prioritize the backlog, audit open issues, or recommend what to
+work on next, follow the [triage policy and procedure](contributing.md#issue-triage).
+It uses cumulative qualitative labels, not a numeric score. Recommendations
+do not authorize changing issue metadata or beginning implementation.
+
 ## Voice
 
 Copied from [AGENTS.md](../AGENTS.md#voice), the canonical source, so the rule

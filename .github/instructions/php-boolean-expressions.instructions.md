@@ -1,5 +1,5 @@
 ---
-applyTo: "src/**/*.php,tests/**/*.php,cli/**/*.php,bin/*"
+applyTo: "src/**/*.php,experimental/Analysis/**/*.php,tests/**/*.php,cli/**/*.php,bin/*"
 ---
 
 # Boolean expressions

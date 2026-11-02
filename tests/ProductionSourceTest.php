@@ -83,8 +83,7 @@ final class ProductionSourceTest extends TestCase
         $root = dirname(__DIR__) . '/src/';
         $namespaces = [
             'PHPCS/Efqs/' => 'Eightfold\\Efqs\\',
-            'PHPCS/' => 'Eightfold\\PHPCS\\',
-            'PHPStan/' => 'Eightfold\\PHPStan\\',
+            'Analysis/' => 'Eightfold\\Analysis\\',
             'Attributes/' => 'Eightfold\\Attributes\\',
         ];
         $types = [];

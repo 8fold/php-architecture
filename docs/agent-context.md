@@ -24,22 +24,27 @@ and local adaptations of the shared rules.
 
 - PHP `^8.5`, as declared in `composer.json`.
 - `src/Attributes/`: PHP attributes (`Eightfold\Attributes\`).
-- `src/PHPStan/`: PHPStan rules (`Eightfold\PHPStan\`). All custom
-  registrations in `extension.neon` are commented out; the vendor extension
-  remains enabled. PHPStan ignores lines prefixed with `#`.
-- `src/PHPCS/`: PHPCS sniffs (`Eightfold\PHPCS\`). Rule bodies are in
-  `Sniffs/`; the `Efqs` standard in `Efqs/` (`Eightfold\Efqs\`)
-  registers them.
-  The `InstanceMethodsMustNotBeAccessedViaThis` Sniff is registered in
-  `phpcs.xml`.
-- Sniff and PHPStan rule names follow the
+- `src/Analysis/<Convention>/`: convention-specific analysis implementations
+  (`Eightfold\Analysis\`), named Markdown diagnostic templates, and PHP message
+  compilation. Templates use `{{placeholder}}` values; missing templates and
+  unresolved placeholders raise explicit errors, and templates are not cached.
+  PHPStan and PHPCS use `PHPStanRule.php` and `PHPCSSniff.php`.
+- `src/PHPCS/Efqs/`: PHPCS registration shells (`Eightfold\Efqs\`) delegate to
+  convention implementations. Custom PHPStan registrations in
+  `extension.neon` remain commented out; the vendor extension remains enabled.
+  PHPStan ignores lines prefixed with `#`.
+- `experimental/Analysis/`: analysis experiments outside Composer autoloading,
+  including the unsupported [callable type-analysis and attribute-inference
+  prototype](../experimental/Analysis/CallablesMustBeTyped/README.md).
+- The `InstanceMethodsMustNotBeAccessedViaThis` Sniff registration is declared
+  in `phpcs.xml`.
+- Convention folder names, sniffs, and PHPStan rule names follow the
   [RFC 2119 naming convention](../.github/instructions/analysis-naming.instructions.md).
-- `tests/`: PHPUnit tests (`Eightfold\Tests\`), with fixtures under
-  `tests/PHPStan/Fixtures/` and `tests/PHPCS/Fixtures/`.
+- `tests/`: PHPUnit tests (`Eightfold\Tests\`), with analysis tests under
+  `tests/Analysis/`, PHPStan fixtures under `tests/PHPStan/Fixtures/`, and
+  PHPCS fixtures under `tests/PHPCS/Fixtures/`.
 - `bin/`: Composer-exposed command-line tools for consuming projects.
 - `cli/`: repository-only command-line tools.
-- `experimental/attribute-inference/`: non-autoloaded, unsupported
-  [inference drafts](../experimental/attribute-inference/README.md).
 - `docs/`: project documentation, including the agent context and
   Graphify [setup](graphify-setup.md) and [workflow](graphify-workflow.md)
   guides copied by consuming projects, as well as

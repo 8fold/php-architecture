@@ -1,6 +1,6 @@
 ---
 name: Convention request
-about: Track a coding convention as an agent instruction, PHPCS sniff, and PHPStan rule
+about: Track a coding convention and its development needs
 ---
 
 <!-- Process: docs/convention-workflow.md -->
@@ -26,6 +26,8 @@ about: Track a coding convention as an agent instruction, PHPCS sniff, and PHPSt
 - [ ] **Agent instruction:** a `.github/instructions/*.instructions.md` file, new or existing. Must pass `composer check:instructions`.
 - [ ] **PHPCS sniff:** follow `.github/instructions/phpcs-sniff-development.instructions.md`.
 - [ ] **PHPStan rule:** follow the sniff stages and approval gates.
+- [ ] **Trait:** add or update a trait when shared implementation is needed.
+- [ ] **Interface:** add or update an interface when a shared contract is needed.
 
 ## Open questions
 

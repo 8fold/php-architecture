@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Eightfold\Tests\Attributes;
 
 use Attribute;
+use Composer\Autoload\ClassLoader;
 use Eightfold\Attributes\CallableSubtype;
 use Eightfold\Attributes\Callables\NamedConstructor;
 use Eightfold\Attributes\Callables\Predicate;
@@ -18,8 +19,8 @@ use Eightfold\Attributes\Functions\Factory;
 use Eightfold\Attributes\Functions\Pure;
 use Eightfold\Attributes\Functions\StateTransformer;
 use Eightfold\Attributes\Functions\StateTransformerThis as FunctionStateTransformerThis;
-use Eightfold\Tests\PHPStan\Fixtures\ClassShouldBeFinalCompliantUsingAttribute;
-use Eightfold\Tests\PHPStan\Fixtures\ClassShouldNotBeSubclassCompliantUsingAttribute;
+use Eightfold\Tests\PHPStan\Fixtures\ClassesShouldBeFinalCompliantUsingAttribute;
+use Eightfold\Tests\PHPStan\Fixtures\ClassesShouldNotBeSubclassCompliantUsingAttribute;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -78,12 +79,12 @@ final class AttributeContractTest extends TestCase
     {
         return [
             'base class' => [
-                ClassShouldBeFinalCompliantUsingAttribute::class,
+                ClassesShouldBeFinalCompliantUsingAttribute::class,
                 BaseClass::class,
                 'This fixture permits extension.',
             ],
             'subclass' => [
-                ClassShouldNotBeSubclassCompliantUsingAttribute::class,
+                ClassesShouldNotBeSubclassCompliantUsingAttribute::class,
                 Subclass::class,
                 'This fixture requires a subclass.',
             ],
@@ -224,5 +225,18 @@ final class AttributeContractTest extends TestCase
         parent::assertFalse(class_exists(
             'Eightfold\\Experimental\\AttributeInference\\CallableSubtypeInference'
         ));
+        $loader = require dirname(__DIR__, 2) . '/vendor/autoload.php';
+        parent::assertInstanceOf(ClassLoader::class, $loader);
+        $drafts = [
+            'AttributeInferer',
+            'NodeInspector',
+            'CallableEvaluators',
+            'CallableSubtypeInference',
+        ];
+        foreach ($drafts as $name) {
+            parent::assertFalse($loader->findFile(
+                'Eightfold\\Experimental\\Analysis\\CallablesMustBeTyped\\' . $name
+            ));
+        }
     }
 }

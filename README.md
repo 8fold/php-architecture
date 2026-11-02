@@ -130,8 +130,8 @@ the command's requirements and its code-only alias.
 
 ## PHP conventions (default with options)
 
-- **Class finality and inheritance:** `ClassShouldBeFinal` and
-  `ClassShouldNotBeSubclass` recognize `Eightfold\Attributes\Classes\BaseClass`
+- **Class finality and inheritance:** `ClassesShouldBeFinal` and
+  `ClassesShouldNotBeSubclass` recognize `Eightfold\Attributes\Classes\BaseClass`
   and `Eightfold\Attributes\Classes\Subclass` as their respective advisory
   opt-outs. The corresponding `Must` rules do not accept those opt-outs.
   Custom PHPStan rules are currently disabled in `extension.neon`.
@@ -141,5 +141,5 @@ the command's requirements and its code-only alias.
 
 `CallableSubtype` supports name lookups, but the unfinished `fromFlags()`
 sketch is not part of the production API. The
-[inference prototype](experimental/attribute-inference/README.md) is
+[inference prototype](experimental/Analysis/CallablesMustBeTyped/README.md) is
 non-autoloaded and unsupported.

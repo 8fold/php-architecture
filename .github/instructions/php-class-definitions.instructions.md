@@ -1,5 +1,5 @@
 ---
-applyTo: "src/**/*.php,tests/**/*.php"
+applyTo: "src/**/*.php,experimental/Analysis/**/*.php,tests/**/*.php"
 ---
 
 # Class Declaration & Finality Rules

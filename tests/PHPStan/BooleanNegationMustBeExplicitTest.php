@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Eightfold\Tests\PHPStan;
 
 use Eightfold\Attributes\Classes\Subclass;
-use Eightfold\PHPStan\Rules\BooleanNegationMustBeExplicit;
+use Eightfold\Analysis\BooleanNegationMustBeExplicit\PHPStanRule as BooleanNegationMustBeExplicit;
 use Eightfold\Tests\PHPStan\Fixtures\BooleanNegationMustBeExplicitCompliant;
 use Eightfold\Tests\PHPStan\Fixtures\BooleanNegationMustBeExplicitNoncompliant;
 use PhpParser\Node\Expr\BooleanNot;

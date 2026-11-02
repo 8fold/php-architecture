@@ -29,7 +29,8 @@ and local adaptations of the shared rules.
 - `src/PHPCS/`: PHPCS sniffs (`Eightfold\PHPCS\`). Rule bodies are in
   `Sniffs/`; the `Efqs` standard in `Efqs/` (`Eightfold\Efqs\`)
   registers them.
-  Not yet referenced in `phpcs.xml`.
+  The `InstanceMethodsMustNotBeAccessedViaThis` Sniff is registered in
+  `phpcs.xml`.
 - Sniff and PHPStan rule names follow the
   [RFC 2119 naming convention](../.github/instructions/analysis-naming.instructions.md).
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with fixtures under

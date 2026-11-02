@@ -14,5 +14,6 @@ applyTo: "src/Analysis/**/*.php,src/PHPCS/**/*.php,experimental/Analysis/**/*.ph
   with its first character lowercased; do not derive them from the shared
   `PHPStanRule` class name.
 - Name tests and fixtures after the rule, adding `Compliant`, `Noncompliant`,
-  or `Test`. Experimental analysis files mirror this structure under
+  or `Test`. 
+- Experimental analysis files mirror this structure under
   `experimental/Analysis/` and are not Composer-autoloaded.

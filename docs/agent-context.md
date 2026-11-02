@@ -53,6 +53,8 @@ The entry points are defined in `composer.json`:
 - `composer check:style`: PHPCS with `phpcs.xml`.
 - `composer check:analyze`: PHPStan with `phpstan.neon`.
 - `composer check:test` (alias `composer test`): PHPUnit.
+- `composer check:instructions`: list and check path-specific instruction
+  coverage ([details](#verify-path-specific-instruction-coverage)).
 - `composer production` (alias `composer prod`): `check`, then
   `optimize-autoloader`.
 
@@ -77,33 +79,13 @@ Not functional yet; do not rely on these:
 
 ### Verify path-specific instruction coverage
 
-From the repository root, list the tracked files matched by each `applyTo`
-pattern:
-
-```sh
-for instruction in .github/instructions/*.instructions.md; do
-    printf '\n%s\n' "$instruction"
-    patterns=$(sed -n 's/^applyTo: "\(.*\)"$/\1/p' "$instruction")
-    printf '%s\n' "$patterns" | tr ',' '\n' | while IFS= read -r pattern; do
-        printf 'Pattern: %s\n' "$pattern"
-        git ls-files -- ":(glob)$pattern"
-    done
-done
-```
-
-This checks the current quoted, comma-separated frontmatter patterns using
-Git's glob pathspecs. For the `*` and `**` patterns used here, `*` stays within
-one path segment and `**/` includes zero or more directories, matching
-[Copilot's documented glob semantics](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions#creating-path-specific-custom-instructions).
-It does not verify that a particular Copilot client loaded the instructions.
-
-Class declaration and class-use instructions should cover all tracked PHP files
-under `src/` and `tests/`, including nested files. PHPUnit instructions should
-cover test classes at every depth, but not fixture files. Analysis naming and
-PHPCS development instructions should remain limited to their respective
-analysis paths; PHPCS development also covers `phpcs.xml`.
-Review the output for missing or unexpected files and for patterns with no
-matches; correct the frontmatter rather than treating an empty list as coverage.
+`composer check:instructions` lists the tracked files that each
+`.github/instructions/*.instructions.md` `applyTo` pattern matches. It fails
+on missing or malformed frontmatter and on patterns that match no tracked
+files. Review the output for missing or unexpected files. The glob semantics,
+intended scopes, limits, and exit codes live in
+[`bin/check-instruction-coverage`](../bin/check-instruction-coverage), the
+canonical home. The script is repository-only and is not a Composer binary.
 
 <!-- Secret templates, copies, and previews. -->
 ## Environment and secrets

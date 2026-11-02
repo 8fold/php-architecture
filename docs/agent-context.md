@@ -36,8 +36,8 @@ and local adaptations of the shared rules.
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with fixtures under
   `tests/PHPStan/Fixtures/` and `tests/PHPCS/Fixtures/`.
 - `bin/`: Composer-exposed command-line tools for consuming projects.
-- `docs/`: project documentation, including the agent context copied by
-  consuming projects.
+- `docs/`: project documentation, including the agent context and
+  [Graphify setup guide](graphify-workflow-setup.md) copied by consuming projects.
 - `.github/instructions/`: Copilot instructions for PHP class and test
   conventions.
 - Tool configuration: `phpcs.xml`, `phpstan.neon`, `phpunit.xml`.
@@ -94,8 +94,8 @@ rule 5. Do not fix unrelated code as part of other work.
 ## Session startup
 
 1. Read `AGENTS.md` and this document. Check the branch and `git status`.
-2. Knowledge graph: none is maintained yet (see adaptations). Tell the user
-   that it is missing. Do not build one without asking.
+2. Check knowledge-graph readiness under the
+   [local graph policy](#local-adaptations-and-pending-deliverables).
 3. If `vendor/` is missing and the task needs validation, run
    `composer install`.
 
@@ -110,9 +110,9 @@ None.
 Each entry links to the shared rule it adapts.
 
 - [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
-  rule 1: no knowledge graph or setup guide exists yet. Until the guide
-  exists, ask before building a graph. Graphify writes `graphify-out/cache/`
-  into the repository; keep it out of commits.
+  rule 1: no knowledge graph has been created yet. Follow the
+  [Graphify setup guide](graphify-workflow-setup.md): creation requires explicit
+  approval; updates to an existing graph require no separate approval.
 - [Human gates and Git workflow](../AGENTS.md#human-gates-and-git-workflow)
   rule 1: the shared contribution guide (full change-classification
   definitions) does not exist yet.

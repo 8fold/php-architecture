@@ -28,10 +28,12 @@ final class EfqsDocsAgentsTest extends TestCase
             '/AGENTS.md',
             '/composer.json',
             '/docs/agent-context.md',
+            '/docs/graphify-workflow-setup.md',
             '/docs',
             '/nested/AGENTS.md',
             '/package with spaces/AGENTS.md',
             '/package with spaces/docs/agent-context.md',
+            '/package with spaces/docs/graphify-workflow-setup.md',
             '/package with spaces/bin/efqs',
             '/project with spaces/AGENTS.md',
             '/project with spaces/composer.json',
@@ -275,6 +277,127 @@ final class EfqsDocsAgentsTest extends TestCase
 
         parent::assertNotSame(0, $exitCode);
         parent::assertStringContainsString("Unable to read the package's agent-context.md", $error);
+        parent::assertDirectoryDoesNotExist($this->projectDirectory . '/docs');
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function copies_the_graphify_guide_and_creates_the_docs_directory(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            ['docs:graphify']
+        );
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertFileEquals(
+            dirname(__DIR__) . '/docs/graphify-workflow-setup.md',
+            $this->projectDirectory . '/docs/graphify-workflow-setup.md'
+        );
+        parent::assertDirectoryDoesNotExist($this->projectDirectory . '/graphify-out');
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function reports_an_identical_graphify_guide_as_current(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/docs');
+        copy(
+            dirname(__DIR__) . '/docs/graphify-workflow-setup.md',
+            $this->projectDirectory . '/docs/graphify-workflow-setup.md'
+        );
+
+        [$exitCode, $output, $error] = self::runInstaller(
+            $this->projectDirectory,
+            ['docs:graphify']
+        );
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertStringContainsString('already current', $output);
+        parent::assertFileEquals(
+            dirname(__DIR__) . '/docs/graphify-workflow-setup.md',
+            $this->projectDirectory . '/docs/graphify-workflow-setup.md'
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function refuses_to_overwrite_a_different_graphify_guide(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/docs');
+        file_put_contents(
+            $this->projectDirectory . '/docs/graphify-workflow-setup.md',
+            "Local guide\n"
+        );
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            ['docs:graphify']
+        );
+
+        parent::assertNotSame(0, $exitCode);
+        parent::assertStringContainsString('refusing to overwrite', $error);
+        parent::assertSame(
+            "Local guide\n",
+            file_get_contents($this->projectDirectory . '/docs/graphify-workflow-setup.md')
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function reads_the_graphify_guide_relative_to_the_installed_package(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/package with spaces/bin', 0700, true);
+        mkdir($this->projectDirectory . '/package with spaces/docs', 0700);
+        copy(
+            dirname(__DIR__) . '/bin/efqs',
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+        file_put_contents(
+            $this->projectDirectory . '/package with spaces/docs/graphify-workflow-setup.md',
+            "Installed package graph guide\n"
+        );
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            ['docs:graphify'],
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+
+        parent::assertSame(0, $exitCode, $error);
+        parent::assertSame(
+            "Installed package graph guide\n",
+            file_get_contents($this->projectDirectory . '/docs/graphify-workflow-setup.md')
+        );
+    }
+
+    #[Test]
+    #[Group('cli')]
+    public function reports_a_missing_canonical_graphify_guide(): void
+    {
+        self::createProjectManifest($this->projectDirectory);
+        mkdir($this->projectDirectory . '/package with spaces/bin', 0700, true);
+        copy(
+            dirname(__DIR__) . '/bin/efqs',
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+
+        [$exitCode, , $error] = self::runInstaller(
+            $this->projectDirectory,
+            ['docs:graphify'],
+            $this->projectDirectory . '/package with spaces/bin/efqs'
+        );
+
+        parent::assertNotSame(0, $exitCode);
+        parent::assertStringContainsString(
+            "Unable to read the package's graphify-workflow-setup.md",
+            $error
+        );
         parent::assertDirectoryDoesNotExist($this->projectDirectory . '/docs');
     }
 

@@ -28,6 +28,10 @@ use Eightfold\Attributes\Functions\Pure;
 /**
  * Draft fixture for issue #46; must produce no diagnostics.
  *
+ * The rule analyzes PHPStan's file-level node, so it covers every import and
+ * name in the file, with or without a class. Every class-like name is
+ * imported, and the imports are grouped.
+ *
  * Provisional block order, one blank line between blocks:
  *
  * 1. Extended parent class.
@@ -45,7 +49,7 @@ use Eightfold\Attributes\Functions\Pure;
  *
  * @implements Rule<Class_>
  */
-final class ClassImportsShouldBeGroupedCompliant extends DateTime implements
+final class FilesMustImportDependenciesCompliant extends DateTime implements
     Stringable,
     Rule
 {

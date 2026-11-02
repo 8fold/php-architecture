@@ -18,20 +18,20 @@ use Stringable;
 
 /**
  * Draft fixture for issue #46; the expected diagnostic is provisional.
- * The convention applies to file-level imports, even without a class.
- * Sibling directory fixtures cover index.php, cli/, and extensionless bin/ scripts.
  *
- * The same imports as ClassImportsShouldBeGroupedCompliant, in one
- * alphabetical block, as many editors produce.
+ * The same imports as FilesMustImportDependenciesCompliant, in one
+ * alphabetical block, as many editors produce. Every name is imported, so
+ * only grouping is reported; FilesMustImportDependenciesNoncompliant/index.php
+ * covers a fully qualified name in a file without a class.
  *
- * Expected: one eightfold.classImportsShouldBeGrouped tip-level diagnostic
- * at the first import that departs from the expected order (line 7,
- * Countable; DateTime is expected first), naming the expected order. An
- * alternative is one diagnostic per misplaced import.
+ * Expected: one eightfold.filesMustImportDependencies error at the first
+ * import that departs from the expected order (line 7, Countable; DateTime
+ * is expected first), naming the expected order. An alternative is one
+ * diagnostic per misplaced import.
  *
  * @implements Rule<Class_>
  */
-final class ClassImportsShouldBeGroupedNoncompliant extends DateTime implements
+final class FilesMustImportDependenciesNoncompliant extends DateTime implements
     Stringable,
     Rule
 {

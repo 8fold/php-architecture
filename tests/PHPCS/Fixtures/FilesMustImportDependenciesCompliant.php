@@ -22,7 +22,7 @@ use PHPStan\Rules\Rule;
 use Eightfold\Attributes\CallableSubtype;
 use Eightfold\Attributes\Classes\BaseClass;
 
-trait ClassNamesMustBeImportedCompliantTrait
+trait FilesMustImportDependenciesCompliantTrait
 {
 }
 
@@ -31,20 +31,20 @@ trait ClassNamesMustBeImportedCompliantTrait
  *
  * Every class-like name in code is imported directly, including built-in PHP
  * classes. Aliased imports (ClassNode) and unqualified names from the current
- * namespace (ClassNamesMustBeImportedCompliantTrait) are compliant. Global
+ * namespace (FilesMustImportDependenciesCompliantTrait) are compliant. Global
  * functions (\strlen, \count), constants (\PHP_EOL), and names in strings,
  * comments, and docblocks such as \PhpParser\Node are outside this
- * convention. The import grouping here is illustrative;
- * ClassImportsShouldBeGrouped governs it.
+ * convention. PHPCS cannot classify symbols, so the PHPStan fixtures verify
+ * import grouping; the grouping here matches them.
  *
  * @implements Rule<ClassNode>
  */
 #[BaseClass('Fixture for issue #46.')]
-abstract class ClassNamesMustBeImportedCompliant extends DateTime implements
+abstract class FilesMustImportDependenciesCompliant extends DateTime implements
     Stringable,
     Rule
 {
-    use ClassNamesMustBeImportedCompliantTrait;
+    use FilesMustImportDependenciesCompliantTrait;
 
     /** @param ArrayObject<int, mixed>|SplObjectStorage<object, mixed> $items */
     public function __construct(

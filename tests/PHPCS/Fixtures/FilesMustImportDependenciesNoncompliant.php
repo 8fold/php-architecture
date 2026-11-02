@@ -6,16 +6,17 @@ namespace Eightfold\Tests\PHPCS\Fixtures;
 
 use PHPStan\Rules;
 
-trait ClassNamesMustBeImportedNoncompliantTrait
+trait FilesMustImportDependenciesNoncompliantTrait
 {
 }
 
 /**
  * Draft fixture for issue #46; expected diagnostics are provisional.
- * The convention applies to the whole file, not just class declarations.
- * Sibling directory fixtures cover index.php, cli/, and extensionless bin/ scripts.
+ * The convention applies to the whole file, not just class declarations;
+ * FilesMustImportDependenciesNoncompliant/index.php has neither a namespace
+ * nor a class.
  *
- * Expected: one Efqs.Namespaces.ClassNamesMustBeImported.FullyQualified error
+ * Expected: one Efqs.Files.FilesMustImportDependencies.FullyQualified error
  * for each fully qualified class-like name in code, including built-in PHP
  * classes, at the name's first token: the attribute, extends, implements,
  * trait use, property and parameter types, union and nullable types, `new`,
@@ -23,7 +24,7 @@ trait ClassNamesMustBeImportedNoncompliantTrait
  *
  * Partially qualified names that resolve through an imported namespace
  * (Rules\Rule) produce a separate
- * Efqs.Namespaces.ClassNamesMustBeImported.Qualified error; whether that case
+ * Efqs.Files.FilesMustImportDependencies.Qualified error; whether that case
  * belongs in this convention is an open question.
  *
  * Not reported: the namespace declaration, `use` import statements, global
@@ -33,11 +34,11 @@ trait ClassNamesMustBeImportedNoncompliantTrait
  * @implements Rules\Rule<\PhpParser\Node\Stmt\Class_>
  */
 #[\Eightfold\Attributes\Classes\BaseClass('Fixture for issue #46.')]
-abstract class ClassNamesMustBeImportedNoncompliant extends \DateTime implements
+abstract class FilesMustImportDependenciesNoncompliant extends \DateTime implements
     \Stringable,
     Rules\Rule
 {
-    use \Eightfold\Tests\PHPCS\Fixtures\ClassNamesMustBeImportedNoncompliantTrait;
+    use \Eightfold\Tests\PHPCS\Fixtures\FilesMustImportDependenciesNoncompliantTrait;
 
     /** @param \ArrayObject<int, mixed>|\SplObjectStorage<object, mixed> $items */
     public function __construct(

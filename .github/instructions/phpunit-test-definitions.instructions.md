@@ -1,5 +1,5 @@
 ---
-applyTo: "tests/*Test.php"
+applyTo: "tests/**/*Test.php"
 ---
 
 - Each class:

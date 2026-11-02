@@ -53,6 +53,8 @@ The entry points are defined in `composer.json`:
 - `composer check:style`: PHPCS with `phpcs.xml`.
 - `composer check:analyze`: PHPStan with `phpstan.neon`.
 - `composer check:test` (alias `composer test`): PHPUnit.
+- `composer check:instructions`: list and check path-specific instruction
+  coverage ([details](#verify-path-specific-instruction-coverage)).
 - `composer production` (alias `composer prod`): `check`, then
   `optimize-autoloader`.
 
@@ -74,6 +76,16 @@ Not functional yet; do not rely on these:
   corresponding `composer check:*` scripts.
 - Not enforced: guidance in `AGENTS.md` unless a tool or check explicitly
   implements it.
+
+### Verify path-specific instruction coverage
+
+`composer check:instructions` lists the tracked files that each
+`.github/instructions/*.instructions.md` `applyTo` pattern matches. It fails
+on missing or malformed frontmatter and on patterns that match no tracked
+files. Review the output for missing or unexpected files. The glob semantics,
+intended scopes, limits, and exit codes live in
+[`bin/check-instruction-coverage`](../bin/check-instruction-coverage), the
+canonical home. The script is repository-only and is not a Composer binary.
 
 <!-- Secret templates, copies, and previews. -->
 ## Environment and secrets

@@ -1,0 +1,133 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Lists the tracked files that each path-specific Copilot instruction applies to.
+ *
+ * Usage, from the repository root:
+ *
+ *     composer check:instructions
+ *
+ * Each `.github/instructions/*.instructions.md` file must begin with
+ * frontmatter containing one quoted, comma-separated `applyTo` line:
+ *
+ *     ---
+ *     applyTo: "src/**\/*.php,tests/**\/*.php"
+ *     ---
+ *
+ * For every pattern, the script prints the tracked files that
+ * `git ls-files -- ':(glob)PATTERN'` matches. For the `*` and `**` patterns
+ * used here, `*` stays within one path segment and `**\/` includes zero or more
+ * directories, matching Copilot's documented glob semantics:
+ * https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions#creating-path-specific-custom-instructions
+ *
+ * Intended scope of this repository's instructions:
+ *
+ * - Class declaration and class-use instructions cover all tracked PHP files
+ *   under `src/` and `tests/`, including nested files.
+ * - PHPUnit instructions cover test classes at every depth, but not fixtures.
+ * - Analysis naming and PHPCS development instructions stay limited to their
+ *   analysis paths; PHPCS development also covers `phpcs.xml`.
+ *
+ * The script fails when no instruction files exist, when frontmatter or
+ * `applyTo` is missing or malformed, when a pattern is empty, or when a pattern
+ * matches no tracked files. An empty match is drift, not coverage. Review the
+ * listed matches for missing or unexpected files; the script does not know the
+ * intended scope.
+ *
+ * Limits: only tracked files are considered, Git must be available, and the
+ * check does not verify that a particular Copilot client loaded the
+ * instructions.
+ *
+ * Exit codes: 0 when every pattern matches at least one tracked file;
+ * 1 when any problem is found or Git cannot be run.
+ */
+
+declare(strict_types=1);
+
+$root = getcwd();
+if ($root === false) {
+    fwrite(STDERR, "Unable to determine the current directory.\n");
+    exit(1);
+}
+
+$instructionFiles = glob($root . '/.github/instructions/*.instructions.md');
+if ($instructionFiles === false || $instructionFiles === []) {
+    fwrite(STDERR, "No .github/instructions/*.instructions.md files found; run from the repository root.\n");
+    exit(1);
+}
+sort($instructionFiles);
+
+$problems = 0;
+foreach ($instructionFiles as $instructionFile) {
+    $relativeFile = substr($instructionFile, strlen($root) + 1);
+    fwrite(STDOUT, "\n{$relativeFile}\n");
+
+    $contents = file_get_contents($instructionFile);
+    if (
+        $contents === false
+        || preg_match('/\A---\R(.*?)\R---(?:\R|\z)/s', $contents, $frontmatter) !== 1
+    ) {
+        fwrite(STDERR, "{$relativeFile}: missing or unreadable frontmatter.\n");
+        $problems++;
+        continue;
+    }
+
+    if (preg_match('/^applyTo: "([^"]*)"$/m', $frontmatter[1], $applyTo) !== 1) {
+        fwrite(STDERR, "{$relativeFile}: frontmatter needs one quoted applyTo line.\n");
+        $problems++;
+        continue;
+    }
+
+    foreach (explode(',', $applyTo[1]) as $pattern) {
+        $pattern = trim($pattern);
+        if ($pattern === '') {
+            fwrite(STDERR, "{$relativeFile}: applyTo contains an empty pattern.\n");
+            $problems++;
+            continue;
+        }
+
+        fwrite(STDOUT, "Pattern: {$pattern}\n");
+        $matches = trackedFiles($root, $pattern);
+        if ($matches === null) {
+            fwrite(STDERR, "Unable to run git ls-files; Git and a repository are required.\n");
+            exit(1);
+        }
+        if ($matches === []) {
+            fwrite(STDERR, "{$relativeFile}: pattern matches no tracked files: {$pattern}\n");
+            $problems++;
+            continue;
+        }
+        foreach ($matches as $match) {
+            fwrite(STDOUT, "{$match}\n");
+        }
+    }
+}
+
+exit($problems === 0 ? 0 : 1);
+
+/**
+ * @return list<string>|null
+ */
+function trackedFiles(string $root, string $pattern): ?array
+{
+    $process = proc_open(
+        ['git', 'ls-files', '-z', '--', ':(glob)' . $pattern],
+        [1 => ['pipe', 'w'], 2 => ['pipe', 'w']],
+        $pipes,
+        $root
+    );
+    if (!is_resource($process)) {
+        return null;
+    }
+
+    $output = stream_get_contents($pipes[1]);
+    stream_get_contents($pipes[2]);
+    fclose($pipes[1]);
+    fclose($pipes[2]);
+    if (proc_close($process) !== 0 || $output === false) {
+        return null;
+    }
+
+    return array_values(array_filter(explode("\0", $output), static fn (string $path): bool => $path !== ''));
+}

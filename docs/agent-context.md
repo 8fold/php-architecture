@@ -41,9 +41,16 @@ and local adaptations of the shared rules.
 - `docs/`: project documentation, including the agent context and
   Graphify [setup](graphify-setup.md) and [workflow](graphify-workflow.md)
   guides copied by consuming projects.
+- `.github/contributing.md`: canonical contribution, change-classification,
+  and [issue-triage policy](../.github/contributing.md#issue-triage).
+  The cumulative rubric is qualitative, not a numeric score.
+- `.github/ISSUE_TEMPLATE/`: bug, feature, deprecation, and convention templates.
+  `.github/pull_request_template.md` is the sole default PR template.
 - `.github/instructions/`: Copilot instructions for PHP class and test
   conventions, including
   [explicit boolean expressions](../.github/instructions/php-boolean-expressions.instructions.md).
+  Template edits follow the
+  [GitHub template instruction](../.github/instructions/github-templates.instructions.md).
 - Tool configuration: `phpcs.xml`, `phpstan.neon`, `phpunit.xml`.
 
 <!-- Commands and their known limitations. -->
@@ -141,12 +148,6 @@ Each entry links to the shared rule it adapts.
   [artifact-tracking baseline](graphify-setup.md#artifact-tracking):
   `.gitignore` lists the local-only Graphify files, and the core artifacts are
   committed.
-- [Human gates and Git workflow](../AGENTS.md#human-gates-and-git-workflow)
-  rule 1: the shared contribution guide (full change-classification
-  definitions) does not exist yet.
-- [Human gates and Git workflow](../AGENTS.md#human-gates-and-git-workflow)
-  rule 4: there is no pull request template yet. Describe each change and
-  classify it as refactoring or re-engineering in the pull request body.
 - [Information placement](../AGENTS.md#information-placement) rule 1: the
   information hierarchy links to `8fold/site-masteringthemundane.com` at
   bc4f99d until this package ships its own copy.

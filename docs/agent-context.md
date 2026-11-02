@@ -98,8 +98,6 @@ rule 5. Do not fix unrelated code as part of other work.
    [local graph policy](#local-adaptations-and-pending-deliverables), before
    reading other documents.
 2. Read `AGENTS.md` and this document. Check the branch and `git status`.
-3. If `vendor/` is missing and the task needs validation, run
-   `composer install`.
 
 <!-- Exceptions permitted by the shared rules. -->
 ## Exceptions

@@ -37,7 +37,8 @@ and local adaptations of the shared rules.
   `tests/PHPStan/Fixtures/` and `tests/PHPCS/Fixtures/`.
 - `bin/`: Composer-exposed command-line tools for consuming projects.
 - `docs/`: project documentation, including the agent context and
-  [Graphify setup guide](graphify-workflow-setup.md) copied by consuming projects.
+  Graphify [setup](graphify-setup.md) and [workflow](graphify-workflow.md)
+  guides copied by consuming projects.
 - `.github/instructions/`: Copilot instructions for PHP class and test
   conventions.
 - Tool configuration: `phpcs.xml`, `phpstan.neon`, `phpunit.xml`.
@@ -111,8 +112,9 @@ Each entry links to the shared rule it adapts.
 
 - [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
   rule 1: no knowledge graph has been created yet. Follow the
-  [Graphify setup guide](graphify-workflow-setup.md): creation requires explicit
-  approval; updates to an existing graph require no separate approval.
+  [Graphify setup guide](graphify-setup.md): creation requires explicit
+  approval. Once a graph exists, the [workflow guide](graphify-workflow.md)
+  applies; updates require no separate approval.
 - [Human gates and Git workflow](../AGENTS.md#human-gates-and-git-workflow)
   rule 1: the shared contribution guide (full change-classification
   definitions) does not exist yet.

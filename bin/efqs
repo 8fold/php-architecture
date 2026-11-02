@@ -6,16 +6,17 @@ declare(strict_types=1);
 $files = [
     'docs:agents' => 'AGENTS.md',
     'docs:context' => 'docs/agent-context.md',
-    'docs:graphify' => 'docs/graphify-workflow-setup.md',
+    'docs:graphify-setup' => 'docs/graphify-setup.md',
+    'docs:graphify-workflow' => 'docs/graphify-workflow.md',
 ];
 if (!isset($argc, $argv) || $argc !== 2) {
-    fwrite(STDERR, "Usage: efqs docs:agents|docs:context|docs:graphify\n");
+    fwrite(STDERR, "Usage: efqs docs:agents|docs:context|docs:graphify-setup|docs:graphify-workflow\n");
     exit(1);
 }
 
 $command = $argv[1] ?? null;
 if (!is_string($command) || !isset($files[$command])) {
-    fwrite(STDERR, "Usage: efqs docs:agents|docs:context|docs:graphify\n");
+    fwrite(STDERR, "Usage: efqs docs:agents|docs:context|docs:graphify-setup|docs:graphify-workflow\n");
     exit(1);
 }
 

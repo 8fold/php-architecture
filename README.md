@@ -1,22 +1,23 @@
 # 8fold Architecture for PHP
 
-## Install the shared agent rules, context, and Graphify guide
+## Install the shared agent rules, context, and Graphify guides
 
 Add `8fold/php-architecture` to the consuming project's Composer dependencies
 and install them. From the consuming project's root, copy the shared rules and
-the project context and setup guide:
+the project context and Graphify guides:
 
 ```sh
 ./vendor/bin/efqs docs:agents
 ./vendor/bin/efqs docs:context
-./vendor/bin/efqs docs:graphify
+./vendor/bin/efqs docs:graphify-setup
+./vendor/bin/efqs docs:graphify-workflow
 ```
 
-The commands copy `AGENTS.md`, `docs/agent-context.md`, and
-`docs/graphify-workflow-setup.md`, respectively, creating destination directories
-if needed. Each command leaves an identical destination unchanged and refuses
-to overwrite a different file. Copying the guide does not install Graphify,
-configure hooks, or create a graph.
+The commands copy `AGENTS.md`, `docs/agent-context.md`,
+`docs/graphify-setup.md`, and `docs/graphify-workflow.md`, respectively,
+creating destination directories if needed. Each command leaves an identical
+destination unchanged and refuses to overwrite a different file. Copying the
+guides does not install Graphify, configure hooks, or create a graph.
 
 Composer makes `efqs` available in its configured `bin-dir`, which defaults to
 `vendor/bin`. To expose the commands as Composer scripts, add these entries to
@@ -27,12 +28,13 @@ the consuming project's existing `composer.json` scripts:
   "scripts": {
     "efqs:docs:agents": "efqs docs:agents",
     "efqs:docs:context": "efqs docs:context",
-    "efqs:docs:graphify": "efqs docs:graphify"
+    "efqs:docs:graphify-setup": "efqs docs:graphify-setup",
+    "efqs:docs:graphify-workflow": "efqs docs:graphify-workflow"
   }
 }
 ```
 
-The copied context and guide are starting points, not consuming-project facts.
+The copied context and guides are starting points, not consuming-project facts.
 Adapt project-specific setup and commands before relying on them.
 
 ## PHP conventions (strict)

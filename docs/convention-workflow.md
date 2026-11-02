@@ -2,7 +2,8 @@
 
 This workflow develops a requested coding convention from concrete PHP
 fixtures. It starts when the user asks for a convention or agent instruction,
-for example, "we need an agent instruction to use explicit boolean comparisons."
+or when an issue requests one. For example, "we need an agent instruction to
+use explicit boolean comparisons."
 
 Start with the closest reasonable approximation of compliant and noncompliant
 code, then refine it through review. Exhaustive agreement on names, exceptions,
@@ -16,7 +17,11 @@ convention request.
 1. **Create a fixture.** Draft syntactically valid compliant and intentionally
    noncompliant fixtures from the request. Describe the expected diagnostics,
    cases that must not be reported, and provisional assumptions. Use the
-   applicable analyzer's fixture directory.
+   applicable analyzer's fixture directory. A request to develop the
+   convention authorizes opening a pull request with the fixture-only draft
+   for review, without the separate approval normally required by the
+   [PR gate](../AGENTS.md#human-gates-and-git-workflow). It does not authorize
+   tests, implementation, or activation.
 2. **Fixture approval.** Present the fixtures and iterate with the user until
    they represent the intended convention. Resolve scope questions through
    concrete examples rather than requiring a complete abstract specification

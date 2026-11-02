@@ -8,15 +8,23 @@ $files = [
     'docs:context' => 'docs/agent-context.md',
     'docs:graphify-setup' => 'docs/graphify-setup.md',
     'docs:graphify-workflow' => 'docs/graphify-workflow.md',
+    'docs:contributing' => '.github/contributing.md',
+    'docs:convention-workflow' => 'docs/convention-workflow.md',
+    'templates:bug' => '.github/ISSUE_TEMPLATE/Bug_report.md',
+    'templates:feature' => '.github/ISSUE_TEMPLATE/Feature_request.md',
+    'templates:deprecation' => '.github/ISSUE_TEMPLATE/Deprecation_notice_or_request.md',
+    'templates:convention' => '.github/ISSUE_TEMPLATE/Convention_request.md',
+    'templates:pull-request' => '.github/pull_request_template.md',
 ];
+$usage = 'Usage: efqs ' . implode('|', array_keys($files)) . "\n";
 if (isset($argc, $argv) === false || $argc !== 2) {
-    fwrite(STDERR, "Usage: efqs docs:agents|docs:context|docs:graphify-setup|docs:graphify-workflow\n");
+    fwrite(STDERR, $usage);
     exit(1);
 }
 
 $command = $argv[1] ?? null;
 if (is_string($command) === false || isset($files[$command]) === false) {
-    fwrite(STDERR, "Usage: efqs docs:agents|docs:context|docs:graphify-setup|docs:graphify-workflow\n");
+    fwrite(STDERR, $usage);
     exit(1);
 }
 

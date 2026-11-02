@@ -1,7 +1,6 @@
 ---
 name: Convention request
 about: Track a coding convention as an agent instruction, PHPCS sniff, and PHPStan rule
-labels: enhancement
 ---
 
 <!-- Process: docs/convention-workflow.md -->
@@ -31,6 +30,10 @@ labels: enhancement
 ## Open questions
 
 <!-- Accuracy, overlap, existing code, and behavior (docs/convention-workflow.md#layers). -->
+
+## Policy status and acceptance criteria
+
+<!-- Record the proposal or adoption, its impact, and the observable outcomes that establish success. Do not infer policy adoption from authorship. -->
 
 ## Out of scope
 

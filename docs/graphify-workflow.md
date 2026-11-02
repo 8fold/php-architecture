@@ -2,9 +2,9 @@
 
 This is the shared workflow baseline for 8fold PHP projects with an existing
 knowledge graph: `graphify-out/graph.json` is present at the project root. If
-it is absent, follow the [Graphify setup](graphify-setup.md) instead. Read
-[AGENTS.md](../AGENTS.md) and the [agent context](agent-context.md) first;
-the context records project-specific commands, startup order, and adaptations.
+it is absent, follow the [Graphify setup](graphify-setup.md) instead.
+[AGENTS.md](../AGENTS.md) and the [agent context](agent-context.md) hold the
+shared rules and project-specific commands, startup order, and adaptations.
 
 `efqs docs:graphify-workflow` copies this guide into a consuming project's
 `docs/` directory. It does not install Graphify, configure hooks, or create a

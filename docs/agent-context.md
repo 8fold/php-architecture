@@ -94,9 +94,10 @@ rule 5. Do not fix unrelated code as part of other work.
 <!-- Ordered repository-specific startup gates. -->
 ## Session startup
 
-1. Read `AGENTS.md` and this document. Check the branch and `git status`.
-2. Check knowledge-graph readiness under the
-   [local graph policy](#local-adaptations-and-pending-deliverables).
+1. Check and refresh the knowledge graph under the
+   [local graph policy](#local-adaptations-and-pending-deliverables), before
+   reading other documents.
+2. Read `AGENTS.md` and this document. Check the branch and `git status`.
 3. If `vendor/` is missing and the task needs validation, run
    `composer install`.
 

@@ -1,9 +1,9 @@
 # Graphify setup
 
 This is the shared setup baseline for 8fold PHP projects with no knowledge
-graph: `graphify-out/graph.json` is absent at the project root. Read
-[AGENTS.md](../AGENTS.md) and the [agent context](agent-context.md) first;
-the context records project-specific commands, startup order, and adaptations.
+graph: `graphify-out/graph.json` is absent at the project root.
+[AGENTS.md](../AGENTS.md) and the [agent context](agent-context.md) hold the
+shared rules and project-specific commands, startup order, and adaptations.
 Once a graph exists, follow the [Graphify workflow](graphify-workflow.md).
 
 `efqs docs:graphify-setup` copies this guide into a consuming project's

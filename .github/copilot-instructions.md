@@ -2,11 +2,9 @@
 
 Run these gates in order at the start of each session, before other work.
 
-1. **Check and refresh the knowledge graph.** First read
-   [AGENTS.md](../AGENTS.md) and the [agent context](../docs/agent-context.md),
-   following the repository's [startup order](../docs/agent-context.md#session-startup)
-   and [local graph policy](../docs/agent-context.md#local-adaptations-and-pending-deliverables).
-   Check for `graphify-out/graph.json`.
+1. **Check and refresh the knowledge graph.** This gate runs first, before
+   reading other documents, so the graph can help navigate them. Check for
+   `graphify-out/graph.json`.
    - If absent, follow the [setup guide](../docs/graphify-setup.md): report
      it and obtain explicit approval before creating a graph.
    - If present, follow the [workflow guide](../docs/graphify-workflow.md):

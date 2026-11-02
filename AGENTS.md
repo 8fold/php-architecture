@@ -5,7 +5,9 @@ Copilot CLI, Gemini CLI, and others) work with people on 8fold PHP projects.
 `8fold/php-architecture` is their canonical home.
 
 Read this file and the repository's [agent context](docs/agent-context.md)
-before working. The agent context records this repository's actual commands,
+before working. Only the knowledge-graph check, the first
+[startup gate](docs/agent-context.md#session-startup), comes earlier. The
+agent context records this repository's actual commands,
 paths, environment, startup gates, exceptions, and local adaptations of these
 rules. Both documents are binding.
 

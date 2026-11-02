@@ -52,6 +52,12 @@ the command's requirements and its code-only alias.
 
 ## PHP conventions (strict)
 
+- [Explicit boolean expressions](.github/instructions/php-boolean-expressions.instructions.md):
+  prefer positive conditions or strict comparisons to negating a boolean
+  expression with `!`. The type-aware `BooleanNegationMustBeExplicit` PHPStan
+  rule is implemented but disabled alongside the other custom rules.
+  See the [enforcement boundaries](docs/agent-context.md#enforcement-boundaries)
+  for its scope and current activation state.
 - **`MethodScopeConventionRule`**: Enforces strict `self::`, `parent::`, and `$this->` scoping conventions on method calls.
 - **`DataObjectPurityRule`**: Enforces strict immutable, property-only rules for class instances.
 - **`RecordPurityRule`**: Enforces strict immutable, property-only Data Object rules applied to database row representation.

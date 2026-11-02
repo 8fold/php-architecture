@@ -112,10 +112,12 @@ None.
 Each entry links to the shared rule it adapts.
 
 - [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
-  rule 1: no knowledge graph has been created yet. Follow the
-  [Graphify setup guide](graphify-setup.md): creation requires explicit
-  approval. Once a graph exists, the [workflow guide](graphify-workflow.md)
-  applies; updates require no separate approval.
+  rule 1: the knowledge graph exists; the
+  [workflow guide](graphify-workflow.md) applies, and updates require no
+  separate approval. The repository follows the setup guide's
+  [artifact-tracking baseline](graphify-setup.md#artifact-tracking):
+  `.gitignore` lists the local-only Graphify files, and the core artifacts are
+  committed.
 - [Human gates and Git workflow](../AGENTS.md#human-gates-and-git-workflow)
   rule 1: the shared contribution guide (full change-classification
   definitions) does not exist yet.

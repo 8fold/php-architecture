@@ -11,6 +11,10 @@ Run these gates in order at the start of each session, before other work.
      refresh code and prose without separate approval, report failures rather
      than treating a stale graph as current, and keep generated changes out of
      unrelated commits.
+   - If `GRAPH_REPORT.md` records zero semantic-extraction tokens that were
+     not measured, replace that line with a statement that usage was
+     unavailable. A code-only extraction can legitimately record zero
+     ([usage evidence](../docs/graphify-workflow.md#php-coverage-and-usage-evidence)).
 
 2. **Read the shared rules.** Read [AGENTS.md](../AGENTS.md) and the
      [agent context](../docs/agent-context.md), including the repository's

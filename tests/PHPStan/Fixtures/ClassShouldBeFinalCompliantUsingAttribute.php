@@ -2,9 +2,9 @@
 
 namespace Eightfold\Tests\PHPStan\Fixtures;
 
-use Eightfold\Attributes\BaseClass;
+use Eightfold\Attributes\Classes\BaseClass;
 
-#[BaseClass('All subclasses must call')]
-class ClassShouldBeFinalCompliantUsingAttribute
+#[BaseClass('This fixture permits extension.')]
+class ClassShouldBeFinalCompliantUsingAttribute extends \DateTime
 {
 }

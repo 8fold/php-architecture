@@ -11,7 +11,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 
 use Eightfold\PHPStan\Rules\ClassMustBeFinal;
 
-use Eightfold\Attributes\BaseClass;
+use Eightfold\Attributes\Classes\BaseClass;
 
 /**
  * @implements Rule<InClassNode>
@@ -31,7 +31,7 @@ final class ClassShouldBeFinal implements Rule
     {
         $attributeName = self::OPT_OUT_ATTRIBUTE;
 
-        $inherited = ClassMustNotBeSubclass::tip($className, true);
+        $inherited = ClassMustBeFinal::tip($className, true);
 
         return <<<tip
         {$inherited}

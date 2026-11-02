@@ -9,7 +9,7 @@ use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 
-use Eightfold\Attributes\Subclass;
+use Eightfold\Attributes\Classes\Subclass;
 
 /**
  * @implements Rule<InClassNode>

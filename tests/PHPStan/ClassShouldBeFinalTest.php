@@ -13,8 +13,9 @@ use PHPStan\Testing\RuleTestCase;
 use Eightfold\PHPStan\Rules\ClassShouldBeFinal;
 
 use Eightfold\Tests\PHPStan\Fixtures\ClassShouldBeFinalNoncompliant;
+use Eightfold\Tests\PHPStan\Fixtures\ClassShouldNotBeSubclassCompliantUsingAttribute;
 
-use Eightfold\Attributes\Subclass;
+use Eightfold\Attributes\Classes\Subclass;
 
 /**
  * @extends RuleTestCase<ClassShouldBeFinal>
@@ -53,6 +54,34 @@ final class ClassShouldBeFinalTest extends RuletestCase
             [__DIR__ . '/Fixtures/ClassShouldBeFinalCompliantUsingAttribute.php'],
             []
         );
+    }
+
+    #[Test]
+    #[Group('analysis')]
+    public function subclass_attribute_does_not_suppress_finality(): void
+    {
+        $noncompliant = ClassShouldNotBeSubclassCompliantUsingAttribute::class;
+
+        parent::analyse(
+            [__DIR__ . '/Fixtures/ClassShouldNotBeSubclassCompliantUsingAttribute.php'],
+            [
+                [
+                    ClassShouldBeFinal::message($noncompliant),
+                    7,
+                    ClassShouldBeFinal::tip($noncompliant, false)
+                ]
+            ]
+        );
+    }
+
+    #[Test]
+    #[Group('analysis')]
+    public function finality_tip_recommends_final_before_the_attribute(): void
+    {
+        $tip = ClassShouldBeFinal::tip('Example');
+
+        parent::assertStringContainsString('Change declaration to `final class Example`', $tip);
+        parent::assertStringContainsString('Eightfold\Attributes\Classes\BaseClass', $tip);
     }
 
     #[Test]

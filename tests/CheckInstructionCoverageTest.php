@@ -22,7 +22,7 @@ final class CheckInstructionCoverageTest extends TestCase
         parent::setUp();
         $this->repository = sys_get_temp_dir()
             . '/instruction-coverage-' . bin2hex(random_bytes(8));
-        if (!mkdir($this->repository . '/.github/instructions', 0700, true)) {
+        if (mkdir($this->repository . '/.github/instructions', 0700, true) === false) {
             throw new RuntimeException('Unable to create the test repository.');
         }
         self::runCommand($this->repository, ['git', 'init', '--quiet']);
@@ -39,7 +39,7 @@ final class CheckInstructionCoverageTest extends TestCase
             RecursiveIteratorIterator::CHILD_FIRST
         );
         foreach ($items as $item) {
-            if ($item->isDir() && !$item->isLink()) {
+            if ($item->isDir() && $item->isLink() === false) {
                 rmdir($item->getPathname());
                 continue;
             }
@@ -128,7 +128,7 @@ final class CheckInstructionCoverageTest extends TestCase
     private static function write(string $repository, string $path, string $contents): void
     {
         $path = $repository . '/' . $path;
-        if (!is_dir(dirname($path)) && !mkdir(dirname($path), 0700, true)) {
+        if (is_dir(dirname($path)) === false && mkdir(dirname($path), 0700, true) === false) {
             throw new RuntimeException('Unable to create a test directory.');
         }
         if (file_put_contents($path, $contents) === false) {
@@ -149,7 +149,7 @@ final class CheckInstructionCoverageTest extends TestCase
             $pipes,
             $directory
         );
-        if (!is_resource($process)) {
+        if (is_resource($process) === false) {
             throw new RuntimeException('Unable to run the command.');
         }
 

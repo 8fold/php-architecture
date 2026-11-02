@@ -79,7 +79,7 @@ final readonly class NodeInspector
 
     public function getDeclaredSubtypeAttribute(Node $node): ?string
     {
-        if (!$node instanceof ClassMethod && !$node instanceof Function_) {
+        if (($node instanceof ClassMethod) === false && ($node instanceof Function_) === false) {
             return null;
         }
 

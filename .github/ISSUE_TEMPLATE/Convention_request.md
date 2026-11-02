@@ -28,6 +28,7 @@ about: Track a coding convention and its development needs
 - [ ] **PHPStan rule:** follow the sniff stages and approval gates.
 - [ ] **Trait:** add or update a trait when shared implementation is needed.
 - [ ] **Interface:** add or update an interface when a shared contract is needed.
+- [ ] **Attribute:** add or update a PHP attribute when declarative metadata is needed.
 
 ## Open questions
 

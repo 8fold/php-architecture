@@ -30,6 +30,7 @@ example.
 | PHPStan rule | Detection needs types, symbols, or semantic analysis. | No documented process yet; follow the sniff stages (fixtures, tests, implementation, activation) with the same approval gates. |
 | Trait | A shared implementation would support the convention. | Add or update a PHP trait. |
 | Interface | A shared contract would support the convention. | Add or update a PHP interface. |
+| Attribute | Declarative metadata would support the convention. | Add or update a PHP attribute. |
 
 Recommend optional work only when its benefit outweighs its cost. Consider:
 

@@ -1,25 +1,57 @@
 # Convention workflow
 
-This workflow turns a requested coding convention into tracked work. It starts
-when the user asks for a new agent instruction, for example, "we need an agent
-instruction to use explicit boolean comparisons."
+This workflow develops a requested coding convention from concrete PHP
+fixtures. It starts when the user asks for a convention or agent instruction,
+for example, "we need an agent instruction to use explicit boolean comparisons."
 
-[#31](https://github.com/8fold/php-architecture/issues/31) is the first
-example.
+Start with the closest reasonable approximation of compliant and noncompliant
+code, then refine it through review. Exhaustive agreement on names, exceptions,
+and ordering is not a prerequisite for drafting fixtures.
+
+[#31](https://github.com/8fold/php-architecture/issues/31) is an example
+convention request.
 
 ## Steps
 
-1. **Clarify the convention.** Restate it with one compliant and one
-   noncompliant example. Ask when the intent is ambiguous.
-2. **Assess each layer.** Decide whether each layer applies and whether it is
-   recommended ([Layers](#layers)). Present the assessment, including
-   alternatives and reasons to skip a layer.
-3. **Create one issue.** Track all layers in a single issue from the
-   [convention request template](../.github/ISSUE_TEMPLATE/Convention_request.md),
-   keeping its sections. Do not create separate issues per layer unless the
-   user asks.
-4. **Stop.** Creating the issue does not authorize implementation. Each layer
-   is implemented later, on request, through its own process.
+1. **Create a fixture.** Draft syntactically valid compliant and intentionally
+   noncompliant fixtures from the request. Describe the expected diagnostics,
+   cases that must not be reported, and provisional assumptions. Use the
+   applicable analyzer's fixture directory.
+2. **Fixture approval.** Present the fixtures and iterate with the user until
+   they represent the intended convention. Resolve scope questions through
+   concrete examples rather than requiring a complete abstract specification
+   first. Stop for explicit approval before writing tests.
+3. **Tests.** Write isolated tests for the agreed analyzer behavior and
+   demonstrate the intended failing assertions before implementation. Follow
+   the applicable [layer's process](#layers) for diagnostic assertions and
+   setup requirements.
+4. **Test approval.** Review the assertions and observed results with the user.
+   Iterate and obtain explicit approval before implementation.
+5. **Implementation.** Implement the approved behavior until the approved tests
+   pass. Do not weaken assertions or repair intentional fixture violations
+   merely to obtain passing tests.
+6. **Activation approval.** Review the implementation and results with the
+   user. Obtain separate explicit approval before enabling the convention in
+   repository analysis. Follow the layer's integration and validation process;
+   report unrelated baseline violations without expanding scope.
+
+The detailed analyzer stages are defined in
+[PHPCS sniff development](../.github/instructions/phpcs-sniff-development.instructions.md).
+Fixture approval authorizes tests, not implementation; test approval does not
+authorize activation.
+
+## Tracking and layer assessment
+
+As the fixtures are refined, assess each [layer](#layers), including
+alternatives and reasons to skip a layer. If a layer has no automated test or
+activation step, record why that stage does not apply.
+
+Track all layers in one issue using the
+[convention request template](../.github/ISSUE_TEMPLATE/Convention_request.md),
+keeping its sections. Update an existing issue rather than creating a
+duplicate. Issue creation is not a prerequisite for drafting fixtures and
+does not authorize implementation. Do not create separate issues per layer
+unless the user asks.
 
 ## Layers
 

@@ -31,7 +31,7 @@ and local adaptations of the shared rules.
   registers them.
   Not yet referenced in `phpcs.xml`.
 - Sniff and PHPStan rule names follow the
-  [RFC 2119 naming convention](../.github/instructions/analysis-naming.instructions.md#naming).
+  [RFC 2119 naming convention](../.github/instructions/analysis-naming.instructions.md).
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with fixtures under
   `tests/PHPStan/Fixtures/` and `tests/PHPCS/Fixtures/`.
 - `bin/`: Composer-exposed command-line tools for consuming projects.

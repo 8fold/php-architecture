@@ -9,9 +9,8 @@ Run these gates in order at the start of each session, before other work.
      it and obtain explicit approval before creating a graph.
    - If present, follow the [workflow guide](../docs/graphify-workflow.md):
      refresh code and prose without separate approval, report failures rather
-     than treating a stale graph as current, use the graph for navigation as
-     required by [AGENTS.md](../AGENTS.md#navigation-tools-and-validation),
-     and keep generated changes out of unrelated commits.
+     than treating a stale graph as current, and keep generated changes out of
+     unrelated commits.
 
 2. **Read the shared rules.** Read [AGENTS.md](../AGENTS.md) and the
      [agent context](../docs/agent-context.md), including the repository's

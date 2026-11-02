@@ -18,7 +18,7 @@ final class EfqsDocsAgentsTest extends TestCase
     {
         parent::setUp();
         $this->projectDirectory = sys_get_temp_dir() . '/efqs-agents-' . bin2hex(random_bytes(8));
-        if (!mkdir($this->projectDirectory, 0700)) {
+        if (mkdir($this->projectDirectory, 0700) === false) {
             throw new RuntimeException('Unable to create the test project directory.');
         }
     }
@@ -76,7 +76,11 @@ final class EfqsDocsAgentsTest extends TestCase
             parent::fail('Unable to read the package manifest.');
         }
         $manifest = json_decode($contents, true, flags: JSON_THROW_ON_ERROR);
-        if (!is_array($manifest) || !isset($manifest['bin']) || !is_array($manifest['bin'])) {
+        if (
+            is_array($manifest) === false
+            || isset($manifest['bin']) === false
+            || is_array($manifest['bin']) === false
+        ) {
             parent::fail('The package manifest does not declare Composer binaries.');
         }
 
@@ -185,7 +189,7 @@ final class EfqsDocsAgentsTest extends TestCase
         mkdir($this->projectDirectory . '/docs');
         $destination = $this->projectDirectory . '/docs/agent-context.md';
         file_put_contents($destination, "Local context\n");
-        if (!chmod($destination, 0000)) {
+        if (chmod($destination, 0000) === false) {
             parent::markTestSkipped('File permissions cannot be changed in this environment.');
         }
 
@@ -474,7 +478,7 @@ final class EfqsDocsAgentsTest extends TestCase
     {
         self::createProjectManifest($this->projectDirectory);
         file_put_contents($this->projectDirectory . '/existing.txt', "Local rules\n");
-        if (!@symlink('existing.txt', $this->projectDirectory . '/AGENTS.md')) {
+        if (@symlink('existing.txt', $this->projectDirectory . '/AGENTS.md') === false) {
             parent::markTestSkipped('Symlinks are not available in this environment.');
         }
 
@@ -494,7 +498,7 @@ final class EfqsDocsAgentsTest extends TestCase
     public function refuses_to_replace_a_dangling_symlink(): void
     {
         self::createProjectManifest($this->projectDirectory);
-        if (!@symlink('missing.txt', $this->projectDirectory . '/AGENTS.md')) {
+        if (@symlink('missing.txt', $this->projectDirectory . '/AGENTS.md') === false) {
             parent::markTestSkipped('Symlinks are not available in this environment.');
         }
 
@@ -511,7 +515,7 @@ final class EfqsDocsAgentsTest extends TestCase
     public function reports_when_the_destination_cannot_be_created(): void
     {
         self::createProjectManifest($this->projectDirectory);
-        if (!chmod($this->projectDirectory, 0500)) {
+        if (chmod($this->projectDirectory, 0500) === false) {
             parent::markTestSkipped('Directory permissions cannot be changed in this environment.');
         }
 
@@ -690,7 +694,7 @@ final class EfqsDocsAgentsTest extends TestCase
             $pipes,
             $directory
         );
-        if (!is_resource($process)) {
+        if (is_resource($process) === false) {
             throw new RuntimeException('Unable to run the installer.');
         }
 

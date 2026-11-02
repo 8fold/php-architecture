@@ -33,7 +33,7 @@ $findCommand = static function (string $name): ?string {
     return null;
 };
 
-if (!chdir(dirname(__DIR__))) {
+if (chdir(dirname(__DIR__)) === false) {
     $fail('could not change to the repository root.');
 }
 
@@ -42,7 +42,7 @@ if (count($argv) !== 2 || $argv[1] !== 'code') {
 }
 
 $graph = 'graphify-out/graph.json';
-if (!is_file($graph)) {
+if (is_file($graph) === false) {
     $fail(
         'no knowledge graph at ' . $graph . '. This command refreshes an existing graph;'
         . ' follow docs/graphify-setup.md to create one.'

@@ -18,7 +18,10 @@ final class InstanceMethodsMustNotBeAccessedViaThis implements Sniff
 
     public function process(File $file, int $stackPtr): void
     {
-        if (!self::isThisReceiver($file, $stackPtr) || !self::isMethodAccess($file, $stackPtr)) {
+        if (
+            self::isThisReceiver($file, $stackPtr) === false
+            || self::isMethodAccess($file, $stackPtr) === false
+        ) {
             return;
         }
 
@@ -72,11 +75,11 @@ final class InstanceMethodsMustNotBeAccessedViaThis implements Sniff
 
         $previous = $file->findPrevious(Tokens::EMPTY_TOKENS, $receiver - 1, null, true);
 
-        return $previous === false || !in_array(
+        return $previous === false || in_array(
             self::token($tokens, $previous)['code'],
             [T_OBJECT_OPERATOR, T_NULLSAFE_OBJECT_OPERATOR, T_DOUBLE_COLON, T_DOLLAR],
             true,
-        );
+        ) === false;
     }
 
     private static function isCallArgumentList(File $file, int $opener): bool
@@ -101,7 +104,7 @@ final class InstanceMethodsMustNotBeAccessedViaThis implements Sniff
         $scopeCondition = self::tokenIndex($token, 'scope_condition');
         if ($token['code'] === T_CLOSE_CURLY_BRACKET && $scopeCondition !== null) {
             $owner = self::token($tokens, $scopeCondition)['code'];
-            if (!in_array($owner, [T_ANON_CLASS, T_CLOSURE, T_MATCH], true)) {
+            if (in_array($owner, [T_ANON_CLASS, T_CLOSURE, T_MATCH], true) === false) {
                 return false;
             }
         }
@@ -146,7 +149,7 @@ final class InstanceMethodsMustNotBeAccessedViaThis implements Sniff
             if ($member === null) {
                 return false;
             }
-        } elseif (!in_array($memberToken['code'], [T_STRING, T_VARIABLE], true)) {
+        } elseif (in_array($memberToken['code'], [T_STRING, T_VARIABLE], true) === false) {
             return false;
         }
 
@@ -163,9 +166,12 @@ final class InstanceMethodsMustNotBeAccessedViaThis implements Sniff
     {
         $token = $tokens[$index] ?? null;
         if (
-            !is_array($token)
-            || (!is_int($token['code'] ?? null) && !is_string($token['code'] ?? null))
-            || !is_string($token['content'] ?? null)
+            is_array($token) === false
+            || (
+                is_int($token['code'] ?? null) === false
+                && is_string($token['code'] ?? null) === false
+            )
+            || is_string($token['content'] ?? null) === false
         ) {
             throw new UnexpectedValueException("Invalid PHPCS token at position {$index}.");
         }
@@ -179,7 +185,7 @@ final class InstanceMethodsMustNotBeAccessedViaThis implements Sniff
     private static function tokenIndex(array $token, string $field): ?int
     {
         $index = $token[$field] ?? null;
-        if ($index !== null && (!is_int($index) || $index < 0)) {
+        if ($index !== null && (is_int($index) === false || $index < 0)) {
             throw new UnexpectedValueException("Invalid PHPCS token index: {$field}.");
         }
 

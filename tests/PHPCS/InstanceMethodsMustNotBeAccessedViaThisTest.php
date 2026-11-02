@@ -81,14 +81,14 @@ final class InstanceMethodsMustNotBeAccessedViaThisTest extends TestCase
     {
         require_once dirname(__DIR__, 2) . '/vendor/squizlabs/php_codesniffer/autoload.php';
 
-        if (!class_exists(self::SNIFF)) {
+        if (class_exists(self::SNIFF) === false) {
             throw new RuntimeException('The proposed PHPCS sniff is unavailable.');
         }
 
-        if (!defined('PHP_CODESNIFFER_CBF')) {
+        if (defined('PHP_CODESNIFFER_CBF') === false) {
             define('PHP_CODESNIFFER_CBF', false);
         }
-        if (!defined('PHP_CODESNIFFER_VERBOSITY')) {
+        if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
             define('PHP_CODESNIFFER_VERBOSITY', 0);
         }
 
@@ -110,21 +110,21 @@ final class InstanceMethodsMustNotBeAccessedViaThisTest extends TestCase
         $ruleset->populateTokenListeners();
 
         if (
-            !isset($ruleset->sniffs[self::SNIFF])
+            isset($ruleset->sniffs[self::SNIFF]) === false
             || $ruleset->tokenListeners === []
         ) {
             throw new RuntimeException('The proposed sniff did not register any token listeners.');
         }
 
         $path = __DIR__ . '/Fixtures/' . $name;
-        if (!is_file($path) || !is_readable($path)) {
+        if (is_file($path) === false || is_readable($path) === false) {
             throw new RuntimeException("Unable to read the fixture: {$path}");
         }
 
         $file = new LocalFile($path, $ruleset, $config);
         $file->process();
 
-        if (!array_key_exists(self::SNIFF, $file->getListenerTimes())) {
+        if (array_key_exists(self::SNIFF, $file->getListenerTimes()) === false) {
             throw new RuntimeException('The proposed sniff did not process the fixture.');
         }
 

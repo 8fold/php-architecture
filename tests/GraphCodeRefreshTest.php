@@ -23,11 +23,16 @@ final class GraphCodeRefreshTest extends TestCase
         parent::setUp();
         $this->repository = sys_get_temp_dir() . '/graph-code-' . bin2hex(random_bytes(8));
         foreach (['cli', 'graphify-out', 'bin', 'home/.local/bin'] as $directory) {
-            if (!mkdir($this->repository . '/' . $directory, 0700, true)) {
+            if (mkdir($this->repository . '/' . $directory, 0700, true) === false) {
                 throw new RuntimeException('Unable to create the test repository.');
             }
         }
-        if (!copy(dirname(__DIR__) . '/cli/graph.php', $this->repository . '/cli/graph.php')) {
+        if (
+            copy(
+                dirname(__DIR__) . '/cli/graph.php',
+                $this->repository . '/cli/graph.php'
+            ) === false
+        ) {
             throw new RuntimeException('Unable to copy the graph refresh helper.');
         }
         self::write($this->repository . '/graphify-out/graph.json', '{}');
@@ -40,7 +45,7 @@ final class GraphCodeRefreshTest extends TestCase
             RecursiveIteratorIterator::CHILD_FIRST
         );
         foreach ($items as $item) {
-            if ($item->isDir() && !$item->isLink()) {
+            if ($item->isDir() && $item->isLink() === false) {
                 rmdir($item->getPathname());
                 continue;
             }
@@ -134,7 +139,7 @@ final class GraphCodeRefreshTest extends TestCase
     {
         $path = $this->repository . '/' . $directory . '/graphify';
         self::write($path, "#!/bin/sh\nprintf '%s\\n' \"\$@\" > arguments.txt\nexit {$exitCode}\n");
-        if (!chmod($path, 0755)) {
+        if (chmod($path, 0755) === false) {
             throw new RuntimeException('Unable to make the fake Graphify executable.');
         }
     }
@@ -161,7 +166,7 @@ final class GraphCodeRefreshTest extends TestCase
                 'PATH' => $this->repository . '/bin',
             ]
         );
-        if (!is_resource($process)) {
+        if (is_resource($process) === false) {
             throw new RuntimeException('Unable to run the graph refresh helper.');
         }
 

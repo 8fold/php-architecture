@@ -24,8 +24,9 @@ and local adaptations of the shared rules.
 
 - PHP `^8.5`, as declared in `composer.json`.
 - `src/Attributes/`: PHP attributes (`Eightfold\Attributes\`).
-- `src/PHPStan/`: PHPStan rules (`Eightfold\PHPStan\`), registered in
-  `extension.neon`.
+- `src/PHPStan/`: PHPStan rules (`Eightfold\PHPStan\`). All custom
+  registrations in `extension.neon` are commented out; the vendor extension
+  remains enabled. PHPStan ignores lines prefixed with `#`.
 - `src/PHPCS/`: PHPCS sniffs (`Eightfold\PHPCS\`). Rule bodies are in
   `Sniffs/`; the `Efqs` standard in `Efqs/` (`Eightfold\Efqs\`)
   registers them.
@@ -41,7 +42,8 @@ and local adaptations of the shared rules.
   Graphify [setup](graphify-setup.md) and [workflow](graphify-workflow.md)
   guides copied by consuming projects.
 - `.github/instructions/`: Copilot instructions for PHP class and test
-  conventions.
+  conventions, including
+  [explicit boolean expressions](../.github/instructions/php-boolean-expressions.instructions.md).
 - Tool configuration: `phpcs.xml`, `phpstan.neon`, `phpunit.xml`.
 
 <!-- Commands and their known limitations. -->
@@ -76,8 +78,14 @@ Not functional yet; do not rely on these:
 <!-- Tool enforcement versus written guidance. -->
 ## Enforcement boundaries
 
-- Enforced: PHPCS style checks, PHPStan analysis, and PHPUnit tests through the
-  corresponding `composer check:*` scripts.
+- Enforced: PHPCS style checks, built-in and vendor PHPStan analysis, and
+  PHPUnit tests through the corresponding `composer check:*` scripts.
+- Disabled: all custom PHPStan rule registrations in `extension.neon`,
+  including `BooleanNegationMustBeExplicit`. That rule reports unary `!` on
+  operands PHPStan knows are boolean, with non-ignorable identifier
+  `eightfold.booleanNegationMustBeExplicit`. Nullable, non-boolean, and unknown
+  operands require manual intent review. Its isolated fixture tests run
+  regardless of whether the rule is enabled for repository analysis.
 - Not enforced: guidance in `AGENTS.md` unless a tool or check explicitly
   implements it.
 
@@ -102,8 +110,9 @@ the canonical home. The script is repository-only and is not a Composer binary.
 ## Current state
 
 The repository is mid-consolidation. `composer check` is not expected to pass:
-several PHP files under `src/Attributes/` do not parse, and `extension.neon`
-registers a rule that does not exist. Report failures under
+several PHP files under `src/Attributes/` do not parse. The existing custom
+PHPStan registrations, including a missing rule, are commented out.
+Report failures under
 [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
 rule 5. Do not fix unrelated code as part of other work.
 

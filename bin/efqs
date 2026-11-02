@@ -9,13 +9,13 @@ $files = [
     'docs:graphify-setup' => 'docs/graphify-setup.md',
     'docs:graphify-workflow' => 'docs/graphify-workflow.md',
 ];
-if (!isset($argc, $argv) || $argc !== 2) {
+if (isset($argc, $argv) === false || $argc !== 2) {
     fwrite(STDERR, "Usage: efqs docs:agents|docs:context|docs:graphify-setup|docs:graphify-workflow\n");
     exit(1);
 }
 
 $command = $argv[1] ?? null;
-if (!is_string($command) || !isset($files[$command])) {
+if (is_string($command) === false || isset($files[$command]) === false) {
     fwrite(STDERR, "Usage: efqs docs:agents|docs:context|docs:graphify-setup|docs:graphify-workflow\n");
     exit(1);
 }
@@ -26,7 +26,7 @@ if ($projectRoot === false) {
     exit(1);
 }
 
-if (!is_file($projectRoot . DIRECTORY_SEPARATOR . 'composer.json')) {
+if (is_file($projectRoot . DIRECTORY_SEPARATOR . 'composer.json') === false) {
     fwrite(STDERR, "Run this command from the consuming project root containing composer.json.\n");
     exit(1);
 }
@@ -42,13 +42,13 @@ if ($content === false) {
 
 $destination = $projectRoot . DIRECTORY_SEPARATOR . $relativePath;
 $destinationDirectory = dirname($destination);
-if (!is_dir($destinationDirectory) && !@mkdir($destinationDirectory, 0755, true)) {
+if (is_dir($destinationDirectory) === false && @mkdir($destinationDirectory, 0755, true) === false) {
     fwrite(STDERR, "Unable to create the destination directory: {$destinationDirectory}\n");
     exit(1);
 }
 
 if (file_exists($destination) || is_link($destination)) {
-    if (!is_file($destination)) {
+    if (is_file($destination) === false) {
         fwrite(STDERR, "The destination exists and is not a regular file: {$destination}\n");
         exit(1);
     }
@@ -95,7 +95,7 @@ while ($offset < $length) {
     $offset += $written;
 }
 
-if (!fclose($file)) {
+if (fclose($file) === false) {
     fwrite(
         STDERR,
         "Unable to finish writing {$fileName}; the new file may be incomplete: {$destination}\n"

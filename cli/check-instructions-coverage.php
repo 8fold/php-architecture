@@ -117,7 +117,7 @@ function trackedFiles(string $root, string $pattern): ?array
         $pipes,
         $root
     );
-    if (!is_resource($process)) {
+    if (is_resource($process) === false) {
         return null;
     }
 

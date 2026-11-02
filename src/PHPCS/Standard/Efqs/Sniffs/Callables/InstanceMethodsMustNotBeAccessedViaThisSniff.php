@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\PHPCS\Standard\Eightfold\Sniffs\Callables;
+namespace Eightfold\Efqs\Sniffs\Callables;
 
 use Eightfold\PHPCS\Sniffs\Callables\InstanceMethodsMustNotBeAccessedViaThis;
 use PHP_CodeSniffer\Files\File;

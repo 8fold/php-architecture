@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Eightfold\Tests\PHPCS;
 
-// phpcs:ignore Generic.Files.LineLength.TooLong -- Keep the tested sniff explicit.
-use Eightfold\PHPCS\Standard\Eightfold\Sniffs\Callables\InstanceMethodsMustNotBeAccessedViaThisSniff;
+use Eightfold\Efqs\Sniffs\Callables\InstanceMethodsMustNotBeAccessedViaThisSniff;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Ruleset;
@@ -20,7 +19,7 @@ final class InstanceMethodsMustNotBeAccessedViaThisTest extends TestCase
     private const SNIFF = InstanceMethodsMustNotBeAccessedViaThisSniff::class;
 
     private const ERROR_CODE =
-        'Eightfold.Callables.InstanceMethodsMustNotBeAccessedViaThis.MethodAccessViaThis';
+        'Efqs.Callables.InstanceMethodsMustNotBeAccessedViaThis.MethodAccessViaThis';
 
     #[Test]
     #[Group('phpcs')]

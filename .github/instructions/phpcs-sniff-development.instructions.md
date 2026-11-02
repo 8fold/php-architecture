@@ -35,6 +35,14 @@ approval does not satisfy a later gate.
    passing. Report unrelated baseline failures rather than expanding scope
    silently. Do not make automatic behavior-changing rewrites.
 
+## Structure
+
+Put the rule body under `src/PHPCS/Sniffs/<Category>/<Rule>.php`. Register it
+through a shell in the `Efqs` (Eightfold Quality Suite) standard that delegates
+to the body: `src/PHPCS/Standard/Efqs/Sniffs/<Category>/<Rule>Sniff.php`, in
+namespace `Eightfold\Efqs\Sniffs\<Category>`. PHPCS derives the diagnostic
+code, `Efqs.<Category>.<Rule>`, from that namespace and the `Sniff` suffix.
+
 `tests/PHPCS/Fixtures/` is excluded from the repository style sweep, not from
 explicit sniff tests. Never repair intentional violations to make the style
 sweep pass.

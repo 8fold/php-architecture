@@ -62,6 +62,7 @@
     "check:style": "./vendor/bin/phpcs --standard=phpcs.xml",
     "check:analyze": "./vendor/bin/phpstan analyze",
     "check:test": "./vendor/bin/phpunit --display-all-issues",
+    "check:instructions": "@php bin/check-instruction-coverage",
     "optimize-autoloader": "composer dumpautoload --no-dev --classmap-authoritative"
   },
   "scripts-descriptions": {
@@ -73,6 +74,7 @@
     "check:style": "Runs PHP CodeSniffer style compliance checks.",
     "check:analyze": "Runs PHPStan static analysis.",
     "check:test": "Runs all PHPUnit test suites.",
+    "check:instructions": "Lists tracked files matched by each Copilot instruction applyTo pattern; fails on malformed frontmatter or empty matches.",
 
     "graph": "Refreshes the knowledge graph: code, then documentation. Stops at the first failure.",
     "graph:code": "Refreshes code in the knowledge graph with the Graphify CLI (fast; no agent).",

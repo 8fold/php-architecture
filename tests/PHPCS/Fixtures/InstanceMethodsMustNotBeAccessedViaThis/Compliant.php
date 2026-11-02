@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPCS\Fixtures;
+namespace Eightfold\Tests\PHPCS\Fixtures\InstanceMethodsMustNotBeAccessedViaThis;
 
 use Closure;
 
-final class InstanceMethodsMustNotBeAccessedViaThisCompliant
+final class Compliant
 {
     private string $name = 'Ada';
 

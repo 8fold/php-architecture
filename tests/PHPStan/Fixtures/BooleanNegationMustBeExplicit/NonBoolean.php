@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPStan\Fixtures;
+namespace Eightfold\Tests\PHPStan\Fixtures\BooleanNegationMustBeExplicit;
 
 // These truthiness checks need an intent review, not a boolean-only diagnostic.
-final class BooleanNegationMustBeExplicitNonBoolean
+final class NonBoolean
 {
     public static function nullable(?bool $value): bool
     {

@@ -25,7 +25,7 @@ final class InstanceMethodsMustNotBeAccessedViaThisTest extends TestCase
     #[Group('phpcs')]
     public function compliant_member_access_has_no_diagnostics(): void
     {
-        $file = self::analyseFixture('InstanceMethodsMustNotBeAccessedViaThisCompliant.php');
+        $file = self::analyseFixture('InstanceMethodsMustNotBeAccessedViaThis/Compliant.php');
 
         parent::assertSame([], $file->getErrors());
         parent::assertSame([], $file->getWarnings());
@@ -35,7 +35,7 @@ final class InstanceMethodsMustNotBeAccessedViaThisTest extends TestCase
     #[Group('phpcs')]
     public function this_method_access_reports_each_violation_without_a_fix(): void
     {
-        $file = self::analyseFixture('InstanceMethodsMustNotBeAccessedViaThisNoncompliant.php');
+        $file = self::analyseFixture('InstanceMethodsMustNotBeAccessedViaThis/Noncompliant.php');
         $actual = [];
 
         foreach ($file->getErrors() as $line => $columns) {

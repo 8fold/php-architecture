@@ -1,8 +1,8 @@
 <?php
 
-namespace Eightfold\Analysis\ClassShouldBeFinal;
+namespace Eightfold\Analysis\ClassesShouldBeFinal;
 
-use Eightfold\Analysis\ClassMustBeFinal\PHPStanRule as ClassMustBeFinalRule;
+use Eightfold\Analysis\ClassesMustBeFinal\PHPStanRule as ClassesMustBeFinalRule;
 use Eightfold\Analysis\MessageCompiler;
 use Eightfold\Attributes\Classes\BaseClass;
 use PhpParser\Node;
@@ -26,7 +26,7 @@ final class PHPStanRule implements Rule
 
     public static function tip(string $className, bool $isInclude = false): string
     {
-        $mustTip = ClassMustBeFinalRule::tip($className, true);
+        $mustTip = ClassesMustBeFinalRule::tip($className, true);
 
         return self::compiler()->compile(
             'help',
@@ -46,7 +46,7 @@ final class PHPStanRule implements Rule
             return false;
         }
 
-        return ClassMustBeFinalRule::errorFoundFor($node);
+        return ClassesMustBeFinalRule::errorFoundFor($node);
     }
 
     public static function ruleError(InClassNode $node): IdentifierRuleError

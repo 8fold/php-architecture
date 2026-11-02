@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types=1);
+namespace Eightfold\Analysis\ClassesShouldNotBeSubclass;
 
-namespace Eightfold\Analysis\ClassMustNotBeSubclass;
-
+use Eightfold\Analysis\ClassesMustNotBeSubclass\PHPStanRule as ClassesMustNotBeSubclassRule;
 use Eightfold\Analysis\MessageCompiler;
+use Eightfold\Attributes\Classes\Subclass;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
@@ -17,6 +17,8 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class PHPStanRule implements Rule
 {
+    private const string OPT_OUT_ATTRIBUTE = Subclass::class;
+
     public static function message(string $className): string
     {
         return self::compiler()->compile('message', ['className' => $className]);
@@ -24,27 +26,27 @@ final class PHPStanRule implements Rule
 
     public static function tip(string $className, bool $isInclude = false): string
     {
-        $tip = self::compiler()->compile('help');
-        if ($isInclude) {
-            return $tip . ';';
-        }
+        $mustTip = ClassesMustNotBeSubclassRule::tip($className, true);
 
-        return $tip;
+        return self::compiler()->compile(
+            'help',
+            [
+                'mustTip' => $mustTip,
+                'attributeName' => self::OPT_OUT_ATTRIBUTE,
+            ]
+        );
     }
 
     public static function errorFoundFor(InClassNode $node): bool
     {
-        $classReflection = $node->getClassReflection();
-        if (
-            $classReflection->isInterface()
-            || $classReflection->isTrait()
-            || $classReflection->isEnum()
-            || $classReflection->isAnonymous()
-        ) {
+        $attributes = $node->getClassReflection()
+            ->getNativeReflection()
+            ->getAttributes(self::OPT_OUT_ATTRIBUTE);
+        if ($attributes !== []) {
             return false;
         }
 
-        return $classReflection->getParentClass() !== null;
+        return ClassesMustNotBeSubclassRule::errorFoundFor($node);
     }
 
     public static function ruleError(InClassNode $node): IdentifierRuleError

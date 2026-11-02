@@ -1,10 +1,9 @@
 <?php
 
-namespace Eightfold\Analysis\ClassShouldNotBeSubclass;
+namespace Eightfold\Analysis\ClassesMustBeFinal;
 
-use Eightfold\Analysis\ClassMustNotBeSubclass\PHPStanRule as ClassMustNotBeSubclassRule;
 use Eightfold\Analysis\MessageCompiler;
-use Eightfold\Attributes\Classes\Subclass;
+use Eightfold\Attributes\Classes\BaseClass;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
@@ -15,10 +14,9 @@ use PHPStan\Rules\RuleErrorBuilder;
 /**
  * @implements Rule<InClassNode>
  */
-final class PHPStanRule implements Rule
+#[BaseClass(rationale: 'Testing the BaseClass attribute-based opt-out capability')]
+class PHPStanRule implements Rule
 {
-    private const string OPT_OUT_ATTRIBUTE = Subclass::class;
-
     public static function message(string $className): string
     {
         return self::compiler()->compile('message', ['className' => $className]);
@@ -26,27 +24,33 @@ final class PHPStanRule implements Rule
 
     public static function tip(string $className, bool $isInclude = false): string
     {
-        $mustTip = ClassMustNotBeSubclassRule::tip($className, true);
-
-        return self::compiler()->compile(
+        $shortClassName = array_last(explode('\\', $className));
+        $tip = self::compiler()->compile(
             'help',
-            [
-                'mustTip' => $mustTip,
-                'attributeName' => self::OPT_OUT_ATTRIBUTE,
-            ]
+            ['shortClassName' => $shortClassName]
         );
+
+        if ($isInclude) {
+            return $tip . ' (recommended);';
+        }
+
+        return $tip;
     }
 
     public static function errorFoundFor(InClassNode $node): bool
     {
-        $attributes = $node->getClassReflection()
-            ->getNativeReflection()
-            ->getAttributes(self::OPT_OUT_ATTRIBUTE);
-        if ($attributes !== []) {
+        $classReflection = $node->getClassReflection();
+        if (
+            $classReflection->isInterface()
+            || $classReflection->isTrait()
+            || $classReflection->isEnum()
+            || $classReflection->isAnonymous()
+            || $classReflection->isAbstract()
+        ) {
             return false;
         }
 
-        return ClassMustNotBeSubclassRule::errorFoundFor($node);
+        return $classReflection->isFinal() === false;
     }
 
     public static function ruleError(InClassNode $node): IdentifierRuleError

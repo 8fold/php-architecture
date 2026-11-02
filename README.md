@@ -127,5 +127,5 @@ the command's requirements and its code-only alias.
 
 ## PHP conventions (default with options)
 
-- **`ClassMustBeFinalRule`:** Enforces classes are declared `final` by default. Use the `AllowInheritance` to explicitly allow class extension.
+- **`ClassesMustBeFinalRule`:** Enforces classes are declared `final` by default. Use the `AllowInheritance` to explicitly allow class extension.
 - Data Objects are PHP classes

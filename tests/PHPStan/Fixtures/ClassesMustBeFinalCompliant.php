@@ -2,6 +2,6 @@
 
 namespace Eightfold\Tests\PHPStan\Fixtures;
 
-class ClassMustBeFinalNoncompliant
+final class ClassesMustBeFinalCompliant
 {
 }

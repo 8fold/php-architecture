@@ -3,6 +3,6 @@ includes:
 
 rules:
 	# - Eightfold\Analysis\BooleanNegationMustBeExplicit\PHPStanRule
-	# - Eightfold\Analysis\ClassShouldBeFinal\PHPStanRule
-	# - Eightfold\Analysis\ClassShouldNotBeSubclass\PHPStanRule
+	# - Eightfold\Analysis\ClassesShouldBeFinal\PHPStanRule
+	# - Eightfold\Analysis\ClassesShouldNotBeSubclass\PHPStanRule
 	# - Eightfold\Analysis\MethodShouldNotBePublic\PHPStanRule

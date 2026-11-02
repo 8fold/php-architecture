@@ -10,36 +10,36 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
-use Eightfold\Analysis\ClassMustBeFinal\PHPStanRule as ClassMustBeFinal;
+use Eightfold\Analysis\ClassesMustBeFinal\PHPStanRule as ClassesMustBeFinal;
 
-use Eightfold\Tests\PHPStan\Fixtures\ClassMustBeFinalNoncompliant;
+use Eightfold\Tests\PHPStan\Fixtures\ClassesMustBeFinalNoncompliant;
 
 use Eightfold\Attributes\Classes\Subclass;
 
 /**
- * @extends RuleTestCase<ClassMustBeFinal>
+ * @extends RuleTestCase<ClassesMustBeFinal>
  */
 #[Subclass('PHPUnit and PHPStan\Testing require exntension.')]
-final class ClassMustBeFinalTest extends RuletestCase
+final class ClassesMustBeFinalTest extends RuletestCase
 {
     protected function getRule(): Rule
     {
-        return new ClassMustBeFinal();
+        return new ClassesMustBeFinal();
     }
 
     #[Test]
     #[Group('analysis')]
     public function noncompliant_fails(): void
     {
-        $noncompliant = ClassMustBeFinalNoncompliant::class;
+        $noncompliant = ClassesMustBeFinalNoncompliant::class;
 
         parent::analyse(
-            [__DIR__ . '/Fixtures/ClassMustBeFinalNoncompliant.php'],
+            [__DIR__ . '/Fixtures/ClassesMustBeFinalNoncompliant.php'],
             [
                 [
-                    ClassMustBeFinal::message($noncompliant),
+                    ClassesMustBeFinal::message($noncompliant),
                     5,
-                    ClassMustBeFinal::tip($noncompliant, false)
+                    ClassesMustBeFinal::tip($noncompliant, false)
                 ]
             ]
         );
@@ -50,7 +50,7 @@ final class ClassMustBeFinalTest extends RuletestCase
     public function compliant_succeeds(): void
     {
         parent::analyse(
-            [__DIR__ . '/Fixtures/ClassMustBeFinalCompliant.php'],
+            [__DIR__ . '/Fixtures/ClassesMustBeFinalCompliant.php'],
             []
         );
     }

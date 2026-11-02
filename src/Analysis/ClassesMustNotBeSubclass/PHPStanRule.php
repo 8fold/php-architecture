@@ -1,9 +1,10 @@
 <?php
 
-namespace Eightfold\Analysis\ClassMustBeFinal;
+declare(strict_types=1);
+
+namespace Eightfold\Analysis\ClassesMustNotBeSubclass;
 
 use Eightfold\Analysis\MessageCompiler;
-use Eightfold\Attributes\Classes\BaseClass;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
@@ -14,8 +15,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 /**
  * @implements Rule<InClassNode>
  */
-#[BaseClass(rationale: 'Testing the BaseClass attribute-based opt-out capability')]
-class PHPStanRule implements Rule
+final class PHPStanRule implements Rule
 {
     public static function message(string $className): string
     {
@@ -24,14 +24,9 @@ class PHPStanRule implements Rule
 
     public static function tip(string $className, bool $isInclude = false): string
     {
-        $shortClassName = array_last(explode('\\', $className));
-        $tip = self::compiler()->compile(
-            'help',
-            ['shortClassName' => $shortClassName]
-        );
-
+        $tip = self::compiler()->compile('help');
         if ($isInclude) {
-            return $tip . ' (recommended);';
+            return $tip . ';';
         }
 
         return $tip;
@@ -45,12 +40,11 @@ class PHPStanRule implements Rule
             || $classReflection->isTrait()
             || $classReflection->isEnum()
             || $classReflection->isAnonymous()
-            || $classReflection->isAbstract()
         ) {
             return false;
         }
 
-        return $classReflection->isFinal() === false;
+        return $classReflection->getParentClass() !== null;
     }
 
     public static function ruleError(InClassNode $node): IdentifierRuleError

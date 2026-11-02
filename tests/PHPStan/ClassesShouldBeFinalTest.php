@@ -10,38 +10,38 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
-use Eightfold\Analysis\ClassMustBeFinal\PHPStanRule as ClassMustBeFinal;
-use Eightfold\Analysis\ClassShouldBeFinal\PHPStanRule as ClassShouldBeFinal;
+use Eightfold\Analysis\ClassesMustBeFinal\PHPStanRule as ClassesMustBeFinal;
+use Eightfold\Analysis\ClassesShouldBeFinal\PHPStanRule as ClassesShouldBeFinal;
 use Eightfold\Attributes\Classes\BaseClass;
 
-use Eightfold\Tests\PHPStan\Fixtures\ClassShouldBeFinalNoncompliant;
+use Eightfold\Tests\PHPStan\Fixtures\ClassesShouldBeFinalNoncompliant;
 
 use Eightfold\Attributes\Classes\Subclass;
 
 /**
- * @extends RuleTestCase<ClassShouldBeFinal>
+ * @extends RuleTestCase<ClassesShouldBeFinal>
  */
 #[Subclass('PHPUnit and PHPStan\Testing require exntension.')]
-final class ClassShouldBeFinalTest extends RuletestCase
+final class ClassesShouldBeFinalTest extends RuletestCase
 {
     protected function getRule(): Rule
     {
-        return new ClassShouldBeFinal();
+        return new ClassesShouldBeFinal();
     }
 
     #[Test]
     #[Group('analysis')]
     public function noncompliant_fails(): void
     {
-        $noncompliant = ClassShouldBeFinalNoncompliant::class;
+        $noncompliant = ClassesShouldBeFinalNoncompliant::class;
 
         parent::analyse(
-            [__DIR__ . '/Fixtures/ClassShouldBeFinalNoncompliant.php'],
+            [__DIR__ . '/Fixtures/ClassesShouldBeFinalNoncompliant.php'],
             [
                 [
-                    ClassShouldBeFinal::message($noncompliant),
+                    ClassesShouldBeFinal::message($noncompliant),
                     5,
-                    ClassShouldBeFinal::tip($noncompliant, false)
+                    ClassesShouldBeFinal::tip($noncompliant, false)
                 ]
             ]
         );
@@ -52,7 +52,7 @@ final class ClassShouldBeFinalTest extends RuletestCase
     public function compliant_using_attributes_succeeds(): void
     {
         parent::analyse(
-            [__DIR__ . '/Fixtures/ClassShouldBeFinalCompliantUsingAttribute.php'],
+            [__DIR__ . '/Fixtures/ClassesShouldBeFinalCompliantUsingAttribute.php'],
             []
         );
     }
@@ -62,7 +62,7 @@ final class ClassShouldBeFinalTest extends RuletestCase
     public function compliant_succeeds(): void
     {
         parent::analyse(
-            [__DIR__ . '/Fixtures/ClassMustBeFinalCompliant.php'],
+            [__DIR__ . '/Fixtures/ClassesMustBeFinalCompliant.php'],
             []
         );
     }
@@ -72,8 +72,8 @@ final class ClassShouldBeFinalTest extends RuletestCase
     public function tip_reuses_must_guidance_and_adds_the_opt_out_attribute(): void
     {
         $className = 'Example\\Widget';
-        $tip = ClassShouldBeFinal::tip($className);
-        $mustTip = ClassMustBeFinal::tip($className, true);
+        $tip = ClassesShouldBeFinal::tip($className);
+        $mustTip = ClassesMustBeFinal::tip($className, true);
         $expectedTip = $mustTip
             . "\nor, decorate the class with the `"
             . BaseClass::class

@@ -22,11 +22,12 @@ auth.json
 .phpunit.result.cache
 .DS_Store
 
-# Graphify local-only metrics & caches
+# Graphify local-only state
 graphify-out/cost.json
 graphify-out/cache/
 graphify-out/manifest.json
 graphify-out/.graphify_python
+graphify-out/.graphify_root
 # Graphify dated backup snapshots (local rollback copies; disabled via
 # GRAPHIFY_NO_BACKUP at the repo's invocation points, ignored here as a
 # backstop so they never reach origin)

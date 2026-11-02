@@ -68,15 +68,19 @@ provide an immediately queryable graph:
 - `graphify-out/GRAPH_REPORT.md`
 - `graphify-out/graph.html`
 
-Keep local metrics, caches, and dated snapshots out of Git:
+Keep local metrics, caches, runtime metadata, and dated snapshots out of Git:
 
 ```gitignore
 graphify-out/cost.json
 graphify-out/cache/
 graphify-out/manifest.json
 graphify-out/.graphify_python
+graphify-out/.graphify_root
 graphify-out/[0-9][0-9][0-9][0-9]-*/
 ```
+
+`graphify-out/.graphify_root` can contain a checkout-specific path; ignoring it
+leaves it available to Graphify locally.
 
 Copying this guide does not change `.gitignore` or adopt the tracking policy
 automatically. Record the project's adopted artifact policy in its agent

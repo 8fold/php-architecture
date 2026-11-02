@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/*
+ * Extensionless PHP script with a shebang and no class declaration.
+ * File discovery must include PHP entry points without requiring a .php suffix.
+ * Expected: two FullyQualified errors, at \DateTimeImmutable and \Exception.
+ * The shebang, global functions, and constants must not be reported.
+ */
+try {
+    $date = new \DateTimeImmutable('2026-01-01');
+    echo $date->format('c') . \PHP_EOL;
+} catch (\Exception $exception) {
+    \fwrite(\STDERR, $exception->getMessage() . \PHP_EOL);
+    exit(1);
+}

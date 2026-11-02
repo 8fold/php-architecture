@@ -12,6 +12,8 @@ trait ClassNamesMustBeImportedNoncompliantTrait
 
 /**
  * Draft fixture for issue #46; expected diagnostics are provisional.
+ * The convention applies to the whole file, not just class declarations.
+ * Sibling directory fixtures cover index.php, cli/, and extensionless bin/ scripts.
  *
  * Expected: one Efqs.Namespaces.ClassNamesMustBeImported.FullyQualified error
  * for each fully qualified class-like name in code, including built-in PHP

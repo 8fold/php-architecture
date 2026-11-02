@@ -18,6 +18,8 @@ use Stringable;
 
 /**
  * Draft fixture for issue #46; the expected diagnostic is provisional.
+ * The convention applies to file-level imports, even without a class.
+ * Sibling directory fixtures cover index.php, cli/, and extensionless bin/ scripts.
  *
  * The same imports as ClassImportsShouldBeGroupedCompliant, in one
  * alphabetical block, as many editors produce.

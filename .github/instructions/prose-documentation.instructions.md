@@ -12,8 +12,9 @@ restated.
   ([Information placement](../../AGENTS.md#information-placement) rule 1).
 - **Terms.** Use PHP terms as defined in the
   [glossary](../../docs/glossary.md).
-- **Line length.** Wrap prose at 80 characters. URLs, tables, and code blocks
-  may exceed it.
+- **Source line breaks.** Do not impose a fixed line-length limit. Add source
+  line breaks where they improve editing and review; rendered wrapping depends
+  on the viewer.
 - **Links.** Use relative links for files in this repository. Link to other
   repositories with commit permalinks, so the target cannot change underneath
   the link.

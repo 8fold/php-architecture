@@ -152,6 +152,7 @@ enum CallableSubtype: string
      */
     public static function fromAttributeName(string $attributeName): self
     {
+        /** @var array<string, self>|null $lookupMap */
         static $lookupMap = null;
 
         if ($lookupMap === null) {
@@ -166,6 +167,10 @@ enum CallableSubtype: string
                 // Index by value string (e.g. 'command', 'command_with_status')
                 $map[$case->value] = $case;
             }
+            $map['Accessor'] = self::Query;
+            $map['accessor'] = self::Query;
+            $map['Pure'] = self::StrictPure;
+            $map['pure'] = self::StrictPure;
             $lookupMap = $map;
         }
 
@@ -177,43 +182,5 @@ enum CallableSubtype: string
         return $lookupMap[$shortName]
             ?? $lookupMap[lcfirst($shortName)]
             ?? self::NotFound;
-    }
-
-    /**
-     * Infers the probable CallableSubtype based on base type, return type, and AST flags.
-     */
-    public static function fromFlags(
-        CallableBaseType $baseType,
-        Returns $returns = Returns::Other,
-        bool $hasNoDiscard = false,
-        bool $isPure = false
-    ): self {
-        // 1. Abstract method signatures are always contract definitions
-        if ($baseType === CallableBaseType::AbstractMethod) {
-            return self::ContractDefinition;
-        }
-
-        // 2. Structural return type dispatch
-        return match ($returns) {
-            Returns::NeverType   => self::Assertion,
-            Returns::VoidType    => self::Command,
-            Returns::BooleanType => $hasNoDiscard ? self::Check : self::Predicate,
-            Returns::SelfType    => match ($baseType) {
-                CallableBaseType::StaticMethod   => self::NamedConstructor,
-                CallableBaseType::InstanceMethod => $isPure
-                    ? self::StateTransformer // Immutability (returns clone)
-                    : self::StateTransformerThis, // Fluent in-place mutation
-                default => self::Factory,
-            },
-            Returns::Other => match (true) {
-                $hasNoDiscard => self::CommandWithStatus,
-                $isPure       => self::Pure,
-                default       => match ($baseType) {
-                    CallableBaseType::InstanceMethod,
-                    CallableBaseType::MagicMethod => self::Query,
-                    default => self::NotFound,
-                },
-            },
-        };
     }
 }

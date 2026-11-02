@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Attributes;
+namespace Eightfold\Attributes\Functions;
 
 use Attribute;
 
@@ -12,30 +12,34 @@ final class Factory
     public static function behavior(): string
     {
         return <<<behavior
-        Encapsulates instantiation logic, parameter normalization, or driver selection. (See also StaticInitializer)
+        Encapsulates instantiation logic, parameter normalization, or driver selection.
+        (See also NamedConstructor)
         behavior;
     }
-    
+
     public static function definingInvariants(): string
     {
         return <<<qualities
-        1. Construction Abstraction: Decouples instantiation details from direct constructor invocation.
-        2. Expressive Entry Point: Conveys domain intent via descriptive names (e.g., `fromCents()`, `fromArray()`).
+        1. Construction Abstraction: Decouples instantiation details from direct constructor
+           invocation.
+        2. Expressive Entry Point: Conveys domain intent via descriptive names
+           (e.g., `fromCents()`, `fromArray()`).
         3. Instance Return Guarantee: Always yields a fully initialized object or driver subclass.
-        qualities>>>;
+        qualities;
     }
-    
+
     public static function recommendedAlternatives(): string
     {
         return <<<alternatives
-        Use static initializer pattern on the class to be instantiated and make the class constructor private: `private function __constructor()`
+        Use a named constructor on the class to be instantiated and make its constructor private:
+        `private function __construct()`
         alternatives;
     }
-    
+
     public static function example(): string
     {
-        return <<<example
-        #[StaticInitializer]
+        return <<<'example'
+        #[\Eightfold\Attributes\Callables\NamedConstructor]
         public static function fromCents(int $cents, string $currency = 'USD'): self
         {
             return new self($cents / 100.0, $currency);

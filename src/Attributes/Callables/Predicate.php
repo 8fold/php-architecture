@@ -9,29 +9,6 @@ use Attribute;
 #[Attribute(Attribute::TARGET_METHOD)]
 final class Predicate
 {
-    public static function definingInvariants(): string
-    {
-        return 'returns `bool`, side-effect free inspection';
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static function behavior(): string
     {
         // phpcs:disable
@@ -45,7 +22,7 @@ final class Predicate
     {
         // phpcs:disable
         return <<<qualities
-        1. Non-Mutating Decision Boundary: Inspects state without altering it; ideal for conditional branching.
+        1. Non-Mutating Decision Boundary: Inspects state without altering it or causing side effects.
         2. Strict Boolean Return: Guarantees a deterministic true or false evaluation.
         qualities;
         // phpcs:enable

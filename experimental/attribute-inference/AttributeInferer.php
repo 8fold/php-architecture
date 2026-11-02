@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Eightfold\Aatributes;
 
 /**
+ * Experimental draft; not autoloaded or supported.
+ *
  * Infers appropriate behavioral subtype attributes for unannotated callables.
  */
 final readonly class AttributeInferer

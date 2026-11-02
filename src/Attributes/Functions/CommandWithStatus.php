@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Attributes;
+namespace Eightfold\Attributes\Functions;
 
 use Attribute;
 
@@ -15,35 +15,38 @@ final class CommandWithStatus
         Executes an action, modifies object state or database state, or triggers side effects.
         behavior;
     }
-    
+
     public static function definingInvariants(): string
     {
         return <<<qualities
-        1. Impure & State-Altering: Causes a state transition in the object, database, or external system.
-        2. Non-Value Returning: Returns status flag/code (issually `bool`, `int`, or `array`), signaling side-effect execution rather than data evaluation.
-        3. Non-Idempotent: Executing the method multiple times alters state sequentially (e.g., repeatedly deducting funds).
-        qualities>>>;
+        1. Impure & State-Altering: Causes a state transition in the object, database, or
+           external system.
+        2. Non-Value Returning: Returns status flag/code (usually `bool`, `int`, or `array`),
+           signaling side-effect execution rather than data evaluation.
+        3. Non-Idempotent: Executing the method multiple times alters state sequentially
+           (e.g., repeatedly deducting funds).
+        qualities;
     }
-    
+
     public static function recommendedAlternatives(): string
     {
         return '';
     }
-    
+
     public static function example(): string
     {
-        return <<<example
-        public/private/protected didDelete(): bool
+        return <<<'example'
+        public function didDelete(): bool
         {
             // remove instance from database
-            return true/false;
+            return true;
         }
         
-        didDelete(Record $record): bool
+        function didDelete(Record $record): bool
         {
             // remove instance from database
-            return true/false;
+            return true;
         }
-        example>>>;
+        example;
     }
 }

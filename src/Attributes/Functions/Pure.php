@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Attributes;
+namespace Eightfold\Attributes\Functions;
 
 use Attribute;
 
@@ -15,25 +15,28 @@ final class Pure
         Performs a deterministic transformation dependent solely on its input parameters.
         behavior;
     }
-    
+
     public static function definingInvariants(): string
     {
         return <<<qualities
         1. Determinism: The same input arguments ALWAYS produce the exact same output value.
-        2. Zero Side Effects: Reads no global state, performs no I/O, and mutates no external variables or arguments.
-        3. Referential Transparency: The function call can be safely replaced by its evaluation result.
-        4. Functional Composability: Directly compatible with PHP 8.5's Pipe Operator (|>) and callables.
-        qualities>>>;
+        2. Zero Side Effects: Reads no global state, performs no I/O, and mutates no external
+           variables or arguments.
+        3. Referential Transparency: The function call can be safely replaced by its evaluation
+           result.
+        4. Functional Composability: Directly compatible with PHP 8.5's Pipe Operator (|>) and
+           callables.
+        qualities;
     }
-    
+
     public static function recommendedAlternatives(): string
     {
         return '';
     }
-    
+
     public static function example(): string
     {
-        return <<<example
+        return <<<'example'
         function sanitizeCurrencyCode(string $rawCode): string
         {
             return strtoupper(trim($rawCode));

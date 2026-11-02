@@ -13,6 +13,10 @@ Run these gates in order at the start of each session, before other work.
      required by [AGENTS.md](../AGENTS.md#navigation-tools-and-validation),
      and keep generated changes out of unrelated commits.
 
+2. **Read the shared rules.** Read [AGENTS.md](../AGENTS.md) and the
+     [agent context](../docs/agent-context.md), including the repository's
+     startup order and local adaptations.
+
 ## Voice
 
 Copied from [AGENTS.md](../AGENTS.md#voice), the canonical source, so the rule

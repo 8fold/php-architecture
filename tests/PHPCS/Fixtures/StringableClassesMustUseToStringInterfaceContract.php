@@ -10,4 +10,5 @@ namespace Eightfold\Interfaces;
  */
 interface ToString extends \Stringable
 {
+    public function toString(): string;
 }

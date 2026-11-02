@@ -21,11 +21,21 @@ final class ImportedSuiteStringable implements ToString
     {
         return 'value';
     }
+
+    public function toString(): string
+    {
+        return 'value';
+    }
 }
 
 final class AliasedSuiteStringable implements SuiteToString
 {
     public function __toString(): string
+    {
+        return 'value';
+    }
+
+    public function toString(): string
     {
         return 'value';
     }
@@ -37,11 +47,21 @@ final class FullyQualifiedSuiteStringable implements \Eightfold\Interfaces\ToStr
     {
         return 'value';
     }
+
+    public function toString(): string
+    {
+        return 'value';
+    }
 }
 
 final class NativeThenSuiteStringable implements Stringable, ToString
 {
     public function __toString(): string
+    {
+        return 'value';
+    }
+
+    public function toString(): string
     {
         return 'value';
     }
@@ -53,10 +73,16 @@ final class SuiteThenNativeStringable implements ToString, Stringable
     {
         return 'value';
     }
+
+    public function toString(): string
+    {
+        return 'value';
+    }
 }
 
 abstract class AbstractSuiteStringable implements ToString
 {
+    abstract public function toString(): string;
 }
 
 final class OrdinaryToStringMethod
@@ -93,6 +119,11 @@ function compliantAnonymousStringable(): Stringable
 {
     return new class implements SuiteToString {
         public function __toString(): string
+        {
+            return 'value';
+        }
+
+        public function toString(): string
         {
             return 'value';
         }

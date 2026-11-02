@@ -45,7 +45,15 @@
       "@optimize-autoloader"
     ],
     "local": "@check",
-    "graph:refresh": "if [ -x \"$HOME/.local/bin/graphify\" ] && [ -f graphify-out/graph.json ]; then GRAPHIFY_NO_BACKUP=1 \"$HOME/.local/bin/graphify\" update . && php cli/graphify-token-usage.php --measured 0 0; else echo 'graphify or graphify-out/graph.json not found; skipping graph refresh'; fi",
+    "graph": [
+      "@graph:code",
+      "@graph:docs"
+    ],
+    "graph:code": "@php cli/graph.php code",
+    "graph:docs": [
+      "Composer\\Config::disableProcessTimeout",
+      "@php cli/graph.php docs"
+    ],
     "check": [
       "@check:style",
       "@check:analyze",
@@ -66,7 +74,9 @@
     "check:analyze": "Runs PHPStan static analysis.",
     "check:test": "Runs all PHPUnit test suites.",
 
-    "graph:refresh": "Updates the Graphify codebase knowledge graph and logs token usage.",
+    "graph": "Refreshes the knowledge graph: code, then documentation. Stops at the first failure.",
+    "graph:code": "Refreshes code in the knowledge graph with the Graphify CLI (fast; no agent).",
+    "graph:docs": "Refreshes documentation in the knowledge graph by launching a Copilot agent with the Graphify skill.",
     "optimize-autoloader": "Dumps authoritative classmap autoloader excluding dev dependencies."
   },
   "script-aliases": {

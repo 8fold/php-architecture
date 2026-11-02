@@ -39,8 +39,9 @@ the skill; the CLI alone cannot extract prose without an API key.
 | Graphify CLI 0.9.80 or newer | `graphify --version` |
 | CLI executable directory on `PATH` (`~/.local/bin` for `uv`) | `command -v graphify` |
 | Graphify skill for Copilot | `~/.copilot/skills/graphify/SKILL.md` exists |
+| Copilot CLI, only to launch the skill from a script | `command -v copilot` |
 
-If either is missing, ask whether to install it.
+If any required item is missing, ask whether to install it.
 
 For an approved user-local installation, one option is:
 

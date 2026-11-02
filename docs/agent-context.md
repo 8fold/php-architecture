@@ -55,6 +55,17 @@ The entry points are defined in `composer.json`:
 - `composer check:test` (alias `composer test`): PHPUnit.
 - `composer production` (alias `composer prod`): `check`, then
   `optimize-autoloader`.
+- `composer graph`: `graph:code`, then `graph:docs`. Stops at the first
+  failure and exits non-zero, reporting the graph as possibly stale.
+- `composer graph:code`: refresh code in the existing knowledge graph with the
+  Graphify CLI (`graphify update .`). Fast; no agent, no API key, no credits.
+- `composer graph:docs`: launch a Copilot CLI agent that runs the Graphify
+  skill's `/graphify --update` flow, so documentation is extracted without an
+  API key. Uses Copilot credits. `cli/graph.php` reports success only when the
+  agent reports a result and, for a refresh, `graph.json` and `manifest.json`
+  were regenerated. It also marks the report's placeholder token count as
+  unavailable. Requires the Copilot CLI and the Graphify skill
+  ([local tooling](graphify-setup.md#local-tooling)).
 
 The current local environment uses MAMP PHP 8.5.2
 (`/Applications/MAMP/bin/php/php8.5.2/bin/php`). Do not assume that path
@@ -64,8 +75,6 @@ Not functional yet; do not rely on these:
 
 - `composer local` only runs `check`. Its description (git hooks, build) is
   aspirational.
-- `composer graph:refresh` calls `cli/graphify-token-usage.php`, which does not
-  exist.
 
 <!-- Tool enforcement versus written guidance. -->
 ## Enforcement boundaries

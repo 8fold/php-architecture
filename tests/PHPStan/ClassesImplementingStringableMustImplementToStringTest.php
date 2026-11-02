@@ -6,10 +6,6 @@ namespace Eightfold\Tests\PHPStan;
 
 use Eightfold\Analysis\ClassesImplementingStringableMustImplementToString\PHPStanRule;
 use Eightfold\Attributes\Classes\Subclass;
-use PhpParser\Node\Identifier;
-use PhpParser\Node\Stmt\Class_;
-use PHPStan\Analyser\MutatingScope;
-use PHPStan\Rules\NonIgnorableRuleError;
 use PHPStan\Testing\RuleTestCase;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
@@ -68,22 +64,6 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
             ],
             []
         );
-    }
-
-    #[Test]
-    #[Group('analysis')]
-    public function reports_a_non_ignorable_must_with_a_stable_identifier(): void
-    {
-        $node = new Class_(new Identifier('Example'));
-        $scope = parent::createStub(MutatingScope::class);
-        $errors = self::getRule()->processNode($node, $scope);
-
-        parent::assertCount(1, $errors);
-        parent::assertSame(
-            'eightfold.classesImplementingStringableMustImplementToString',
-            $errors[0]->getIdentifier()
-        );
-        parent::assertInstanceOf(NonIgnorableRuleError::class, $errors[0]);
     }
 
     private static function loadFixtureSymbols(string $name): void

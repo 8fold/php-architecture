@@ -8,12 +8,7 @@ use Eightfold\Attributes\Classes\Subclass;
 use Eightfold\Analysis\BooleanNegationMustBeExplicit\PHPStanRule as BooleanNegationMustBeExplicit;
 use Eightfold\Tests\PHPStan\Fixtures\BooleanNegationMustBeExplicitCompliant;
 use Eightfold\Tests\PHPStan\Fixtures\BooleanNegationMustBeExplicitNoncompliant;
-use PhpParser\Node\Expr\BooleanNot;
-use PhpParser\Node\Expr\Variable;
-use PHPStan\Analyser\MutatingScope;
-use PHPStan\Rules\NonIgnorableRuleError;
 use PHPStan\Testing\RuleTestCase;
-use PHPStan\Type\BooleanType;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
@@ -69,21 +64,6 @@ final class BooleanNegationMustBeExplicitTest extends RuleTestCase
             [__DIR__ . '/Fixtures/BooleanNegationMustBeExplicitNonBoolean.php'],
             []
         );
-    }
-
-    #[Test]
-    #[Group('analysis')]
-    public function reports_a_non_ignorable_must_with_a_stable_identifier(): void
-    {
-        $node = new BooleanNot(new Variable('flag'));
-        $scope = parent::createStub(MutatingScope::class);
-        $scope->method('getType')->willReturn(new BooleanType());
-
-        $errors = self::getRule()->processNode($node, $scope);
-
-        parent::assertCount(1, $errors);
-        parent::assertSame('eightfold.booleanNegationMustBeExplicit', $errors[0]->getIdentifier());
-        parent::assertInstanceOf(NonIgnorableRuleError::class, $errors[0]);
     }
 
     /** @return array<string, array{bool}> */

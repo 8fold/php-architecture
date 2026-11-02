@@ -2,7 +2,7 @@ includes:
 	- vendor/spaze/phpstan-disallowed-calls/extension.neon
 
 rules:
-	# - Eightfold\PHPStan\Rules\BooleanNegationMustBeExplicit
-	# - Eightfold\PHPStan\Rules\ClassShouldBeFinal
-	# - Eightfold\PHPStan\Rules\ClassShouldNotBeSubclass
-	# - Eightfold\PHPStan\Rules\MethodShouldNotBePublic
+	# - Eightfold\Analysis\BooleanNegationMustBeExplicit\PHPStanRule
+	# - Eightfold\Analysis\ClassShouldBeFinal\PHPStanRule
+	# - Eightfold\Analysis\ClassShouldNotBeSubclass\PHPStanRule
+	# - Eightfold\Analysis\MethodShouldNotBePublic\PHPStanRule

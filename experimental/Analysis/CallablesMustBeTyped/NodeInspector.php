@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\PHPStan;
+namespace Eightfold\Experimental\Analysis\CallablesMustBeTyped;
 
 /**
  * AST Node Inspector for Method & Function Properties

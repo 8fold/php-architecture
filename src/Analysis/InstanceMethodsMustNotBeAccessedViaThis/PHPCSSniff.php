@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\PHPCS\Sniffs\Callables;
+namespace Eightfold\Analysis\InstanceMethodsMustNotBeAccessedViaThis;
 
+use Eightfold\Analysis\MessageCompiler;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
 use UnexpectedValueException;
 
-final class InstanceMethodsMustNotBeAccessedViaThis implements Sniff
+final class PHPCSSniff implements Sniff
 {
     public function register(): array
     {
@@ -25,7 +26,11 @@ final class InstanceMethodsMustNotBeAccessedViaThis implements Sniff
             return;
         }
 
-        $file->addError('Do not use $this to access a method.', $stackPtr, 'MethodAccessViaThis');
+        $file->addError(
+            self::messageCompiler()->compile('message'),
+            $stackPtr,
+            'MethodAccessViaThis'
+        );
     }
 
     private static function isThisReceiver(File $file, int $operator): bool
@@ -190,5 +195,10 @@ final class InstanceMethodsMustNotBeAccessedViaThis implements Sniff
         }
 
         return $index;
+    }
+
+    private static function messageCompiler(): MessageCompiler
+    {
+        return new MessageCompiler(__DIR__);
     }
 }

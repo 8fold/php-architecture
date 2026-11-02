@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\Attributes;
+namespace Eightfold\Experimental\Analysis\CallablesMustBeTyped\Tests;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;

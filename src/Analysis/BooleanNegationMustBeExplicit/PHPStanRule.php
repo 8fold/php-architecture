@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\PHPStan\Rules;
+namespace Eightfold\Analysis\BooleanNegationMustBeExplicit;
 
+use Eightfold\Analysis\MessageCompiler;
 use PhpParser\Node;
 use PhpParser\Node\Expr\BooleanNot;
 use PHPStan\Analyser\Scope;
@@ -14,7 +15,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 /**
  * @implements Rule<BooleanNot>
  */
-final class BooleanNegationMustBeExplicit implements Rule
+final class PHPStanRule implements Rule
 {
     public function getNodeType(): string
     {
@@ -32,16 +33,23 @@ final class BooleanNegationMustBeExplicit implements Rule
         }
 
         return [
-            RuleErrorBuilder::message(
-                'Boolean negation must use an explicit comparison or a positive condition.'
-            )->tip(
-                'For a boolean operand, replace !expression with expression === false,'
-                . ' preserving grouping and short-circuiting.'
+            RuleErrorBuilder::message(self::compiler()->compile('message'))->tip(
+                self::compiler()->compile('help')
             )->line(
                 $node->getStartLine()
             )->identifier(
-                'eightfold.booleanNegationMustBeExplicit'
+                self::identifier()
             )->nonIgnorable()->build(),
         ];
+    }
+
+    private static function compiler(): MessageCompiler
+    {
+        return new MessageCompiler(__DIR__);
+    }
+
+    private static function identifier(): string
+    {
+        return 'eightfold.' . lcfirst(basename(__DIR__));
     }
 }

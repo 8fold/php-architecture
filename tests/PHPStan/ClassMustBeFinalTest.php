@@ -10,11 +10,11 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
-use Eightfold\PHPStan\Rules\ClassMustBeFinal;
+use Eightfold\Analysis\ClassMustBeFinal\PHPStanRule as ClassMustBeFinal;
 
 use Eightfold\Tests\PHPStan\Fixtures\ClassMustBeFinalNoncompliant;
 
-use Eightfold\Attributes\Subclass;
+use Eightfold\Attributes\Classes\Subclass;
 
 /**
  * @extends RuleTestCase<ClassMustBeFinal>

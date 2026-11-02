@@ -10,11 +10,13 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
-use Eightfold\PHPStan\Rules\ClassShouldBeFinal;
+use Eightfold\Analysis\ClassMustBeFinal\PHPStanRule as ClassMustBeFinal;
+use Eightfold\Analysis\ClassShouldBeFinal\PHPStanRule as ClassShouldBeFinal;
+use Eightfold\Attributes\Classes\BaseClass;
 
 use Eightfold\Tests\PHPStan\Fixtures\ClassShouldBeFinalNoncompliant;
 
-use Eightfold\Attributes\Subclass;
+use Eightfold\Attributes\Classes\Subclass;
 
 /**
  * @extends RuleTestCase<ClassShouldBeFinal>
@@ -62,6 +64,23 @@ final class ClassShouldBeFinalTest extends RuletestCase
         parent::analyse(
             [__DIR__ . '/Fixtures/ClassMustBeFinalCompliant.php'],
             []
+        );
+    }
+
+    #[Test]
+    #[Group('analysis')]
+    public function tip_reuses_must_guidance_and_adds_the_opt_out_attribute(): void
+    {
+        $className = 'Example\\Widget';
+        $tip = ClassShouldBeFinal::tip($className);
+        $mustTip = ClassMustBeFinal::tip($className, true);
+        $expectedTip = $mustTip
+            . "\nor, decorate the class with the `"
+            . BaseClass::class
+            . '` attribute.';
+        parent::assertSame(
+            $expectedTip,
+            $tip
         );
     }
 }

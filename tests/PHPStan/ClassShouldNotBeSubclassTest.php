@@ -10,11 +10,11 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
-use Eightfold\PHPStan\Rules\ClassShouldNotBeSubclass;
+use Eightfold\Analysis\ClassShouldNotBeSubclass\PHPStanRule as ClassShouldNotBeSubclass;
 
 use Eightfold\Tests\PHPStan\Fixtures\ClassMustNotBeSubclassNoncompliant;
 
-use Eightfold\Attributes\Subclass;
+use Eightfold\Attributes\Classes\Subclass;
 
 /**
  * @extends RuleTestCase<ClassShouldNotBeSubclass>

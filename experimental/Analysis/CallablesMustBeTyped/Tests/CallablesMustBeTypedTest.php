@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPStan;
+namespace Eightfold\Experimental\Analysis\CallablesMustBeTyped\Tests;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
@@ -10,9 +10,9 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
 
-use Eightfold\PHPStan\Rules\CallablesMustBeTyped;
+use Eightfold\Experimental\Analysis\CallablesMustBeTyped\PHPStanRule as CallablesMustBeTyped;
 
-use Eightfold\Tests\PHPStan\Fixtures\CallablesMustBeTypedNoncompliant;
+use Eightfold\Experimental\Analysis\CallablesMustBeTyped\Tests\Fixtures\CallablesMustBeTypedNoncompliant;
 
 use Eightfold\Attributes\Classes\Subclass;
 

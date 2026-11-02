@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Aatributes;
+namespace Eightfold\Experimental\Analysis\CallablesMustBeTyped;
 
 /**
  * Infers appropriate behavioral subtype attributes for unannotated callables.

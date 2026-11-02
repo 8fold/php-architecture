@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\PHPStan\Rules;
+namespace Eightfold\Analysis\ClassMustNotBeSubclass;
 
+use Eightfold\Analysis\MessageCompiler;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
 use PHPStan\Node\InClassNode;
@@ -14,38 +15,25 @@ use PHPStan\Rules\RuleErrorBuilder;
 /**
  * @implements Rule<InClassNode>
  */
-final class ClassMustNotBeSubclass implements Rule
+final class PHPStanRule implements Rule
 {
     public static function message(string $className): string
     {
-        return <<<message
-        Class {$className} must not extend another class.
-        message;
+        return self::compiler()->compile('message', ['className' => $className]);
     }
 
     public static function tip(string $className, bool $isInclude = false): string
     {
-        $className = $className
-            |> (fn($c) => explode('\\', $c))
-            |> 'array_last';
-
-        $base = <<<base
-        Wrap the target class inside a dedicated class (adapter) (recommended);
-            \tor, inject an instance via constructor (composition);
-            \tor, move shared behavior into a PHP `trait` (horizontal composition)
-        base;
-
+        $tip = self::compiler()->compile('help');
         if ($isInclude) {
-            return <<<tip
-            {$base};
-            tip;
+            return $tip . ';';
         }
-        return $base;
+
+        return $tip;
     }
 
     public static function errorFoundFor(InClassNode $node): bool
     {
-        // Skip interfaces, traits, enums, anonymous classes
         $classReflection = $node->getClassReflection();
         if (
             $classReflection->isInterface()
@@ -56,26 +44,20 @@ final class ClassMustNotBeSubclass implements Rule
             return false;
         }
 
-        // Check if class extends another class
         return $classReflection->getParentClass() !== null;
     }
 
     public static function ruleError(InClassNode $node): IdentifierRuleError
     {
-        $id = static::class
-            |> (fn($c) => explode('\\', $c))
-            |> 'array_last'
-            |> 'lcfirst'
-            |> (fn($s) => 'eightfold.' . $s);
-
         $className = $node->getClassReflection()->getName();
-        return RuleErrorBuilder::message(
-            self::message($className)
-        )->tip(
-            self::tip($className, false)
+
+        return RuleErrorBuilder::message(self::message($className))->tip(
+            self::tip($className)
         )->line(
             $node->getOriginalNode()->getStartLine()
-        )->identifier($id)->nonIgnorable()->build();
+        )->identifier(
+            self::identifier()
+        )->nonIgnorable()->build();
     }
 
     public function getNodeType(): string
@@ -85,14 +67,24 @@ final class ClassMustNotBeSubclass implements Rule
 
     /**
      * @param InClassNode $node
+     * @return list<IdentifierRuleError>
      */
     public function processNode(Node $node, Scope $scope): array
     {
         if (self::errorFoundFor($node)) {
-            return [
-                self::ruleError($node),
-            ];
+            return [self::ruleError($node)];
         }
+
         return [];
+    }
+
+    private static function compiler(): MessageCompiler
+    {
+        return new MessageCompiler(__DIR__);
+    }
+
+    private static function identifier(): string
+    {
+        return 'eightfold.' . lcfirst(basename(__DIR__));
     }
 }

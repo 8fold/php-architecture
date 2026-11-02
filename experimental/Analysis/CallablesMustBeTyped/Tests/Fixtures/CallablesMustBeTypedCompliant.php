@@ -1,6 +1,6 @@
 <?php
 
-namespace Eightfold\Tests\PHPStan\Fixtures;
+namespace Eightfold\Experimental\Analysis\CallablesMustBeTyped\Tests\Fixtures;
 
 use Stringable;
 use NoDiscard;

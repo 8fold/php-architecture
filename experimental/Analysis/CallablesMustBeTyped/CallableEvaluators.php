@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\PHPStan;
+namespace Eightfold\Experimental\Analysis\CallablesMustBeTyped;
 
 use PhpParser\Node;
 use PhpParser\Node\FunctionLike;

@@ -35,11 +35,11 @@ final readonly class AttributeInferer
         $eligible = [];
 
         foreach ($candidates as $attributeClass) {
-            if ($this->isDisqualified($attributeClass, $inspector)) {
+            if (self::isDisqualified($attributeClass, $inspector)) {
                 continue;
             }
 
-            $score = $this->calculateScore($attributeClass, $inspector);
+            $score = self::calculateScore($attributeClass, $inspector);
             if ($score > 0) {
                 $eligible[$attributeClass] = $score;
             }
@@ -56,7 +56,7 @@ final readonly class AttributeInferer
         return new InferenceResult(
             attributeClass: $bestMatch,
             score: $confidence,
-            explanation: $this->buildExplanation($bestMatch, $inspector)
+            explanation: self::buildExplanation($bestMatch, $inspector)
         );
     }
 
@@ -67,7 +67,7 @@ final readonly class AttributeInferer
         string $attributeClass,
         NodeInspector $inspector
     ): bool {
-        $checks = $this->getRuleCheckMap($inspector);
+        $checks = self::getRuleCheckMap($inspector);
 
         foreach ($checks as $methodName => $actualCondition) {
             /** @var Rfc2119 $rfc */
@@ -93,7 +93,7 @@ final readonly class AttributeInferer
         NodeInspector $inspector
     ): int {
         $score = 0;
-        $checks = $this->getRuleCheckMap($inspector);
+        $checks = self::getRuleCheckMap($inspector);
 
         foreach ($checks as $methodName => $actualCondition) {
             /** @var Rfc2119 $rfc */

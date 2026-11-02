@@ -16,6 +16,7 @@
  		<!-- `use` clauses on new lines -->
  		<exclude name="PSR12.Files.FileHeader"/>
  	</rule>
+	<rule ref="src/PHPCS/Efqs/Sniffs/Callables/InstanceMethodsMustNotBeAccessedViaThisSniff.php"/>
 	<rule ref="Generic.Files.LineLength">
 		<properties>
 			<property phpcs-only="true" name="lineLimit" value="100"/>

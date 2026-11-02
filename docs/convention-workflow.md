@@ -29,7 +29,9 @@ convention request.
 3. **Tests.** Write isolated tests for the agreed analyzer behavior and
    demonstrate the intended failing assertions before implementation. Follow
    the applicable [layer's process](#layers) for diagnostic assertions and
-   setup requirements.
+   setup requirements, and
+   [Test scope and evidence](../.github/instructions/phpunit-test-definitions.instructions.md#test-scope-and-evidence)
+   for test boundaries, input validity, and red-test evidence.
 4. **Test approval.** Review the assertions and observed results with the user.
    Iterate and obtain explicit approval before implementation.
 5. **Implementation.** Implement the approved behavior until the approved tests

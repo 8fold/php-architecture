@@ -19,8 +19,9 @@ approval does not satisfy a later gate.
    from unrelated rules and the repository style sweep's fixture exclusion.
    Assert no diagnostics for compliant fixtures and only the agreed diagnostic
    codes, locations, severity, and counts for noncompliant fixtures.
-   Demonstrate the intended failing assertions before implementation; syntax,
-   loading, or test-runner errors are setup failures, not valid red tests.
+   Follow [Test scope and evidence](phpunit-test-definitions.instructions.md#test-scope-and-evidence)
+   for input validity, third-party boundaries, and valid red-test evidence.
+   Demonstrate the intended failing assertions before implementation.
 4. **Test approval.** Review the assertions and observed results with the user.
    Iterate until the user agrees that the tests verify the intended behavior.
    Do not implement the sniff before approval.

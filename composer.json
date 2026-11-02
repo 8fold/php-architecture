@@ -28,8 +28,7 @@
   "autoload": {
     "psr-4": {
       "Eightfold\\Attributes\\": "./src/Attributes/",
-      "Eightfold\\PHPStan\\": "./src/PHPStan/",
-      "Eightfold\\PHPCS\\": "./src/PHPCS/",
+      "Eightfold\\Analysis\\": "./src/Analysis/",
       "Eightfold\\Efqs\\": "./src/PHPCS/Efqs/"
     }
   },

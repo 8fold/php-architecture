@@ -1,5 +1,5 @@
 ---
-applyTo: "src/PHPCS/**/*.php,tests/PHPCS/**/*.php,phpcs.xml"
+applyTo: "src/Analysis/**/*.php,src/PHPCS/**/*.php,experimental/Analysis/**/*.php,tests/PHPCS/**/*.php,phpcs.xml"
 ---
 
 # PHPCS sniff development
@@ -37,11 +37,12 @@ approval does not satisfy a later gate.
 
 ## Structure
 
-Put the rule body under `src/PHPCS/Sniffs/<Category>/<Rule>.php`. Register it
-through a shell in the `Efqs` (Eightfold Quality Suite) standard that delegates
-to the body: `src/PHPCS/Efqs/Sniffs/<Category>/<Rule>Sniff.php`, in
-namespace `Eightfold\Efqs\Sniffs\<Category>`. PHPCS derives the diagnostic
-code, `Efqs.<Category>.<Rule>`, from that namespace and the `Sniff` suffix.
+Put a PHPCS rule body in the convention folder under
+`src/Analysis/<Convention>/PHPCSSniff.php`. Register it through a shell in the
+`Efqs` (Eightfold Quality Suite) standard that delegates to the body:
+`src/PHPCS/Efqs/Sniffs/<Category>/<Rule>Sniff.php`, in namespace
+`Eightfold\Efqs\Sniffs\<Category>`. PHPCS derives the diagnostic code,
+`Efqs.<Category>.<Rule>`, from that namespace and the `Sniff` suffix.
 
 `tests/PHPCS/Fixtures/` is excluded from the repository style sweep, not from
 explicit sniff tests. Never repair intentional violations to make the style

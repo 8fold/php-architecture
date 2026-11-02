@@ -1,5 +1,5 @@
 ---
-applyTo: "src/**/*.php,tests/**/*.php"
+applyTo: "src/**/*.php,experimental/Analysis/**/*.php,tests/**/*.php"
 ---
 
 # Class Declaration & Finality Rules
@@ -30,9 +30,10 @@ applyTo: "src/**/*.php,tests/**/*.php"
 
 - Run `composer check:analyze` for PHPStan analysis.
 - These attributes express architectural intent; documentation is not proof
-  of enforcement. The current PHPStan rules reference different attribute
-  namespaces, and the existing custom registrations in `extension.neon` are
-  commented out (one references a missing rule). These defects are
-  tracked in [#24](https://github.com/8fold/php-architecture/issues/24). Report
-  those failures rather than treating the attributes as working analyzer
-  opt-outs or substituting nonexistent attribute names.
+  of enforcement. The `Should` PHPStan rules recognize the corresponding
+  attributes under `Eightfold\Attributes\Classes\`, but all custom
+  registrations in `extension.neon` remain commented out (one references a
+  rule that is not implemented). The registration gap is tracked in
+  [#24](https://github.com/8fold/php-architecture/issues/24). Report that
+  enforcement is disabled rather than treating the attributes as active
+  analyzer opt-outs.

@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Eightfold\Efqs\Sniffs\Callables;
 
-use Eightfold\PHPCS\Sniffs\Callables\InstanceMethodsMustNotBeAccessedViaThis;
+use Eightfold\Analysis\InstanceMethodsMustNotBeAccessedViaThis\PHPCSSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
- * PHPCS registration shell; the rule body is InstanceMethodsMustNotBeAccessedViaThis.
+ * PHPCS registration shell; the rule body is the convention's PHPCS sniff.
  */
 final class InstanceMethodsMustNotBeAccessedViaThisSniff implements Sniff
 {
-    private readonly InstanceMethodsMustNotBeAccessedViaThis $rule;
+    private readonly PHPCSSniff $rule;
 
     public function __construct()
     {
-        $this->rule = new InstanceMethodsMustNotBeAccessedViaThis();
+        $this->rule = new PHPCSSniff();
     }
 
     public function register(): array

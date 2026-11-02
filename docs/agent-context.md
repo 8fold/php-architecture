@@ -152,6 +152,10 @@ None.
 
 Each entry links to the shared rule it adapts.
 
+- [Human gates and Git workflow](../AGENTS.md#human-gates-and-git-workflow)
+  rule 3: a convention-development request authorizes opening a pull request
+  for the initial fixture-only draft without separate approval. Later stages
+  retain the gates in the [convention workflow](convention-workflow.md#steps).
 - [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
   rule 1: the knowledge graph exists; the
   [workflow guide](graphify-workflow.md) applies, and updates require no

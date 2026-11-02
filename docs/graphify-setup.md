@@ -31,12 +31,16 @@ graph does not imply them.
 
 ## Local tooling
 
-Use Graphify 0.9.80 or newer for this PHP baseline and a matching Graphify
-skill. Check the installed CLI with:
+Both the CLI and the skill are required. Every graph build and refresh needs
+the skill; the CLI alone cannot extract prose without an API key.
 
-```sh
-graphify --version
-```
+| Prerequisite | Check |
+|---|---|
+| Graphify CLI 0.9.80 or newer | `graphify --version` |
+| CLI executable directory on `PATH` (`~/.local/bin` for `uv`) | `command -v graphify` |
+| Graphify skill for Copilot | `~/.copilot/skills/graphify/SKILL.md` exists |
+
+If either is missing, ask whether to install it.
 
 For an approved user-local installation, one option is:
 

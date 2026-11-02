@@ -8,7 +8,7 @@ use PhpParser\ParserFactory;
 use DateTimeImmutable;
 
 /*
- * No class declaration: the rule analyzes the file node.
+ * No class declaration: the rule analyzes PHPStan\Node\FileNode.
  * Expected: two eightfold.filesMustImportDependencies errors:
  * - line 7, ParserFactory: the PSL import DateTimeImmutable belongs first;
  * - line 21, \DateTime: fully qualified instead of imported.

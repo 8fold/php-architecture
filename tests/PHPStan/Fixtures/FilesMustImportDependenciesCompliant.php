@@ -28,9 +28,10 @@ use Eightfold\Attributes\Functions\Pure;
 /**
  * Draft fixture for issue #46; must produce no diagnostics.
  *
- * The rule analyzes PHPStan's file-level node, so it covers every import and
- * name in the file, with or without a class. Every class-like name is
- * imported, and the imports are grouped.
+ * The rule analyzes PHPStan's file-level node, PHPStan\Node\FileNode, whose
+ * getNodes() returns every top-level statement. It therefore covers every
+ * import and name in the file, with or without a class. Every class-like name
+ * is imported, and the imports are grouped.
  *
  * Provisional block order, one blank line between blocks:
  *

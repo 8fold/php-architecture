@@ -44,7 +44,7 @@ final readonly class NodeInspector
 
     public function accessesThis(Node $node): bool
     {
-        if ($this->isStatic($node) || $this->isStandalone($node)) {
+        if (self::isStatic($node) || self::isStandalone($node)) {
             return false;
         }
 
@@ -57,7 +57,7 @@ final readonly class NodeInspector
 
     public function mutatesInstanceState(Node $node): bool
     {
-        if ($this->isStatic($node) || $this->isStandalone($node)) {
+        if (self::isStatic($node) || self::isStandalone($node)) {
             return false;
         }
 

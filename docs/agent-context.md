@@ -37,6 +37,7 @@ and local adaptations of the shared rules.
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with fixtures under
   `tests/PHPStan/Fixtures/` and `tests/PHPCS/Fixtures/`.
 - `bin/`: Composer-exposed command-line tools for consuming projects.
+- `cli/`: repository-only command-line tools.
 - `docs/`: project documentation, including the agent context and
   Graphify [setup](graphify-setup.md) and [workflow](graphify-workflow.md)
   guides copied by consuming projects.
@@ -95,8 +96,8 @@ Not functional yet; do not rely on these:
 on missing or malformed frontmatter and on patterns that match no tracked
 files. Review the output for missing or unexpected files. The glob semantics,
 intended scopes, limits, and exit codes live in
-[`bin/check-instruction-coverage`](../bin/check-instruction-coverage), the
-canonical home. The script is repository-only and is not a Composer binary.
+[`cli/check-instructions-coverage.php`](../cli/check-instructions-coverage.php),
+the canonical home. The script is repository-only and is not a Composer binary.
 
 <!-- Secret templates, copies, and previews. -->
 ## Environment and secrets

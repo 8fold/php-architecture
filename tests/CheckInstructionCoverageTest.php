@@ -142,7 +142,7 @@ final class CheckInstructionCoverageTest extends TestCase
      */
     private static function runCommand(string $directory, ?array $command = null): array
     {
-        $command ??= [PHP_BINARY, dirname(__DIR__) . '/bin/check-instruction-coverage'];
+        $command ??= [PHP_BINARY, dirname(__DIR__) . '/cli/check-instructions-coverage.php'];
         $process = proc_open(
             $command,
             [1 => ['pipe', 'w'], 2 => ['pipe', 'w']],

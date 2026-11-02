@@ -55,7 +55,7 @@
     "check:style": "./vendor/bin/phpcs --standard=phpcs.xml",
     "check:analyze": "./vendor/bin/phpstan analyze",
     "check:test": "./vendor/bin/phpunit --display-all-issues",
-    "check:instructions": "@php bin/check-instruction-coverage",
+    "check:instructions": "@php cli/check-instructions-coverage.php",
     "optimize-autoloader": "composer dumpautoload --no-dev --classmap-authoritative"
   },
   "scripts-descriptions": {

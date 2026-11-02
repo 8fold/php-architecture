@@ -2,7 +2,7 @@
 <?php
 
 /**
- * Lists the tracked files that each path-specific Copilot instruction applies to.
+ * Repository-local CLI that lists files matched by each Copilot instruction.
  *
  * Usage, from the repository root:
  *

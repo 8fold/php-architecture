@@ -1,5 +1,5 @@
 ---
-applyTo: "src/*.php,tests/*.php"
+applyTo: "src/**/*.php,tests/**/*.php"
 ---
 
 Terms follow [docs/glossary.md](../../docs/glossary.md).

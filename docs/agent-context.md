@@ -75,6 +75,36 @@ Not functional yet; do not rely on these:
 - Not enforced: guidance in `AGENTS.md` unless a tool or check explicitly
   implements it.
 
+### Verify path-specific instruction coverage
+
+From the repository root, list the tracked files matched by each `applyTo`
+pattern:
+
+```sh
+for instruction in .github/instructions/*.instructions.md; do
+    printf '\n%s\n' "$instruction"
+    patterns=$(sed -n 's/^applyTo: "\(.*\)"$/\1/p' "$instruction")
+    printf '%s\n' "$patterns" | tr ',' '\n' | while IFS= read -r pattern; do
+        printf 'Pattern: %s\n' "$pattern"
+        git ls-files -- ":(glob)$pattern"
+    done
+done
+```
+
+This checks the current quoted, comma-separated frontmatter patterns using
+Git's glob pathspecs. For the `*` and `**` patterns used here, `*` stays within
+one path segment and `**/` includes zero or more directories, matching
+[Copilot's documented glob semantics](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions#creating-path-specific-custom-instructions).
+It does not verify that a particular Copilot client loaded the instructions.
+
+Class declaration and class-use instructions should cover all tracked PHP files
+under `src/` and `tests/`, including nested files. PHPUnit instructions should
+cover test classes at every depth, but not fixture files. Analysis naming and
+PHPCS development instructions should remain limited to their respective
+analysis paths; PHPCS development also covers `phpcs.xml`.
+Review the output for missing or unexpected files and for patterns with no
+matches; correct the frontmatter rather than treating an empty list as coverage.
+
 <!-- Secret templates, copies, and previews. -->
 ## Environment and secrets
 

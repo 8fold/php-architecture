@@ -10,6 +10,9 @@ graph.
 
 ## Refresh
 
+- Refresh after every successful `git pull` an agent runs, before relying on
+  the graph again. Report the refresh result with the pull result; a failed
+  refresh does not make the pull fail.
 - Updating an existing graph requires no separate approval. Installing or
   upgrading tools and enabling hooks still require the approvals in the
   [setup guide](graphify-setup.md#approval).

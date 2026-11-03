@@ -88,6 +88,10 @@ The entry points are defined in `composer.json`:
   key. It looks for the Graphify CLI on `PATH` or in `~/.local/bin` and fails
   if the graph or CLI is missing or the update fails. Documentation still
   requires the [semantic refresh](graphify-workflow.md#refresh).
+- `git/post-merge`: runs `cli/graph.php code` after every merge, including
+  `git pull`, and never blocks the merge. Opt in once per clone with
+  `git config core.hooksPath git`; enabling it is human-gated. Rebase pulls
+  do not trigger it.
 
 The current local environment uses MAMP PHP 8.5.2
 (`/Applications/MAMP/bin/php/php8.5.2/bin/php`). Do not assume that path

@@ -19,8 +19,10 @@ use Eightfold\Attributes\Functions\Factory;
 use Eightfold\Attributes\Functions\Pure;
 use Eightfold\Attributes\Functions\StateTransformer;
 use Eightfold\Attributes\Functions\StateTransformerThis as FunctionStateTransformerThis;
-use Eightfold\Tests\PHPStan\Fixtures\ClassesShouldBeFinalCompliantUsingAttribute;
-use Eightfold\Tests\PHPStan\Fixtures\ClassesShouldNotBeSubclassCompliantUsingAttribute;
+use Eightfold\Tests\PHPStan\Fixtures\{
+    ClassesShouldBeFinal\Compliant as ClassesShouldBeFinalCompliant,
+    ClassesShouldNotBeSubclass\Compliant as ClassesShouldNotBeSubclassCompliant,
+};
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -79,12 +81,12 @@ final class AttributeContractTest extends TestCase
     {
         return [
             'base class' => [
-                ClassesShouldBeFinalCompliantUsingAttribute::class,
+                ClassesShouldBeFinalCompliant::class,
                 BaseClass::class,
                 'This fixture permits extension.',
             ],
             'subclass' => [
-                ClassesShouldNotBeSubclassCompliantUsingAttribute::class,
+                ClassesShouldNotBeSubclassCompliant::class,
                 Subclass::class,
                 'This fixture requires a subclass.',
             ],

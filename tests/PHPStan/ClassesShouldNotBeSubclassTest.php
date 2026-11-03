@@ -12,8 +12,10 @@ use PHPStan\Testing\RuleTestCase;
 
 use Eightfold\Analysis\ClassesShouldNotBeSubclass\PHPStanRule as ClassesShouldNotBeSubclass;
 
-use Eightfold\Tests\PHPStan\Fixtures\ClassesMustNotBeSubclassNoncompliant;
-use Eightfold\Tests\PHPStan\Fixtures\ClassesShouldBeFinalCompliantUsingAttribute;
+use Eightfold\Tests\PHPStan\Fixtures\{
+    ClassesMustNotBeSubclass\Noncompliant as ClassesMustNotBeSubclassNoncompliant,
+    ClassesShouldBeFinal\Compliant as ClassesShouldBeFinalCompliant,
+};
 
 use Eightfold\Attributes\Classes\Subclass;
 
@@ -35,7 +37,7 @@ final class ClassesShouldNotBeSubclassTest extends RuletestCase
         $noncompliant = ClassesMustNotBeSubclassNoncompliant::class;
 
         parent::analyse(
-            [__DIR__ . '/Fixtures/ClassesMustNotBeSubclassNoncompliant.php'],
+            [__DIR__ . '/Fixtures/ClassesMustNotBeSubclass/Noncompliant.php'],
             [
                 [
                     ClassesShouldNotBeSubclass::message($noncompliant),
@@ -51,7 +53,7 @@ final class ClassesShouldNotBeSubclassTest extends RuletestCase
     public function compliant_using_attributes_succeeds(): void
     {
         parent::analyse(
-            [__DIR__ . '/Fixtures/ClassesShouldNotBeSubclassCompliantUsingAttribute.php'],
+            [__DIR__ . '/Fixtures/ClassesShouldNotBeSubclass/Compliant.php'],
             []
         );
     }
@@ -60,10 +62,10 @@ final class ClassesShouldNotBeSubclassTest extends RuletestCase
     #[Group('analysis')]
     public function base_class_attribute_does_not_suppress_subclass_diagnostics(): void
     {
-        $noncompliant = ClassesShouldBeFinalCompliantUsingAttribute::class;
+        $noncompliant = ClassesShouldBeFinalCompliant::class;
 
         parent::analyse(
-            [__DIR__ . '/Fixtures/ClassesShouldBeFinalCompliantUsingAttribute.php'],
+            [__DIR__ . '/Fixtures/ClassesShouldBeFinal/Compliant.php'],
             [
                 [
                     ClassesShouldNotBeSubclass::message($noncompliant),
@@ -79,7 +81,7 @@ final class ClassesShouldNotBeSubclassTest extends RuletestCase
     public function compliant_succeeds(): void
     {
         parent::analyse(
-            [__DIR__ . '/Fixtures/ClassesMustNotBeSubclassCompliant.php'],
+            [__DIR__ . '/Fixtures/ClassesMustNotBeSubclass/Compliant.php'],
             []
         );
     }

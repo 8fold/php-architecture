@@ -6,8 +6,10 @@ namespace Eightfold\Tests\PHPStan;
 
 use Eightfold\Attributes\Classes\Subclass;
 use Eightfold\Analysis\BooleanNegationMustBeExplicit\PHPStanRule as BooleanNegationMustBeExplicit;
-use Eightfold\Tests\PHPStan\Fixtures\BooleanNegationMustBeExplicitCompliant;
-use Eightfold\Tests\PHPStan\Fixtures\BooleanNegationMustBeExplicitNoncompliant;
+use Eightfold\Tests\PHPStan\Fixtures\{
+    BooleanNegationMustBeExplicit\Compliant as BooleanNegationMustBeExplicitCompliant,
+    BooleanNegationMustBeExplicit\Noncompliant as BooleanNegationMustBeExplicitNoncompliant,
+};
 use PhpParser\Node\Expr\BooleanNot;
 use PhpParser\Node\Expr\Variable;
 use PHPStan\Analyser\MutatingScope;
@@ -46,7 +48,7 @@ final class BooleanNegationMustBeExplicitTest extends RuleTestCase
         }
 
         parent::analyse(
-            [__DIR__ . '/Fixtures/BooleanNegationMustBeExplicitNoncompliant.php'],
+            [__DIR__ . '/Fixtures/BooleanNegationMustBeExplicit/Noncompliant.php'],
             $errors
         );
     }
@@ -56,7 +58,7 @@ final class BooleanNegationMustBeExplicitTest extends RuleTestCase
     public function accepts_explicit_comparisons_and_positive_conditions(): void
     {
         parent::analyse(
-            [__DIR__ . '/Fixtures/BooleanNegationMustBeExplicitCompliant.php'],
+            [__DIR__ . '/Fixtures/BooleanNegationMustBeExplicit/Compliant.php'],
             []
         );
     }
@@ -66,7 +68,7 @@ final class BooleanNegationMustBeExplicitTest extends RuleTestCase
     public function leaves_non_boolean_truthiness_for_intent_review(): void
     {
         parent::analyse(
-            [__DIR__ . '/Fixtures/BooleanNegationMustBeExplicitNonBoolean.php'],
+            [__DIR__ . '/Fixtures/BooleanNegationMustBeExplicit/NonBoolean.php'],
             []
         );
     }

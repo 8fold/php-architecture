@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPStan\Fixtures;
+namespace Eightfold\Tests\PHPStan\Fixtures\BooleanNegationMustBeExplicit;
 
-final class BooleanNegationMustBeExplicitNoncompliant
+final class Noncompliant
 {
     public static function variable(bool $flag): bool
     {

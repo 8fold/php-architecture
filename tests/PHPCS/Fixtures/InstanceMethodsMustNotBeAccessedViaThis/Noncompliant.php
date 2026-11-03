@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPCS\Fixtures;
+namespace Eightfold\Tests\PHPCS\Fixtures\InstanceMethodsMustNotBeAccessedViaThis;
 
-final class InstanceMethodsMustNotBeAccessedViaThisNoncompliant
+final class Noncompliant
 {
     /** Each statement should produce a MethodAccessViaThis error. */
     public function exercise(string $method): void

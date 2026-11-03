@@ -11,5 +11,8 @@ parameters:
 	excludePaths:
 		analyse:
 			- tests/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringNoncompliant.php
+			- tests/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringIndirectCompliant.php
+			- tests/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringIndirectParentNoncompliant.php
+			- tests/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringIndirectNoncompliant.php
 		analyseAndScan:
 			- tests/PHPStan/Fixtures

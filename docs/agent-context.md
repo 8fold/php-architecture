@@ -23,21 +23,28 @@ and local adaptations of the shared rules.
 ## Layout and runtime
 
 - PHP `^8.5`, as declared in `composer.json`.
+- The suite is intended as a consumer development dependency; its tool and
+  runtime-contract boundaries are documented in
+  [Consumer dependencies](../README.md#consumer-dependencies).
 - `src/Attributes/`: PHP attributes (`Eightfold\Attributes\`).
+- `src/Interfaces/`: shared interface contracts (`Eightfold\Interfaces\`).
 - `src/Analysis/<Convention>/`: convention-specific analysis implementations
   (`Eightfold\Analysis\`), named Markdown diagnostic templates, and PHP message
   compilation. Templates use `{{placeholder}}` values; missing templates and
   unresolved placeholders raise explicit errors, and templates are not cached.
   PHPStan and PHPCS use `PHPStanRule.php` and `PHPCSSniff.php`.
 - `src/PHPCS/Efqs/`: PHPCS registration shells (`Eightfold\Efqs\`) delegate to
-  convention implementations. Custom PHPStan registrations in
-  `extension.neon` remain commented out; the vendor extension remains enabled.
-  PHPStan ignores lines prefixed with `#`.
+  convention implementations.
+- The stringability PHPStan rule is active in `extension.neon` alongside the
+  vendor extension. Its scope is described in the
+  [class stringability instruction](../.github/instructions/php-class-stringability.instructions.md);
+  the other custom registrations remain commented out. PHPStan ignores lines
+  prefixed with `#`.
 - `experimental/Analysis/`: analysis experiments outside Composer autoloading,
   including the unsupported [callable type-analysis and attribute-inference
   prototype](../experimental/Analysis/CallablesMustBeTyped/README.md).
-- The `InstanceMethodsMustNotBeAccessedViaThis` Sniff registration is declared
-  in `phpcs.xml`.
+- The `InstanceMethodsMustNotBeAccessedViaThis` sniff is registered in
+  `phpcs.xml`.
 - Convention folder names, sniffs, and PHPStan rule names follow the
   [RFC 2119 naming convention](../.github/instructions/analysis-naming.instructions.md).
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with analysis tests under
@@ -69,7 +76,8 @@ The entry points are defined in `composer.json`:
 - `composer install`: install dependencies from the lock file.
 - `composer check`: run `check:style`, `check:analyze`, and `check:test`.
 - `composer check:style`: PHPCS with `phpcs.xml`.
-- `composer check:analyze`: PHPStan with `phpstan.neon`.
+- `composer check:analyze`: PHPStan with `phpstan.neon`, which loads PHPCS's
+  autoloader for repository analysis.
 - `composer check:test` (alias `composer test`): PHPUnit.
 - `composer check:instructions`: list and check path-specific instruction
   coverage ([details](#verify-path-specific-instruction-coverage)).
@@ -93,9 +101,11 @@ Not functional yet; do not rely on these:
 <!-- Tool enforcement versus written guidance. -->
 ## Enforcement boundaries
 
-- Enforced: PHPCS style checks, built-in and vendor PHPStan analysis, and
-  PHPUnit tests through the corresponding `composer check:*` scripts.
-- Disabled: all custom PHPStan rule registrations in `extension.neon`,
+- Enforced: PHPCS style checks, the stringability PHPStan rule, built-in
+  and vendor PHPStan analysis, and PHPUnit tests through the corresponding
+  `composer check:*` scripts. Repository-wide PHPStan analysis excludes its
+  fixtures; isolated tests still analyze the stringability fixtures.
+- Disabled: the other custom PHPStan rule registrations in `extension.neon`,
   including `BooleanNegationMustBeExplicit`. That rule reports unary `!` on
   operands PHPStan knows are boolean, with non-ignorable identifier
   `eightfold.booleanNegationMustBeExplicit`. Nullable, non-boolean, and unknown
@@ -126,10 +136,9 @@ the canonical home. The script is repository-only and is not a Composer binary.
 
 The repository is mid-consolidation. `composer check:style` still reports
 pre-existing line-length warnings in `tests/EfqsDocsAgentsTest.php`, and
-`composer check:analyze` still reports pre-existing errors: PHPStan does not
-load PHPCS's autoloader by default, and additional test and fixture type errors
-remain when it is loaded. The existing custom PHPStan registrations, including
-a missing rule, are commented out.
+`composer check:analyze` still reports pre-existing test and fixture type
+errors. The other custom PHPStan registrations, including a missing rule, are
+commented out.
 Report failures under
 [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
 rule 5. Do not fix unrelated code as part of other work.

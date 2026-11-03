@@ -14,13 +14,13 @@
   },
   "require": {
     "php": "^8.5",
-    "8fold/php-html-builder": "^5.0"
+    "8fold/php-html-builder": "^5.0",
+    "phpstan/phpstan": "^2.3",
+    "spaze/phpstan-disallowed-calls": "^4.14",
+    "squizlabs/php_codesniffer": "^4.0"
   },
   "require-dev": {
-    "phpstan/phpstan": "^2.3",
-    "phpunit/phpunit": "^13.2",
-    "squizlabs/php_codesniffer": "^4.0",
-    "spaze/phpstan-disallowed-calls": "^4.14"
+    "phpunit/phpunit": "^13.2"
   },
   "bin": [
     "bin/efqs"
@@ -29,6 +29,7 @@
     "psr-4": {
       "Eightfold\\Attributes\\": "./src/Attributes/",
       "Eightfold\\Analysis\\": "./src/Analysis/",
+      "Eightfold\\Interfaces\\": "./src/Interfaces/",
       "Eightfold\\Efqs\\": "./src/PHPCS/Efqs/"
     }
   },

@@ -1,7 +1,8 @@
 includes:
-	- vendor/spaze/phpstan-disallowed-calls/extension.neon
+	- %rootDir%/../../spaze/phpstan-disallowed-calls/extension.neon
 
 rules:
+	- Eightfold\Analysis\ClassesImplementingStringableMustImplementToString\PHPStanRule
 	# - Eightfold\Analysis\BooleanNegationMustBeExplicit\PHPStanRule
 	# - Eightfold\Analysis\ClassesShouldBeFinal\PHPStanRule
 	# - Eightfold\Analysis\ClassesShouldNotBeSubclass\PHPStanRule

@@ -85,6 +85,7 @@ final class ProductionSourceTest extends TestCase
             'PHPCS/Efqs/' => 'Eightfold\\Efqs\\',
             'Analysis/' => 'Eightfold\\Analysis\\',
             'Attributes/' => 'Eightfold\\Attributes\\',
+            'Interfaces/' => 'Eightfold\\Interfaces\\',
         ];
         $types = [];
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(

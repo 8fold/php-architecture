@@ -9,3 +9,28 @@ applyTo: "tests/**/*Test.php,experimental/Analysis/**/*Test.php"
     - names use lowercase words and spaces replaced by an underscore (_); snake_case.
     - is identified using PHPUnit's `#[Test]` attribute, not naming convention.
     - is a member of one or more groups using PHPUnit's `#[Group('name')]` attribute.
+
+## Test scope and evidence
+
+- Test behavior implemented by this package, not mechanisms implemented by
+  PHP itself or third-party libraries. Use third-party tools to exercise
+  convention detection, but do not reproduce their internal tests.
+- Do not test tool configuration that only registers package code, such as a
+  rule entry in `extension.neon`; loading it is the tool's behavior, and using
+  the tool verifies it.
+- Remove scaffolding assertions, such as checking that a new object is not
+  null, once behavioral tests cover the code
+  ([Navigation, tools, and validation](../../AGENTS.md#navigation-tools-and-validation)
+  rule 8).
+- Convention tests focus on detection correctness: compliant inputs produce no
+  diagnostics, and noncompliant inputs produce the agreed diagnostics. Do not add
+  standalone tests that merely restate the identifier formula or assert
+  PHPStan's error marker types or suppression mechanics. Package-maintenance
+  policies belong in agent instructions and dedicated static analysis, not
+  repeated metadata assertions in each convention's PHPUnit tests.
+- Every test input, including configured stubs, must represent the case its
+  assertions describe. A diagnostic assertion requires an input that actually
+  violates the convention.
+- A red test demonstrates the intended assertion failing. Missing rule classes,
+  syntax errors, autoload failures, and test-runner errors are setup failures,
+  not evidence that the assertion detects missing convention behavior.

@@ -22,6 +22,8 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
     private const TIP =
         'Implement Eightfold\\Interfaces\\ToString and its toString(): string method.';
 
+    private const FIXTURE_PREFIX = 'ClassesImplementingStringableMustImplementToString';
+
     protected function getRule(): PHPStanRule
     {
         return new PHPStanRule();
@@ -31,7 +33,7 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
     #[Group('analysis')]
     public function reports_each_directly_stringable_class_once(): void
     {
-        self::loadFixtureSymbols('ClassesImplementingStringableMustImplementToStringNoncompliant.php');
+        self::loadFixtureSymbols(self::FIXTURE_PREFIX . 'Noncompliant.php');
 
         $errors = [];
         foreach ([17, 25, 33, 41, 49, 57, 61, 71, 83, 94] as $line) {
@@ -41,9 +43,7 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
         parent::analyse(
             [
                 dirname(__DIR__)
-                . '/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringContract.php',
-                dirname(__DIR__)
-                . '/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringNoncompliant.php',
+                . '/PHPCS/Fixtures/' . self::FIXTURE_PREFIX . 'Noncompliant.php',
             ],
             $errors
         );
@@ -53,14 +53,12 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
     #[Group('analysis')]
     public function accepts_suite_contract_implementations_and_non_targets(): void
     {
-        self::loadFixtureSymbols('ClassesImplementingStringableMustImplementToStringCompliant.php');
+        self::loadFixtureSymbols(self::FIXTURE_PREFIX . 'Compliant.php');
 
         parent::analyse(
             [
                 dirname(__DIR__)
-                . '/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringContract.php',
-                dirname(__DIR__)
-                . '/PHPCS/Fixtures/ClassesImplementingStringableMustImplementToStringCompliant.php',
+                . '/PHPCS/Fixtures/' . self::FIXTURE_PREFIX . 'Compliant.php',
             ],
             []
         );
@@ -69,8 +67,6 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
     private static function loadFixtureSymbols(string $name): void
     {
         $fixtures = dirname(__DIR__) . '/PHPCS/Fixtures/';
-        require_once $fixtures
-            . 'ClassesImplementingStringableMustImplementToStringContract.php';
         require_once $fixtures . $name;
     }
 }

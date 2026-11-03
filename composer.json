@@ -29,6 +29,7 @@
     "psr-4": {
       "Eightfold\\Attributes\\": "./src/Attributes/",
       "Eightfold\\Analysis\\": "./src/Analysis/",
+      "Eightfold\\Interfaces\\": "./src/Interfaces/",
       "Eightfold\\Efqs\\": "./src/PHPCS/Efqs/"
     }
   },

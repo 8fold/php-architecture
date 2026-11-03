@@ -114,6 +114,10 @@ the command's requirements and its code-only alias.
 
 ## PHP conventions (strict)
 
+- [Class stringability](.github/instructions/php-class-stringability.instructions.md):
+  directly stringable classes implement `Eightfold\Interfaces\ToString`, which
+  also requires `toString(): string`. The direct-declaration PHPCS and PHPStan
+  checks are implemented but not yet enabled.
 - [Explicit boolean expressions](.github/instructions/php-boolean-expressions.instructions.md):
   prefer positive conditions or strict comparisons to negating a boolean
   expression with `!`. The type-aware `BooleanNegationMustBeExplicit` PHPStan

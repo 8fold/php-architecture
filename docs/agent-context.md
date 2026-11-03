@@ -24,6 +24,7 @@ and local adaptations of the shared rules.
 
 - PHP `^8.5`, as declared in `composer.json`.
 - `src/Attributes/`: PHP attributes (`Eightfold\Attributes\`).
+- `src/Interfaces/`: shared interface contracts (`Eightfold\Interfaces\`).
 - `src/Analysis/<Convention>/`: convention-specific analysis implementations
   (`Eightfold\Analysis\`), named Markdown diagnostic templates, and PHP message
   compilation. Templates use `{{placeholder}}` values; missing templates and

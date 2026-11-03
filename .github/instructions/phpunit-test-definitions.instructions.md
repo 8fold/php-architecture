@@ -23,7 +23,7 @@ applyTo: "tests/**/*Test.php,experimental/Analysis/**/*Test.php"
   repeated metadata assertions in each convention's PHPUnit tests.
 - Every test input, including configured stubs, must represent the case its
   assertions describe. A diagnostic assertion requires an input that actually
-  violates the convention; a bare class is not evidence of stringability.
+  violates the convention.
 - A red test demonstrates the intended assertion failing. Missing rule classes,
   syntax errors, autoload failures, and test-runner errors are setup failures,
   not evidence that the assertion detects missing convention behavior.

@@ -15,19 +15,21 @@ applyTo: "tests/**/*Test.php,experimental/Analysis/**/*Test.php"
 - Test behavior implemented by this package, not mechanisms implemented by
   PHP itself or third-party libraries. Use third-party tools to exercise
   convention detection, but do not reproduce their internal tests.
-- Do not test tool configuration that only registers package code, such as a
-  rule entry in `extension.neon`; loading it is the tool's behavior, and using
-  the tool verifies it.
+- Convention tests assert the rule's behavior through compliant and noncompliant
+  inputs. Do not add tests solely to verify that PHPStan can load configuration
+  or that its extension mechanism works; those are PHPStan behaviors. Test
+  package configuration only when it protects a meaningful behavior or contract
+  that is not already covered by the convention tests.
+- Compliant convention inputs produce no diagnostics, and noncompliant inputs
+  produce the agreed diagnostics. Do not add standalone tests that merely
+  restate the identifier formula or assert PHPStan's error marker types or
+  suppression mechanics. Package-maintenance policies belong in agent
+  instructions and dedicated static analysis, not repeated metadata assertions
+  in each convention's PHPUnit tests.
 - Remove scaffolding assertions, such as checking that a new object is not
   null, once behavioral tests cover the code
   ([Navigation, tools, and validation](../../AGENTS.md#navigation-tools-and-validation)
   rule 8).
-- Convention tests focus on detection correctness: compliant inputs produce no
-  diagnostics, and noncompliant inputs produce the agreed diagnostics. Do not add
-  standalone tests that merely restate the identifier formula or assert
-  PHPStan's error marker types or suppression mechanics. Package-maintenance
-  policies belong in agent instructions and dedicated static analysis, not
-  repeated metadata assertions in each convention's PHPUnit tests.
 - Every test input, including configured stubs, must represent the case its
   assertions describe. A diagnostic assertion requires an input that actually
   violates the convention.

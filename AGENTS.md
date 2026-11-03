@@ -170,6 +170,12 @@ These rules apply whenever a request asks for changes to files.
 7. **Guidance is not enforcement.** A rule in documentation does not mean a tool
    enforces it. A new rule is not permission to refactor existing code across
    the repository. Apply new guidance to the code being changed.
+8. **Refactor tests like production code.** Tests receive the same scrutiny
+   as the code they cover. Assertions that helped drive a design, such as
+   checking that a new object is not null, are removed once behavioral tests
+   cover that code. Remove tests that only exercise language or third-party
+   behavior. Removing a redundant test is not trading coverage (rule 5) when
+   the behavior remains covered.
 
 ---
 

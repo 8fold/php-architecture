@@ -13,8 +13,15 @@ applyTo: "tests/**/*Test.php,experimental/Analysis/**/*Test.php"
 ## Test scope and evidence
 
 - Test behavior implemented by this package, not mechanisms implemented by
-  third-party libraries. Use third-party tools to exercise convention detection,
-  but do not reproduce their internal tests.
+  PHP itself or third-party libraries. Use third-party tools to exercise
+  convention detection, but do not reproduce their internal tests.
+- Do not test tool configuration that only registers package code, such as a
+  rule entry in `extension.neon`; loading it is the tool's behavior, and using
+  the tool verifies it.
+- Remove scaffolding assertions, such as checking that a new object is not
+  null, once behavioral tests cover the code
+  ([Navigation, tools, and validation](../../AGENTS.md#navigation-tools-and-validation)
+  rule 8).
 - Convention tests focus on detection correctness: compliant inputs produce no
   diagnostics, and noncompliant inputs produce the agreed diagnostics. Do not add
   standalone tests that merely restate the identifier formula or assert

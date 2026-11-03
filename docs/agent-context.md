@@ -69,7 +69,8 @@ The entry points are defined in `composer.json`:
 - `composer install`: install dependencies from the lock file.
 - `composer check`: run `check:style`, `check:analyze`, and `check:test`.
 - `composer check:style`: PHPCS with `phpcs.xml`.
-- `composer check:analyze`: PHPStan with `phpstan.neon`.
+- `composer check:analyze`: PHPStan with `phpstan.neon`, which loads PHPCS's
+  autoloader for repository analysis.
 - `composer check:test` (alias `composer test`): PHPUnit.
 - `composer check:instructions`: list and check path-specific instruction
   coverage ([details](#verify-path-specific-instruction-coverage)).
@@ -126,10 +127,9 @@ the canonical home. The script is repository-only and is not a Composer binary.
 
 The repository is mid-consolidation. `composer check:style` still reports
 pre-existing line-length warnings in `tests/EfqsDocsAgentsTest.php`, and
-`composer check:analyze` still reports pre-existing errors: PHPStan does not
-load PHPCS's autoloader by default, and additional test and fixture type errors
-remain when it is loaded. The existing custom PHPStan registrations, including
-a missing rule, are commented out.
+`composer check:analyze` still reports pre-existing test and fixture type
+errors. The existing custom PHPStan registrations, including a missing rule,
+are commented out.
 Report failures under
 [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
 rule 5. Do not fix unrelated code as part of other work.

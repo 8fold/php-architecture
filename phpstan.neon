@@ -3,6 +3,8 @@ includes:
 
 parameters:
 	level: 10
+	bootstrapFiles:
+		- vendor/squizlabs/php_codesniffer/autoload.php
 	paths:
 		- src
 		- tests

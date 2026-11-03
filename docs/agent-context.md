@@ -34,8 +34,10 @@ and local adaptations of the shared rules.
   unresolved placeholders raise explicit errors, and templates are not cached.
   PHPStan and PHPCS use `PHPStanRule.php` and `PHPCSSniff.php`.
 - `src/PHPCS/Efqs/`: PHPCS registration shells (`Eightfold\Efqs\`) delegate to
-  convention implementations. The direct stringability PHPStan rule is active
-  in `extension.neon` alongside the vendor extension; the other custom
+  convention implementations.
+- The direct stringability PHPStan rule is active in `extension.neon`
+  alongside the vendor extension. Its `includeIndirect` mode is implemented
+  but defaults to disabled pending activation approval; the other custom
   registrations remain commented out. PHPStan ignores lines prefixed with `#`.
 - `experimental/Analysis/`: analysis experiments outside Composer autoloading,
   including the unsupported [callable type-analysis and attribute-inference

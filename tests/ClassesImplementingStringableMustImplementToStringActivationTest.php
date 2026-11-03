@@ -18,7 +18,7 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
 
     #[Test]
     #[Group('analysis')]
-    public function configured_phpstan_enforces_direct_stringability(): void
+    public function configured_phpstan_enforces_direct_stringability_and_defers_indirect(): void
     {
         $root = dirname(__DIR__);
         $command = [
@@ -36,6 +36,7 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
 
         $noncompliant = $directory . '/Noncompliant.php';
         $compliant = $directory . '/Compliant.php';
+        $indirect = $directory . '/Indirect.php';
 
         try {
             $noncompliantSource = <<<'PHP'
@@ -73,9 +74,30 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
                     }
                 }
                 PHP;
+            $indirectSource = <<<'PHP'
+                <?php
+
+                declare(strict_types=1);
+
+                namespace StringabilityActivation;
+
+                trait StringableTrait
+                {
+                    public function __toString(): string
+                    {
+                        return 'value';
+                    }
+                }
+
+                final class UsesStringableTrait
+                {
+                    use StringableTrait;
+                }
+                PHP;
             if (
                 file_put_contents($noncompliant, $noncompliantSource . "\n") === false
                 || file_put_contents($compliant, $compliantSource . "\n") === false
+                || file_put_contents($indirect, $indirectSource . "\n") === false
             ) {
                 throw new RuntimeException('Unable to write the activation test inputs.');
             }
@@ -86,8 +108,11 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
 
             [$exitCode, $output, $error] = self::runAnalyzer($command, $compliant);
             parent::assertSame(0, $exitCode, $output . $error);
+
+            [$exitCode, $output, $error] = self::runAnalyzer($command, $indirect);
+            parent::assertSame(0, $exitCode, $output . $error);
         } finally {
-            foreach ([$noncompliant, $compliant] as $path) {
+            foreach ([$noncompliant, $compliant, $indirect] as $path) {
                 if (is_file($path) && unlink($path) === false) {
                     throw new RuntimeException('Unable to remove the activation test input.');
                 }

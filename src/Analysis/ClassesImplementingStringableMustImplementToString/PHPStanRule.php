@@ -10,47 +10,65 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassLike;
 use PHPStan\Analyser\Scope;
+use PHPStan\Node\InClassNode;
 use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use Stringable;
 
 /**
- * @implements Rule<ClassLike>
+ * @implements Rule<ClassLike|InClassNode>
  */
 final class PHPStanRule implements Rule
 {
+    public function __construct(private readonly bool $includeIndirect = false)
+    {
+    }
+
     public function getNodeType(): string
     {
-        return ClassLike::class;
+        return $this->includeIndirect ? InClassNode::class : ClassLike::class;
     }
 
     /**
-     * @param ClassLike $node
+     * @param ClassLike|InClassNode $node
      * @return list<IdentifierRuleError>
      */
     public function processNode(Node $node, Scope $scope): array
     {
-        if (($node instanceof Class_) === false) {
+        $class = $node instanceof InClassNode ? $node->getOriginalNode() : $node;
+        if (($class instanceof Class_) === false) {
             return [];
         }
 
-        if (self::directlyImplements($node, $scope, ToString::class)) {
-            return [];
-        }
-
-        if (
-            self::directlyImplements($node, $scope, Stringable::class) === false
-            && self::declaresMagicMethod($node) === false
-        ) {
-            return [];
+        if ($node instanceof InClassNode) {
+            $reflection = $node->getClassReflection();
+            if ($reflection->implementsInterface(ToString::class)) {
+                return [];
+            }
+            if (
+                $reflection->implementsInterface(Stringable::class) === false
+                && $reflection->hasNativeMethod('__toString') === false
+            ) {
+                return [];
+            }
+        } else {
+            if (self::directlyImplements($class, $scope, ToString::class)) {
+                return [];
+            }
+            if (
+                self::directlyImplements($class, $scope, Stringable::class) === false
+                && self::declaresMagicMethod($class) === false
+            ) {
+                return [];
+            }
         }
 
         return [
             RuleErrorBuilder::message(self::compiler()->compile('message'))->tip(
                 self::compiler()->compile('help')
             )->line(
-                $node->getStartLine()
+                $class->getStartLine()
             )->identifier(
                 self::identifier()
             )->nonIgnorable()->build(),

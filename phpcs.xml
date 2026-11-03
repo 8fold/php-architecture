@@ -7,7 +7,7 @@
 
 	<exclude-pattern>*/src/assets/*/**$</exclude-pattern>
 	<exclude-pattern>*/tests/PHPCS/Fixtures/*</exclude-pattern>
-	<exclude-pattern>*/tests/PHPStan/Fixtures/ClassesImplementingStringableMustImplementToString*.php</exclude-pattern>
+	<exclude-pattern>*/tests/PHPStan/Fixtures/*</exclude-pattern>
 
 	<arg name="colors" />
 

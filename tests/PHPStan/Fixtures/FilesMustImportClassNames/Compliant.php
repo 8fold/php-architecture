@@ -10,14 +10,11 @@ use Stringable;
 use PHPStan\Rules\Rule;
 
 use InvalidArgumentException;
-
 use Countable;
-
 use Override;
 
-use PhpParser\Node\Stmt\Class_;
-
 use PhpParser\Node;
+use PhpParser\Node\Stmt\Class_;
 
 use PHPStan\Analyser\Scope;
 
@@ -40,12 +37,12 @@ use Eightfold\Attributes\Functions\Pure;
  * 3. PHP standard library (PSL): classes, interfaces, traits, attributes.
  * 4. Third-party, one group per Composer package, packages sorted
  *    alphabetically (nikic/php-parser, phpstan/phpstan); each package
- *    split into classes, interfaces, traits, attributes.
+ *    split into classes, interfaces, traits, attributes. Ordering within
+ *    each package group is alphabetical.
  * 5. First-party, grouped like third-party (Eightfold\Attributes).
  *
  * Names appear once, in the earliest applicable block; Rule is third-party
- * but belongs to the implements block. Names within a block other than
- * implements are sorted alphabetically. Empty blocks are omitted. Enums
+ * but belongs to the implements block. Empty blocks are omitted. Enums
  * (CallableSubtype) are provisionally grouped with classes.
  *
  * @implements Rule<Class_>

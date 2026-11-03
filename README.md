@@ -116,12 +116,14 @@ the command's requirements and its code-only alias.
 
 - [Class stringability](.github/instructions/php-class-stringability.instructions.md):
   directly stringable classes implement `Eightfold\Interfaces\ToString`, which
-  also requires `toString(): string`. The direct-declaration PHPCS and PHPStan
-  checks are implemented but not yet enabled.
+  also requires `toString(): string`. The direct-declaration PHPCS check is
+  enabled for this repository, and the PHPStan rule is enabled in
+  `extension.neon`. See the
+  [enforcement boundaries](docs/agent-context.md#enforcement-boundaries).
 - [Explicit boolean expressions](.github/instructions/php-boolean-expressions.instructions.md):
   prefer positive conditions or strict comparisons to negating a boolean
   expression with `!`. The type-aware `BooleanNegationMustBeExplicit` PHPStan
-  rule is implemented but disabled alongside the other custom rules.
+  rule is implemented but disabled.
   See the [enforcement boundaries](docs/agent-context.md#enforcement-boundaries)
   for its scope and current activation state.
 - **Method scope:** [Guidance](.github/instructions/php-class-use.instructions.md)
@@ -138,7 +140,7 @@ the command's requirements and its code-only alias.
   `ClassesShouldNotBeSubclass` recognize `Eightfold\Attributes\Classes\BaseClass`
   and `Eightfold\Attributes\Classes\Subclass` as their respective advisory
   opt-outs. The corresponding `Must` rules do not accept those opt-outs.
-  Custom PHPStan rules are currently disabled in `extension.neon`.
+  The corresponding PHPStan rules are currently disabled in `extension.neon`.
 - Data Objects are PHP classes
 
 ## Attribute inference

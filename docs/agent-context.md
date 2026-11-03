@@ -31,14 +31,15 @@ and local adaptations of the shared rules.
   unresolved placeholders raise explicit errors, and templates are not cached.
   PHPStan and PHPCS use `PHPStanRule.php` and `PHPCSSniff.php`.
 - `src/PHPCS/Efqs/`: PHPCS registration shells (`Eightfold\Efqs\`) delegate to
-  convention implementations. Custom PHPStan registrations in
-  `extension.neon` remain commented out; the vendor extension remains enabled.
-  PHPStan ignores lines prefixed with `#`.
+  convention implementations. The direct stringability PHPStan rule is active
+  in `extension.neon` alongside the vendor extension; the other custom
+  registrations remain commented out. PHPStan ignores lines prefixed with `#`.
 - `experimental/Analysis/`: analysis experiments outside Composer autoloading,
   including the unsupported [callable type-analysis and attribute-inference
   prototype](../experimental/Analysis/CallablesMustBeTyped/README.md).
-- The `InstanceMethodsMustNotBeAccessedViaThis` Sniff registration is declared
-  in `phpcs.xml`.
+- The `InstanceMethodsMustNotBeAccessedViaThis` and
+  `ClassesImplementingStringableMustImplementToString` sniff registrations
+  are declared in `phpcs.xml`.
 - Convention folder names, sniffs, and PHPStan rule names follow the
   [RFC 2119 naming convention](../.github/instructions/analysis-naming.instructions.md).
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with analysis tests under
@@ -95,9 +96,12 @@ Not functional yet; do not rely on these:
 <!-- Tool enforcement versus written guidance. -->
 ## Enforcement boundaries
 
-- Enforced: PHPCS style checks, built-in and vendor PHPStan analysis, and
-  PHPUnit tests through the corresponding `composer check:*` scripts.
-- Disabled: all custom PHPStan rule registrations in `extension.neon`,
+- Enforced: PHPCS style checks, the direct stringability PHPCS and PHPStan
+  rules, built-in and vendor PHPStan analysis, and PHPUnit tests through the
+  corresponding `composer check:*` scripts. Repository-wide PHPStan analysis
+  excludes the intentionally noncompliant stringability fixture; isolated
+  tests still analyze it.
+- Disabled: the other custom PHPStan rule registrations in `extension.neon`,
   including `BooleanNegationMustBeExplicit`. That rule reports unary `!` on
   operands PHPStan knows are boolean, with non-ignorable identifier
   `eightfold.booleanNegationMustBeExplicit`. Nullable, non-boolean, and unknown
@@ -129,8 +133,8 @@ the canonical home. The script is repository-only and is not a Composer binary.
 The repository is mid-consolidation. `composer check:style` still reports
 pre-existing line-length warnings in `tests/EfqsDocsAgentsTest.php`, and
 `composer check:analyze` still reports pre-existing test and fixture type
-errors. The existing custom PHPStan registrations, including a missing rule,
-are commented out.
+errors. The other custom PHPStan registrations, including a missing rule, are
+commented out.
 Report failures under
 [Navigation, tools, and validation](../AGENTS.md#navigation-tools-and-validation)
 rule 5. Do not fix unrelated code as part of other work.

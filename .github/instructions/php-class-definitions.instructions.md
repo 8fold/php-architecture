@@ -31,6 +31,6 @@ applyTo: "src/**/*.php,experimental/Analysis/**/*.php,tests/**/*.php"
 - Run `composer check:analyze` for PHPStan analysis.
 - These attributes express architectural intent; documentation is not proof
   of enforcement. The advisory PHPStan rules recognize the corresponding
-  attributes in isolated tests, but all custom rule registrations in
+  attributes in isolated tests, but the class-finality rule registrations in
   `extension.neon` remain commented out. Do not treat these conventions as
   enforced by the repository's normal analyzer configuration.

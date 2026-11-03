@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPCS\Fixtures\ClassesImplementingStringableMustImplementToString;
+namespace Eightfold\Tests\PHPStan\Fixtures\ClassesImplementingStringableMustImplementToString;
 
 use Stringable;
 use Stringable as NativeStringable;
 
 /*
- * One MissingToStringInterface error is proposed at each offending class
+ * One convention diagnostic is expected at each offending class
  * declaration: eight named classes and two anonymous classes.
  * Both triggers must not produce duplicate errors. The interface and the
  * NonStringableContainer are not targets; nested methods belong to their class.

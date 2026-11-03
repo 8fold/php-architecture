@@ -40,9 +40,8 @@ and local adaptations of the shared rules.
 - `experimental/Analysis/`: analysis experiments outside Composer autoloading,
   including the unsupported [callable type-analysis and attribute-inference
   prototype](../experimental/Analysis/CallablesMustBeTyped/README.md).
-- The `InstanceMethodsMustNotBeAccessedViaThis` and
-  `ClassesImplementingStringableMustImplementToString` sniff registrations
-  are declared in `phpcs.xml`.
+- The `InstanceMethodsMustNotBeAccessedViaThis` sniff is registered in
+  `phpcs.xml`.
 - Convention folder names, sniffs, and PHPStan rule names follow the
   [RFC 2119 naming convention](../.github/instructions/analysis-naming.instructions.md).
 - `tests/`: PHPUnit tests (`Eightfold\Tests\`), with analysis tests under
@@ -99,11 +98,10 @@ Not functional yet; do not rely on these:
 <!-- Tool enforcement versus written guidance. -->
 ## Enforcement boundaries
 
-- Enforced: PHPCS style checks, the direct stringability PHPCS and PHPStan
-  rules, built-in and vendor PHPStan analysis, and PHPUnit tests through the
-  corresponding `composer check:*` scripts. Repository-wide PHPStan analysis
-  excludes the intentionally noncompliant stringability fixture; isolated
-  tests still analyze it.
+- Enforced: PHPCS style checks, the direct stringability PHPStan rule, built-in
+  and vendor PHPStan analysis, and PHPUnit tests through the corresponding
+  `composer check:*` scripts. Repository-wide PHPStan analysis excludes its
+  fixtures; isolated tests still analyze the stringability fixtures.
 - Disabled: the other custom PHPStan rule registrations in `extension.neon`,
   including `BooleanNegationMustBeExplicit`. That rule reports unary `!` on
   operands PHPStan knows are boolean, with non-ignorable identifier

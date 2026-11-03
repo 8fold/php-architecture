@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPCS\Fixtures\ClassesImplementingStringableMustImplementToString;
+namespace Eightfold\Tests\PHPStan\Fixtures\ClassesImplementingStringableMustImplementToString;
 
 use Eightfold\Interfaces\ToString;
 use Eightfold\Interfaces\ToString as SuiteToString;
 use Stringable;
 
 /*
- * Shared PHPCS/PHPStan draft: no convention diagnostics are expected.
+ * PHPStan fixture: no convention diagnostics are expected.
  * Traits, interfaces and non-stringable enums are provisional non-targets.
  */
 

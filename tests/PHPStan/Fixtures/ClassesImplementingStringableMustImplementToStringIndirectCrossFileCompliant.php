@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPCS\Fixtures\ClassesImplementingStringableMustImplementToString\Indirect;
+namespace Eightfold\Tests\PHPStan\Fixtures\ClassesImplementingStringableMustImplementToString\Indirect;
 
 use Eightfold\Attributes\Classes\Subclass;
 

@@ -7,6 +7,7 @@
 
 	<exclude-pattern>*/src/assets/*/**$</exclude-pattern>
 	<exclude-pattern>*/tests/PHPCS/Fixtures/*</exclude-pattern>
+	<exclude-pattern>*/tests/PHPStan/Fixtures/ClassesImplementingStringableMustImplementToString*.php</exclude-pattern>
 
 	<arg name="colors" />
 
@@ -17,7 +18,6 @@
  		<exclude name="PSR12.Files.FileHeader"/>
  	</rule>
 	<rule ref="src/PHPCS/Efqs/Sniffs/Callables/InstanceMethodsMustNotBeAccessedViaThisSniff.php"/>
-	<rule ref="src/PHPCS/Efqs/Sniffs/Classes/ClassesImplementingStringableMustImplementToStringSniff.php"/>
 	<rule ref="Generic.Files.LineLength">
 		<properties>
 			<property phpcs-only="true" name="lineLimit" value="100"/>

@@ -151,9 +151,8 @@ the command's requirements and its code-only alias.
 
 - [Class stringability](.github/instructions/php-class-stringability.instructions.md):
   directly stringable classes implement `Eightfold\Interfaces\ToString`, which
-  also requires `toString(): string`. The direct-declaration PHPCS check is
-  enabled for this repository, and the PHPStan rule is enabled in
-  `extension.neon`. See the
+  also requires `toString(): string`. The direct-declaration PHPStan rule is
+  enabled in `extension.neon`. See the
   [enforcement boundaries](docs/agent-context.md#enforcement-boundaries).
 - [Explicit boolean expressions](.github/instructions/php-boolean-expressions.instructions.md):
   prefer positive conditions or strict comparisons to negating a boolean

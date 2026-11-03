@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPCS\Fixtures\ClassesImplementingStringableMustImplementToString\Indirect;
+namespace Eightfold\Tests\PHPStan\Fixtures\ClassesImplementingStringableMustImplementToString\Indirect;
 
 use Eightfold\Attributes\Classes\Subclass;
 
@@ -10,8 +10,8 @@ require_once __DIR__ . '/ClassesImplementingStringableMustImplementToStringIndir
 
 /*
  * PHPStan should report each of the six named classes and the anonymous class
- * once. PHPCS must not guess whether a parent or another interface supplies
- * ToString; cases it cannot resolve remain PHPStan's responsibility.
+ * once. Parent and indirect interface relationships must be resolved, and
+ * the inherited trait must be treated as stringability for each affected class.
  */
 
 #[Subclass(rationale: 'Exercises inherited native stringability.')]

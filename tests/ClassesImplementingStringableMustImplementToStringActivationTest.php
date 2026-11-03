@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Eightfold\Tests;
 
 use Eightfold\Attributes\Classes\Subclass;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -17,39 +16,19 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
     private const MESSAGE =
         'Classes implementing Stringable must implement Eightfold\\Interfaces\\ToString.';
 
-    /**
-     * @return array<string, array{list<string>}>
-     */
-    public static function analyzerCommands(): array
-    {
-        $root = dirname(__DIR__);
-
-        return [
-            'PHPCS' => [[
-                PHP_BINARY,
-                $root . '/vendor/bin/phpcs',
-                '--standard=' . $root . '/phpcs.xml',
-                '--report=emacs',
-            ]],
-            'PHPStan' => [[
-                PHP_BINARY,
-                $root . '/vendor/bin/phpstan',
-                'analyze',
-                '--configuration=' . $root . '/phpstan.neon',
-                '--no-progress',
-                '--error-format=raw',
-            ]],
-        ];
-    }
-
-    /**
-     * @param list<string> $command
-     */
     #[Test]
     #[Group('analysis')]
-    #[DataProvider('analyzerCommands')]
-    public function configured_analyzer_enforces_direct_stringability(array $command): void
+    public function configured_phpstan_enforces_direct_stringability(): void
     {
+        $root = dirname(__DIR__);
+        $command = [
+            PHP_BINARY,
+            $root . '/vendor/bin/phpstan',
+            'analyze',
+            '--configuration=' . $root . '/phpstan.neon',
+            '--no-progress',
+            '--error-format=raw',
+        ];
         $directory = sys_get_temp_dir() . '/stringability-' . bin2hex(random_bytes(8));
         if (mkdir($directory, 0700) === false) {
             throw new RuntimeException('Unable to create the activation test directory.');

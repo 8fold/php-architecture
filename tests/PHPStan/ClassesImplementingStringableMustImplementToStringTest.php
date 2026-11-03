@@ -42,8 +42,7 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
 
         parent::analyse(
             [
-                dirname(__DIR__)
-                . '/PHPCS/Fixtures/' . self::FIXTURE_PREFIX . 'Noncompliant.php',
+                __DIR__ . '/Fixtures/' . self::FIXTURE_PREFIX . 'Noncompliant.php',
             ],
             $errors
         );
@@ -57,8 +56,7 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
 
         parent::analyse(
             [
-                dirname(__DIR__)
-                . '/PHPCS/Fixtures/' . self::FIXTURE_PREFIX . 'Compliant.php',
+                __DIR__ . '/Fixtures/' . self::FIXTURE_PREFIX . 'Compliant.php',
             ],
             []
         );
@@ -66,7 +64,7 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
 
     private static function loadFixtureSymbols(string $name): void
     {
-        $fixtures = dirname(__DIR__) . '/PHPCS/Fixtures/';
+        $fixtures = __DIR__ . '/Fixtures/';
         require_once $fixtures . $name;
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\Tests\PHPCS\Fixtures\ClassesImplementingStringableMustImplementToString\Indirect;
+namespace Eightfold\Tests\PHPStan\Fixtures\ClassesImplementingStringableMustImplementToString\Indirect;
 
 require_once __DIR__ . '/ClassesImplementingStringableMustImplementToStringIndirectCompliant.php';
 

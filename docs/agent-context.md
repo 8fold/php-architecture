@@ -35,10 +35,11 @@ and local adaptations of the shared rules.
   PHPStan and PHPCS use `PHPStanRule.php` and `PHPCSSniff.php`.
 - `src/PHPCS/Efqs/`: PHPCS registration shells (`Eightfold\Efqs\`) delegate to
   convention implementations.
-- The direct stringability PHPStan rule is active in `extension.neon`
-  alongside the vendor extension. Its `includeIndirect` mode is implemented
-  but defaults to disabled pending activation approval; the other custom
-  registrations remain commented out. PHPStan ignores lines prefixed with `#`.
+- The stringability PHPStan rule is active in `extension.neon` alongside the
+  vendor extension. Its scope is described in the
+  [class stringability instruction](../.github/instructions/php-class-stringability.instructions.md);
+  the other custom registrations remain commented out. PHPStan ignores lines
+  prefixed with `#`.
 - `experimental/Analysis/`: analysis experiments outside Composer autoloading,
   including the unsupported [callable type-analysis and attribute-inference
   prototype](../experimental/Analysis/CallablesMustBeTyped/README.md).
@@ -100,7 +101,7 @@ Not functional yet; do not rely on these:
 <!-- Tool enforcement versus written guidance. -->
 ## Enforcement boundaries
 
-- Enforced: PHPCS style checks, the direct stringability PHPStan rule, built-in
+- Enforced: PHPCS style checks, the stringability PHPStan rule, built-in
   and vendor PHPStan analysis, and PHPUnit tests through the corresponding
   `composer check:*` scripts. Repository-wide PHPStan analysis excludes its
   fixtures; isolated tests still analyze the stringability fixtures.

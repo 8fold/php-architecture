@@ -25,28 +25,15 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
 
     private const FIXTURE_PREFIX = 'ClassesImplementingStringableMustImplementToString';
 
-    private bool $includeIndirect = false;
-
     protected function getRule(): PHPStanRule
     {
-        return new PHPStanRule($this->includeIndirect);
-    }
-
-    /** @return array<string, array{bool}> */
-    public static function ruleModes(): array
-    {
-        return [
-            'direct' => [false],
-            'indirect' => [true],
-        ];
+        return new PHPStanRule();
     }
 
     #[Test]
     #[Group('analysis')]
-    #[DataProvider('ruleModes')]
-    public function reports_each_directly_stringable_class_once(bool $includeIndirect): void
+    public function reports_each_directly_stringable_class_once(): void
     {
-        $this->includeIndirect = $includeIndirect;
         self::loadFixtureSymbols(self::FIXTURE_PREFIX . 'Noncompliant.php');
 
         $errors = [];
@@ -64,10 +51,8 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
 
     #[Test]
     #[Group('analysis')]
-    #[DataProvider('ruleModes')]
-    public function accepts_direct_suite_contracts_and_non_targets(bool $includeIndirect): void
+    public function accepts_direct_suite_contracts_and_non_targets(): void
     {
-        $this->includeIndirect = $includeIndirect;
         self::loadFixtureSymbols(self::FIXTURE_PREFIX . 'Compliant.php');
 
         parent::analyse(
@@ -92,7 +77,6 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
     #[DataProvider('indirectCompliantFixtures')]
     public function accepts_inherited_and_indirect_suite_contracts(string $fixture): void
     {
-        $this->includeIndirect = true;
         self::loadFixtureSymbols($fixture);
 
         parent::analyse(
@@ -105,7 +89,6 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
     #[Group('analysis')]
     public function reports_trait_provided_stringability_in_a_parent(): void
     {
-        $this->includeIndirect = true;
         $fixture = self::FIXTURE_PREFIX . 'IndirectParentNoncompliant.php';
         self::loadFixtureSymbols($fixture);
 
@@ -119,7 +102,6 @@ final class ClassesImplementingStringableMustImplementToStringTest extends RuleT
     #[Group('analysis')]
     public function reports_each_indirectly_stringable_class_without_the_suite_contract(): void
     {
-        $this->includeIndirect = true;
         $fixture = self::FIXTURE_PREFIX . 'IndirectNoncompliant.php';
         self::loadFixtureSymbols($fixture);
 

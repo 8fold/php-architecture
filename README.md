@@ -150,10 +150,10 @@ the command's requirements and its code-only alias.
 ## PHP conventions (strict)
 
 - [Class stringability](.github/instructions/php-class-stringability.instructions.md):
-  directly stringable classes implement `Eightfold\Interfaces\ToString`, which
-  also requires `toString(): string`. The direct-declaration PHPStan rule is
-  enabled in `extension.neon`; indirect support is implemented but not
-  activated. See the
+  classes with direct or inherited stringability implement
+  `Eightfold\Interfaces\ToString` directly or indirectly. The interface also
+  requires `toString(): string`; the PHPStan rule is enabled in `extension.neon`.
+  See the
   [enforcement boundaries](docs/agent-context.md#enforcement-boundaries).
 - [Explicit boolean expressions](.github/instructions/php-boolean-expressions.instructions.md):
   prefer positive conditions or strict comparisons to negating a boolean

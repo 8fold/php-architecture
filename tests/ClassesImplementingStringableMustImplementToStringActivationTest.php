@@ -18,7 +18,7 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
 
     #[Test]
     #[Group('analysis')]
-    public function configured_phpstan_enforces_direct_stringability_and_defers_indirect(): void
+    public function configured_phpstan_enforces_direct_and_indirect_stringability(): void
     {
         $root = dirname(__DIR__);
         $command = [
@@ -37,6 +37,7 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
         $noncompliant = $directory . '/Noncompliant.php';
         $compliant = $directory . '/Compliant.php';
         $indirect = $directory . '/Indirect.php';
+        $inheritedContract = $directory . '/InheritedContract.php';
 
         try {
             $noncompliantSource = <<<'PHP'
@@ -94,10 +95,39 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
                     use StringableTrait;
                 }
                 PHP;
+            $inheritedContractSource = <<<'PHP'
+                <?php
+
+                declare(strict_types=1);
+
+                namespace StringabilityActivation;
+
+                abstract class SuiteParent implements \Eightfold\Interfaces\ToString
+                {
+                    public function __toString(): string
+                    {
+                        return 'value';
+                    }
+
+                    public function toString(): string
+                    {
+                        return 'value';
+                    }
+                }
+
+                final class Child extends SuiteParent
+                {
+                    public function __toString(): string
+                    {
+                        return 'child';
+                    }
+                }
+                PHP;
             if (
                 file_put_contents($noncompliant, $noncompliantSource . "\n") === false
                 || file_put_contents($compliant, $compliantSource . "\n") === false
                 || file_put_contents($indirect, $indirectSource . "\n") === false
+                || file_put_contents($inheritedContract, $inheritedContractSource . "\n") === false
             ) {
                 throw new RuntimeException('Unable to write the activation test inputs.');
             }
@@ -110,9 +140,13 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
             parent::assertSame(0, $exitCode, $output . $error);
 
             [$exitCode, $output, $error] = self::runAnalyzer($command, $indirect);
+            parent::assertNotSame(0, $exitCode, $error);
+            parent::assertStringContainsString(self::MESSAGE, $output);
+
+            [$exitCode, $output, $error] = self::runAnalyzer($command, $inheritedContract);
             parent::assertSame(0, $exitCode, $output . $error);
         } finally {
-            foreach ([$noncompliant, $compliant, $indirect] as $path) {
+            foreach ([$noncompliant, $compliant, $indirect, $inheritedContract] as $path) {
                 if (is_file($path) && unlink($path) === false) {
                     throw new RuntimeException('Unable to remove the activation test input.');
                 }
@@ -157,6 +191,19 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
                         return 'value';
                     }
                 }
+
+                trait StringableTrait
+                {
+                    public function __toString(): string
+                    {
+                        return 'trait value';
+                    }
+                }
+
+                final class TraitStringable
+                {
+                    use StringableTrait;
+                }
                 PHP;
             if (
                 copy(dirname(__DIR__) . '/extension.neon', $extension) === false
@@ -178,7 +225,7 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
                 $fixture
             );
             parent::assertNotSame(0, $exitCode, $error);
-            parent::assertStringContainsString(self::MESSAGE, $output, $error);
+            parent::assertSame(2, substr_count($output, self::MESSAGE), $output . $error);
         } finally {
             foreach ([$fixture, $config, $extension] as $path) {
                 if (is_file($path) && unlink($path) === false) {

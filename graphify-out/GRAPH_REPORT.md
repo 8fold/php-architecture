@@ -1,167 +1,214 @@
-# Graph Report - cp-joshbruce-shiny-giggle  (2026-11-02)
+# Graph Report - cp-joshbruce-fluffy-funicular  (2026-11-02)
 
 ## Corpus Check
-- 98 files · ~22,954 words
+- 110 files · ~24,936 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 659 nodes · 983 edges · 57 communities (11 shown, 46 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 32 edges (avg confidence: 0.9)
-- Semantic-extraction usage: unavailable (the host did not expose token counts)
-
-## Graph Freshness
-- Built from commit: `ed3778cb`
-- Run `git rev-parse HEAD` and compare to check if the graph is stale.
-- Run `graphify update .` after code changes (no API cost).
+- 873 nodes · 1219 edges · 94 communities (15 shown, 79 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 11 edges (avg confidence: 0.9)
+- Semantic-extraction token usage: unavailable (not measured by this host).
 
 ## Community Hubs (Navigation)
-- Contributor and Agent Workflows
-- Convention and Attribute Tests
-- Composer Package Configuration
-- Documentation CLI Regression Tests
-- Boolean Analysis Rules
-- Callable Classification Prototypes
-- Experimental Callable Fixtures
-- Attribute Inference Drafts
-- Experimental Callable Evaluation
-- PHPCS Method Access
-- Attribute Declaration Contracts
-- Mandatory Subclass Analysis
-- Graph Refresh CLI Tests
-- Mandatory Finality Analysis
-- PHP Method Scope Glossary
-- Advisory Finality Analysis
-- Advisory Subclass Analysis
+- Convention Workflow Guidance
+- Stringable Contract Fixtures
+- Inherited Stringability Fixtures
+- Callable Attribute Contracts
+- EFQS Documentation Commands
+- Contribution and Triage
+- PHP Node Inspection
+- Callable Typing Fixtures
+- Graphify Startup Workflow
+- Class Attribute Tests
+- PHPUnit Production Tests
+- Callable Analysis Components
+- PHP Terms and Documentation
+- PHPCS Instance Method Sniff
+- Advisory Finality Rule
+- Composer Package Metadata
+- Composer Quality Scripts
+- PHPStan Rule Tests
+- Graph Refresh Tests
+- Compliant Boolean Expressions
+- Composer Script Descriptions
+- Boolean Negation Rule Tests
+- Analysis Message Compiler
+- Noncompliant Boolean Expressions
 - Instruction Coverage Tests
-- Compliant PHPCS Patterns
-- Diagnostic Message Compilation
+- Stringable Convention Tests
+- Compliant Instance Method Access
+- Instance Method Sniff Tests
+- Mandatory Finality Rule
+- Prohibited Subclass Rule
+- Advisory Inheritance Rule
+- Mandatory Finality Tests
 - Advisory Finality Tests
-- Inheritance Diagnostic Templates
-- Callable Return Types
-- Nonboolean Negation Fixtures
-- Callable Pattern Drafts
-- Boolean Negation PHPStan Rule
-- Named Constructor Metadata
-- Predicate Attribute Metadata
-- Callable Fluent Mutation Metadata
-- Accessor Attribute Metadata
-- Command Attribute Metadata
-- Status Command Metadata
-- Factory Attribute Metadata
-- Pure Attribute Metadata
-- Immutable Transformation Metadata
-- Function Fluent Mutation Metadata
-- Community Conduct Policy
-- Semantic Versioning Policy
-- Finality Diagnostic Templates
-- Noncompliant PHPCS Patterns
-- Class Finality Instructions
-- Private Security Disclosure
-- Experimental Noncompliant Callables
-- PHPUnit Authoring Conventions
-- License and Warranty
-- Finality Compliant Fixture
-- Inheritance Compliant Fixture
-- Message Compiler Fixture
+- Convention Request Template
+- Semantic Release Versioning
+- Callable Architecture Patterns
+- Named Constructor Examples
+- NonBoolean Comparison Fixtures
+- Analysis Naming Conventions
+- Explicit Boolean Expressions
+- Bug Report Template
+- Feature Request Template
+- Composer Autoload Mapping
+- Composer Runtime Dependencies
+- Stringable Rule Implementation
+- Predicate Callable Contract
+- Callable This Transformer
+- Accessor Callable Contract
+- Command Callable Contract
+- Status Command Callable
+- Factory Callable Contract
+- Pure Callable Contract
+- State Transformer Contract
+- Function This Transformer
+- Advisory Subclass Tests
+- Deprecation Issue Template
+- Callable Inference Prototype
+- Boolean Negation Rule
+- Noncompliant Instance Access
+- Production Source Integrity
+- Architecture Package License
+- Noncompliant Callable Fixtures
+- Inheritance Restriction Remedies
+- Development Autoload Mapping
+- Advisory Finality Guidance
+- Advisory Inheritance Guidance
+- Boolean Negation Remedies
+- Boolean Negation Diagnostic
+- Mandatory Finality Remedy
+- Mandatory Finality Diagnostic
+- Mandatory Inheritance Diagnostic
+- Advisory Finality Diagnostic
+- Advisory Inheritance Diagnostic
+- Instance Method Access Diagnostic
+- Message Template Placeholders
+- Final Class Compliant Fixtures
+- Subclass Compliant Fixtures
 
 ## God Nodes (most connected - your core abstractions)
 1. `EfqsDocsAgentsTest` - 39 edges
 2. `CallableSubtype` - 26 edges
-3. `php-architecture agent context` - 25 edges
-4. `Convention workflow` - 21 edges
-5. `MessageCompiler` - 19 edges
-6. `CallablesMustBeTypedCompliant` - 18 edges
-7. `NodeInspector` - 17 edges
-8. `CallableEvaluators` - 13 edges
-9. `PHPStanRule` - 13 edges
-10. `PHPCSSniff` - 13 edges
+3. `MessageCompiler` - 19 edges
+4. `CallablesMustBeTypedCompliant` - 18 edges
+5. `NodeInspector` - 17 edges
+6. `Contribution and triage policy` - 17 edges
+7. `ToString` - 15 edges
+8. `Convention workflow` - 15 edges
+9. `PHP architecture agent context` - 14 edges
+10. `CallableEvaluators` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Measured versus unavailable extraction usage` --semantically_similar_to--> `Evidence-based completion`  [INFERRED] [semantically similar]
-  docs/graphify-workflow.md → AGENTS.md
-- `Class declaration and finality instruction` --conceptually_related_to--> `Custom PHPStan rules disabled by default`  [INFERRED]
-  .github/instructions/php-class-definitions.instructions.md → docs/agent-context.md
-- `PHP Class Use Instructions` --references--> `PHP Architecture Glossary`  [EXTRACTED]
-  .github/instructions/php-class-use.instructions.md → docs/glossary.md
-- `Bug report template` --conceptually_related_to--> `Evidence-based completion`  [INFERRED]
-  .github/ISSUE_TEMPLATE/Bug_report.md → AGENTS.md
-- `Issue tracking` --references--> `Convention request template`  [EXTRACTED]
-  docs/convention-workflow.md → .github/ISSUE_TEMPLATE/Convention_request.md
+- `Advisory class finality rules` --semantically_similar_to--> `Guidance is not enforcement`  [INFERRED] [semantically similar]
+  .github/instructions/php-class-definitions.instructions.md → AGENTS.md
+- `PHPCS fixture style exclusion` --semantically_similar_to--> `PHPStan fixture exclusion`  [INFERRED] [semantically similar]
+  .github/instructions/phpcs-sniff-development.instructions.md → docs/agent-context.md
+- `Valid red test evidence` --semantically_similar_to--> `Completion evidence`  [INFERRED] [semantically similar]
+  .github/instructions/phpunit-test-definitions.instructions.md → AGENTS.md
+- `ClassesImplementingStringableMustImplementToString convention` --conceptually_related_to--> `Stringability rule activation`  [INFERRED]
+  src/Analysis/ClassesImplementingStringableMustImplementToString/help.md → docs/agent-context.md
+- `Copilot startup gates` --references--> `PHP architecture agent context`  [EXTRACTED]
+  .github/copilot-instructions.md → docs/agent-context.md
 
 ## Import Cycles
 - None detected.
 
 ## Hyperedges (group relationships)
-- **SecurityContext across distinct authorization and pipeline roles** — docs_callable_pattern_drafts_guard, docs_callable_pattern_drafts_middleware, docs_callable_pattern_drafts_handler, docs_callable_pattern_drafts_voter [EXTRACTED 1.00]
-- **Convention request and fixture-only PR authorization** — docs_convention_workflow_convention_request, docs_convention_workflow_fixture_draft, docs_convention_workflow_fixture_only_pr_exception, agents_human_gates [EXTRACTED 1.00]
-- **Fixture, test, implementation, and activation approval flow** — docs_convention_workflow_fixture_draft, docs_convention_workflow_fixture_approval, docs_convention_workflow_tests, docs_convention_workflow_test_approval, docs_convention_workflow_implementation, docs_convention_workflow_activation_approval [EXTRACTED 1.00]
-- **Convention layer assessment and selection** — docs_convention_workflow_layer_assessment, docs_convention_workflow_agent_instruction, docs_convention_workflow_phpcs_sniff, docs_convention_workflow_phpstan_rule, docs_convention_workflow_trait, docs_convention_workflow_interface, docs_convention_workflow_layer_selection_criteria [EXTRACTED 1.00]
+- **Cumulative triage impact categories** — _github_contributing_security_accessibility, _github_contributing_broken, _github_contributing_annoying, _github_contributing_new_by_policy, _github_contributing_new_user_request [EXTRACTED 1.00]
+- **Callable pattern taxonomy** — docs_callable_pattern_drafts_guard, docs_callable_pattern_drafts_middleware, docs_callable_pattern_drafts_handler, docs_callable_pattern_drafts_voter, docs_callable_pattern_drafts_property_hooks [EXTRACTED 1.00]
+- **Class stringability contract** — _github_instructions_php_class_stringability_instructions_effective_class_stringability, _github_instructions_php_class_stringability_instructions_native_stringable_interface, _github_instructions_php_class_stringability_instructions_native_magic_string_conversion, _github_instructions_php_class_stringability_instructions_eightfold_interfaces_tostring, _github_instructions_php_class_stringability_instructions_suite_tostring_method [EXTRACTED 1.00]
+- **PHPCS gated development** — _github_instructions_phpcs_sniff_development_instructions_phpcs_fixtures, _github_instructions_phpcs_sniff_development_instructions_fixture_approval, _github_instructions_phpcs_sniff_development_instructions_isolated_phpcs_sniff_tests, _github_instructions_phpcs_sniff_development_instructions_test_approval, _github_instructions_phpcs_sniff_development_instructions_phpcs_sniff_implementation, _github_instructions_phpcs_sniff_development_instructions_activation_approval, _github_instructions_phpcs_sniff_development_instructions_phpcs_ruleset_activation [EXTRACTED 1.00]
+- **Convention implementation layers** — docs_convention_workflow_agent_instruction_layer, docs_convention_workflow_phpcs_token_analysis, docs_convention_workflow_phpstan_semantic_analysis, docs_convention_workflow_trait_and_interface_layers [EXTRACTED 1.00]
 
-## Communities (57 total, 46 thin omitted)
+## Communities (94 total, 79 thin omitted)
 
-### Community 0 - "Contributor and Agent Workflows"
+### Community 0 - "Convention Workflow Guidance"
 Cohesion: 0.05
-Nodes (20): Contribution guide, Copilot session instructions, Analysis naming instruction, GitHub template maintenance instruction, Boolean expression instruction, PHPCS sniff development instruction, Prose documentation instruction, Bug report template (+12 more)
+Nodes (30): BaseClass attribute, Class definition instructions, Subclass attribute, Class stringability instructions, Eightfold\Interfaces\ToString, Native magic string conversion, Native Stringable interface, Suite toString method (+22 more)
 
-### Community 1 - "Convention and Attribute Tests"
-Cohesion: 0.05
-Nodes (12): CallablesMustBeTypedTest, CallableTypesTest, InstanceMethodsMustNotBeAccessedViaThisTest, ClassesMustBeFinalTest, ClassesMustNotBeSubclassTest, ClassesShouldNotBeSubclassTest, ClassesMustBeFinalNoncompliant, ClassesMustNotBeSubclassNoncompliant (+4 more)
-
-### Community 2 - "Composer Package Configuration"
-Cohesion: 0.04
-Nodes (48): authors, autoload, autoload-dev, psr-4, psr-4, bin, description, license (+40 more)
-
-### Community 4 - "Boolean Analysis Rules"
+### Community 1 - "Stringable Contract Fixtures"
 Cohesion: 0.06
-Nodes (3): BooleanNegationMustBeExplicitTest, BooleanNegationMustBeExplicitCompliant, BooleanNegationMustBeExplicitNoncompliant
+Nodes (26): ToString, AbstractSuiteStringable, AliasedSuiteStringable, compliantAnonymousStringable(), FullyQualifiedSuiteStringable, ImportedSuiteStringable, NativeStringabilityDeclaration, NativeThenSuiteStringable (+18 more)
 
-### Community 5 - "Callable Classification Prototypes"
+### Community 2 - "Inherited Stringability Fixtures"
 Cohesion: 0.07
-Nodes (17): CallableSubtypeInference, CallableSubtype, Assertion, Check, Command, CommandWithStatus, Factory, Handler (+9 more)
+Nodes (22): DeclaresMagicAndDerivedSuiteContract, DerivedNativeContract, DerivedSuiteContract, ImplementsDerivedSuiteContract, InheritsSuiteContract, NativeAndDerivedSuiteContract, OrdinaryChild, OrdinaryParent (+14 more)
 
-### Community 7 - "Attribute Inference Drafts"
+### Community 3 - "Callable Attribute Contracts"
+Cohesion: 0.06
+Nodes (23): CallableSubtypeInference, CallableSubtype, Assertion, Check, Command, CommandWithStatus, Factory, Handler (+15 more)
+
+### Community 5 - "Contribution and Triage"
+Cohesion: 0.06
+Nodes (5): Contributor Covenant, Contribution and triage policy, GitHub template guidance, Pull request template, Security reporting policy
+
+### Community 6 - "PHP Node Inspection"
 Cohesion: 0.14
 Nodes (5): AttributeInferer, {closure#1}(), {closure#2}(), {closure#3}(), NodeInspector
 
-### Community 23 - "Callable Return Types"
-Cohesion: 0.29
-Nodes (6): Returns, BooleanType, NeverType, Other, SelfType, VoidType
+### Community 8 - "Graphify Startup Workflow"
+Cohesion: 0.09
+Nodes (3): Copilot startup gates, Graphify setup, Graphify refresh workflow
 
-### Community 37 - "Community Conduct Policy"
-Cohesion: 0.40
-Nodes (3): Contributor Covenant 2.1, Code of Conduct, Mozilla Code of Conduct Enforcement Ladder
+### Community 9 - "Class Attribute Tests"
+Cohesion: 0.14
+Nodes (6): BaseClass, Subclass, ClassesMustNotBeSubclassNoncompliant, ClassesShouldBeFinalCompliantUsingAttribute, ClassesShouldBeFinalNoncompliant, ClassesShouldNotBeSubclassCompliantUsingAttribute
 
-### Community 38 - "Semantic Versioning Policy"
-Cohesion: 0.50
-Nodes (3): Versioning Policy, Semantic Versioning 2.0, Semantic Versioning 2.0 Specification
+### Community 12 - "PHP Terms and Documentation"
+Cohesion: 0.11
+Nodes (3): Method and property scope, Prose documentation guidance, PHP glossary
 
-### Community 42 - "Class Finality Instructions"
-Cohesion: 0.50
-Nodes (3): Eightfold Attributes Classes BaseClass, Class declaration and finality instruction, Eightfold Attributes Classes Subclass
+### Community 15 - "Composer Package Metadata"
+Cohesion: 0.17
+Nodes (11): authors, bin, description, license, name, require-dev, phpunit/phpunit, script-aliases (+3 more)
 
-### Community 46 - "License and Warranty"
+### Community 16 - "Composer Quality Scripts"
+Cohesion: 0.17
+Nodes (12): scripts, check, check:analyze, check:instructions, check:style, check:test, graph:code, graph:refresh (+4 more)
+
+### Community 20 - "Composer Script Descriptions"
+Cohesion: 0.18
+Nodes (11): scripts-descriptions, check, check:analyze, check:instructions, check:style, check:test, graph:code, graph:refresh (+3 more)
+
+### Community 43 - "Composer Autoload Mapping"
+Cohesion: 0.33
+Nodes (6): autoload, psr-4, Eightfold\\Analysis\\, Eightfold\\Attributes\\, Eightfold\\Efqs\\, Eightfold\\Interfaces\\
+
+### Community 44 - "Composer Runtime Dependencies"
+Cohesion: 0.33
+Nodes (6): require, 8fold/php-html-builder, php, phpstan/phpstan, spaze/phpstan-disallowed-calls, squizlabs/php_codesniffer
+
+### Community 67 - "Development Autoload Mapping"
 Cohesion: 0.67
-Nodes (3): As-Is Warranty and Liability Disclaimer, Creative Commons Attribution-ShareAlike 4.0 International, 8fold PHP Architecture License
+Nodes (3): autoload-dev, psr-4, Eightfold\\Tests\\
 
 ## Knowledge Gaps
-- **65 isolated node(s):** `ClassesMustBeFinalCompliant`, `ClassesMustNotBeSubclassCompliant`, `BooleanType`, `NeverType`, `Other` (+60 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 324 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **46 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **71 isolated node(s):** `ClassesMustBeFinalCompliant`, `ClassesMustNotBeSubclassCompliant`, `Assertion`, `Check`, `Command` (+66 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 488 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **79 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `CallableSubtype` connect `Callable Classification Prototypes` to `Experimental Callable Evaluation`, `Convention and Attribute Tests`, `Experimental Callable Fixtures`?**
-  _High betweenness centrality (0.098) - this node is a cross-community bridge._
-- **What connects `ClassesMustBeFinalCompliant`, `ClassesMustNotBeSubclassCompliant`, `BooleanType` to the rest of the system?**
-  _65 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Contributor and Agent Workflows` be split into smaller, more focused modules?**
-  _Cohesion score 0.05365296803652968 - nodes in this community are weakly interconnected._
-- **Why does `EfqsDocsAgentsTest` connect `Documentation CLI Regression Tests` to `Convention and Attribute Tests`?**
-  _High betweenness centrality (0.068) - this node is a cross-community bridge._
-- **Should `Convention and Attribute Tests` be split into smaller, more focused modules?**
-  _Cohesion score 0.051643192488262914 - nodes in this community are weakly interconnected._
-- **Why does `NamedConstructor` connect `Experimental Callable Fixtures` to `Callable Classification Prototypes`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
-- **Should `Composer Package Configuration` be split into smaller, more focused modules?**
-  _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
+- **Why does `CallableSubtype` connect `Callable Attribute Contracts` to `Class Attribute Tests`, `PHPUnit Production Tests`, `Callable Analysis Components`, `Callable Typing Fixtures`?**
+  _High betweenness centrality (0.057) - this node is a cross-community bridge._
+- **What connects `ClassesMustBeFinalCompliant`, `ClassesMustNotBeSubclassCompliant`, `Assertion` to the rest of the system?**
+  _71 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Convention Workflow Guidance` be split into smaller, more focused modules?**
+  _Cohesion score 0.05487269534679543 - nodes in this community are weakly interconnected._
+- **Why does `EfqsDocsAgentsTest` connect `EFQS Documentation Commands` to `PHPUnit Production Tests`?**
+  _High betweenness centrality (0.047) - this node is a cross-community bridge._
+- **Should `Stringable Contract Fixtures` be split into smaller, more focused modules?**
+  _Cohesion score 0.058673469387755105 - nodes in this community are weakly interconnected._
+- **Why does `ToString` connect `Stringable Contract Fixtures` to `Inherited Stringability Fixtures`, `PHPStan Rule Implementations`?**
+  _High betweenness centrality (0.030) - this node is a cross-community bridge._
+- **Should `Inherited Stringability Fixtures` be split into smaller, more focused modules?**
+  _Cohesion score 0.07051282051282051 - nodes in this community are weakly interconnected._
+
+## Refresh coverage audit
+
+- Incremental refresh: 12 changed code files and 10 changed documents extracted; no changed documents were left unextracted.
+- Parser warning: `bin/efqs` yields no modeled symbols; its top-level executable behavior is not fully represented.
+- Graph health warning: 7 self-loop edges; no missing or dangling endpoints were detected in the merged graph.

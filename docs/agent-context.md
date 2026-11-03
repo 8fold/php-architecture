@@ -23,6 +23,9 @@ and local adaptations of the shared rules.
 ## Layout and runtime
 
 - PHP `^8.5`, as declared in `composer.json`.
+- The suite is intended as a consumer development dependency; its tool and
+  runtime-contract boundaries are documented in
+  [Consumer dependencies](../README.md#consumer-dependencies).
 - `src/Attributes/`: PHP attributes (`Eightfold\Attributes\`).
 - `src/Interfaces/`: shared interface contracts (`Eightfold\Interfaces\`).
 - `src/Analysis/<Convention>/`: convention-specific analysis implementations

@@ -119,6 +119,82 @@ final class ClassesImplementingStringableMustImplementToStringActivationTest ext
         }
     }
 
+    #[Test]
+    #[Group('analysis')]
+    public function phpstan_extension_loads_from_a_consumer_package_directory(): void
+    {
+        $directory = sys_get_temp_dir() . '/stringability-consumer-' . bin2hex(random_bytes(8));
+        $packageDirectory = $directory . '/vendor/8fold/php-architecture';
+        if (mkdir($packageDirectory, 0700, true) === false) {
+            throw new RuntimeException('Unable to create the consumer test directory.');
+        }
+
+        $extension = $packageDirectory . '/extension.neon';
+        $config = $directory . '/phpstan.neon';
+        $fixture = $directory . '/Noncompliant.php';
+
+        try {
+            $configSource = <<<'NEON'
+                includes:
+                    - vendor/8fold/php-architecture/extension.neon
+
+                parameters:
+                    level: 10
+                NEON;
+            $fixtureSource = <<<'PHP'
+                <?php
+
+                namespace StringabilityConsumer;
+
+                final class DirectStringable implements \Stringable
+                {
+                    public function __toString(): string
+                    {
+                        return 'value';
+                    }
+                }
+                PHP;
+            if (
+                copy(dirname(__DIR__) . '/extension.neon', $extension) === false
+                || file_put_contents($config, $configSource . "\n") === false
+                || file_put_contents($fixture, $fixtureSource . "\n") === false
+            ) {
+                throw new RuntimeException('Unable to write the consumer test inputs.');
+            }
+
+            [$exitCode, $output, $error] = self::runAnalyzer(
+                [
+                    PHP_BINARY,
+                    dirname(__DIR__) . '/vendor/bin/phpstan',
+                    'analyze',
+                    '--configuration=' . $config,
+                    '--no-progress',
+                    '--error-format=raw',
+                ],
+                $fixture
+            );
+            parent::assertNotSame(0, $exitCode, $error);
+            parent::assertStringContainsString(self::MESSAGE, $output, $error);
+        } finally {
+            foreach ([$fixture, $config, $extension] as $path) {
+                if (is_file($path) && unlink($path) === false) {
+                    throw new RuntimeException('Unable to remove a consumer test input.');
+                }
+            }
+            $directories = [
+                $packageDirectory,
+                $directory . '/vendor/8fold',
+                $directory . '/vendor',
+                $directory,
+            ];
+            foreach ($directories as $path) {
+                if (rmdir($path) === false) {
+                    throw new RuntimeException('Unable to remove a consumer test directory.');
+                }
+            }
+        }
+    }
+
     /**
      * @param list<string> $command
      * @return array{int, string, string}

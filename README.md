@@ -1,5 +1,40 @@
 # 8fold Architecture for PHP
 
+## Consumer dependencies
+
+The 8fold Quality Suite is intended to be a development dependency in
+consuming projects. Composer ignores a dependency's `require-dev` entries, so
+the suite lists PHPStan, PHPCS, and its required PHPStan extension in its own
+`require`. When a consumer lists the suite in `require-dev`, those transitive
+dependencies are also development-only unless another production dependency
+requires them.
+
+The same package currently provides runtime contracts such as
+`Eightfold\Interfaces\ToString`. An application class that implements one
+needs the contract when PHP loads that class, including in a private
+deployment. A consumer using such contracts at runtime cannot omit the suite
+with `composer install --no-dev`. Independent distribution of runtime
+contracts is tracked in [#61](https://github.com/8fold/php-architecture/issues/61).
+
+With Composer's default `vendor/` directory, include the suite in the
+consumer's existing `phpstan.neon`:
+
+```neon
+includes:
+    - vendor/8fold/php-architecture/extension.neon
+```
+
+Set a PHPStan analysis level in the consumer's configuration. To run the
+suite's PHPCS sniffs against a consumer's `src/` directory:
+
+```sh
+./vendor/bin/phpcs --standard=vendor/8fold/php-architecture/src/PHPCS/Efqs src
+```
+
+The `Efqs` standard contains the suite's sniffs; include any additional coding
+standards in the consumer's own PHPCS configuration. This repository's root
+`phpcs.xml` is its local ruleset, not the consumer standard.
+
 ## Install the shared agent rules, context, and Graphify guides
 
 Add `8fold/php-architecture` to the consuming project's Composer dependencies

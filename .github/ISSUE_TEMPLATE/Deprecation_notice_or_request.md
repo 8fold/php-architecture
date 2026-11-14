@@ -3,6 +3,10 @@ name: Deprecation notice or request
 about: Propose retiring or replacing a supported capability
 ---
 
+<!--
+Maintained and synced from 8fold/repo-skeleton, do not update outside of the 8fold/repo-skeleton repository
+-->
+
 ## Capability
 
 <!-- What should be deprecated: API, rule, instruction, command, or other supported behavior? -->
